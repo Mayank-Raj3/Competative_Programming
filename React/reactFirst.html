@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="header"><h1>headder</h1></div>
+    <div id="root">
+      <!-- <h1 id="title">Nameste React</h1>
+      <h1 id="title">Nameste React</h1>
+      <h1 id="title">Nameste React</h1>
+      <h1 id="title">Nameste React</h1>
+      <h1 id="title">Nameste React</h1> -->
+
+      <div>
+        <h1>h11</h1>
+        <h2>h22</h2>
+      </div>
+    
+    </div>
+    <div class="footer"><h1>footer</h1></div>
+  
+
+
+    <script
+
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script>
+    //react gives us this api and we pass three argumnet ("html tag",{emtyr obje},"what u need to but in h1 tag")
+    const heading = React.createElement("h1", {
+        id:"title"
+    }, "Namaste React");
+    console.log(heading);
+    // now we need to tell react that we need to put root in div
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    console.log(root);
+    //passing a react element inside the root element 
+
+    // it will rewrite all the things inside the root
+    root.render(heading);
+
+</script>
+
+
+</body>
+  <!-- <script>
+    //using javascript
+    const heading = document.createElement("h1");
+    heading.innerHTML ="Nameste React From Javascript"
+    const root = document.getElementById("root");
+    root.appendChild(heading);
+</script> -->
+ </html>
