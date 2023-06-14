@@ -1,7 +1,7 @@
 /*
 	==> SEE constainnt weather o2 work or not 
 	==> CONSTRAINTS DEKHNA MAT BHUTLNA AGR KAM HO THO BRUTFORCE
-
+	==> jha bhi + vali chizz ho udr neg karke try kar skte ho 
 	==>  ASCII : 1=49 a=97 A=65
 
 	==> DONT GET STUCK ON ONE APPROCH

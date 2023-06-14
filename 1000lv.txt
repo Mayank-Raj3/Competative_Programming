@@ -64,6 +64,8 @@ gcd rules --
 
 6. Lamda function and comarator
 
+function<void(int, int)> dfs =[&](){};
+
 bool compare(int a, int b)
 {
     return a > b;

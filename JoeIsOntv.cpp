@@ -107,59 +107,17 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
+void  calculateHarmonicSum(int n) {
+	long double sum = 0.0;
+	for (int i = 1; i <= n; i++) {
+		sum += 1.0 / i;
+	}
+	cout << fixed << setprecision(12) << sum << nline;
+}
 void solve() {
-	// int n ; cin >> n ;
-	// vector<int> arr(n), b(n);
-	// set<int> st ;
-	// for (int i = 0 ; i < n ; i++) {
-	// 	cin >> arr[i];
-	// 	st.insert(arr[i]);
-	// }
-	// int moves  = 1 ;
-	// if (n == 2) {
-	// 	cout << 1 << nline;
-	// 	return ;
-	// }
-	// b[0] = -9;
-	// int big = *st.rbegin();
-	// int i = 2;
-	// for ( ; i < n ; i ++) {
-	// 	if (st.size() == 0) break;
-	// 	moves++;
-	// 	b[i] = *st.begin();
-	// 	st.erase(st.begin());
-	// }
-	// db(i);
-	// db(b);
-
-	// cout << moves + (((n - i ) * (n - i + 1)) / 2 ) - 1 << nline;
-	// db(b);
-	// cout << moves << nline;
-
-	//brutforce tha ) : : : :
 	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) {
-		cin >> arr[i];
-	}
+	calculateHarmonicSum(n);
 
-	int totMOves = 3123750003126250  ;
-	for (int pos = 0; pos < n; pos++) {
-		long long prev = 0, sum = 0;
-		for (int i = pos - 1; i >= 0; i--) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-		}
-		prev = 0;
-		for (int i = pos + 1; i < n; i++) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-
-		}
-		totMOves = min(totMOves, sum);
-	}
-	cout << totMOves << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

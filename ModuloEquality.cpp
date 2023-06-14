@@ -109,57 +109,31 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	// int n ; cin >> n ;
-	// vector<int> arr(n), b(n);
-	// set<int> st ;
-	// for (int i = 0 ; i < n ; i++) {
-	// 	cin >> arr[i];
-	// 	st.insert(arr[i]);
-	// }
-	// int moves  = 1 ;
-	// if (n == 2) {
-	// 	cout << 1 << nline;
-	// 	return ;
-	// }
-	// b[0] = -9;
-	// int big = *st.rbegin();
-	// int i = 2;
-	// for ( ; i < n ; i ++) {
-	// 	if (st.size() == 0) break;
-	// 	moves++;
-	// 	b[i] = *st.begin();
-	// 	st.erase(st.begin());
-	// }
-	// db(i);
-	// db(b);
-
-	// cout << moves + (((n - i ) * (n - i + 1)) / 2 ) - 1 << nline;
-	// db(b);
-	// cout << moves << nline;
-
-	//brutforce tha ) : : : :
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) {
-		cin >> arr[i];
-	}
-
-	int totMOves = 3123750003126250  ;
-	for (int pos = 0; pos < n; pos++) {
-		long long prev = 0, sum = 0;
-		for (int i = pos - 1; i >= 0; i--) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
+	/*Idea :- brutforce karke dekh lo diffrence ik bar min mileg jo ki b se match kar rha hoga
+				int dif = (b[i] - a[0] + m) % m;
+				ab bas check kar lo ki array same mil rha ki nhi op lgane k bad
+	*/
+	int n , m ; cin >> n >> m ;
+	vector<int> a(n), b(n);
+	for (int i = 0 ; i < n; i++ ) cin >> a[i];
+	for (int i = 0 ; i < n; i++ ) cin >> b[i];
+	sort(all(b));
+	sort(all(a));
+	db(b);
+	int mini = LONG_MAX;
+	for (int i = 0 ; i < n ; i++) {
+		int dif = ((b[i] - a[0]) + m) % m;
+		vi temp = a ;
+		for (int j = 0 ; j < n; j++) {
+			temp[j] = (temp[j] + dif) % m;
 		}
-		prev = 0;
-		for (int i = pos + 1; i < n; i++) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-
+		sort(all(temp));
+		db(temp);
+		if (temp == b ) {
+			mini = min(dif, mini);
 		}
-		totMOves = min(totMOves, sum);
 	}
-	cout << totMOves << nline;
+	cout << mini << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

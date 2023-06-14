@@ -106,60 +106,79 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
+vector<int> topoSort(int V, vector<int> adj[])
+{
+	vector<int> vis(V, 0), indegree(V, 0), topo;
+	for (int i = 0 ; i < V ; i++) {
+		for (auto it : adj[i]) {
+			indegree[it]++;
+		}
+	}
+	queue<int>  q;
+	for (int i = 0 ; i < V ; i++) {
+		if (indegree[i] == 0) {
+			q.push(i);
+		}
+	}
 
+	while (q.size() != 0) {
+		int node = q.front();
+		topo.push_back(node);
+		q.pop();
+		for (auto it : adj[node]) {
+			indegree[it]--;
+			if (indegree[it] == 0) {
+				q.push(it);
+			}
+		}
+	}
+
+	return topo;
+}
+
+string findOrder(string dict[], int N, int K) {
+	// topological sort is the algo for this prob
+	// we can iterate on the array and find the dependency
+	// s[i] to s[i+1];
+	// s[i]<s[i+1] then we push it to the adj list
+	vector<int> adj[K];
+	for (int i  = 0 ; i < N - 1; i++) {
+		string s = dict[i], s2 = dict[i + 1];
+		int x = 0;
+		int len = min(s.size(), s2.size());
+		while (x < len) {
+			if (s[x] != s2[x]) {
+				adj[s[x] - 'a'].push_back(s2[x] - 'a');
+				break;
+			}
+			x++;
+		}
+	}
+	for (int i = 0 ; i < K; i++) {
+		cout << char(i + 'a') << ": ";
+		for (auto it : adj[i]) {
+			cout << char(it + 'a') << " ";
+		}
+		cout << nline;
+
+	}
+
+	string ans = "";
+	vector<int> topo = topoSort(K, adj);
+	for (auto it : topo) {
+		ans += (it + 'a');
+	}
+	return ans ;
+
+}
 
 void solve() {
-	// int n ; cin >> n ;
-	// vector<int> arr(n), b(n);
-	// set<int> st ;
-	// for (int i = 0 ; i < n ; i++) {
-	// 	cin >> arr[i];
-	// 	st.insert(arr[i]);
-	// }
-	// int moves  = 1 ;
-	// if (n == 2) {
-	// 	cout << 1 << nline;
-	// 	return ;
-	// }
-	// b[0] = -9;
-	// int big = *st.rbegin();
-	// int i = 2;
-	// for ( ; i < n ; i ++) {
-	// 	if (st.size() == 0) break;
-	// 	moves++;
-	// 	b[i] = *st.begin();
-	// 	st.erase(st.begin());
-	// }
-	// db(i);
-	// db(b);
-
-	// cout << moves + (((n - i ) * (n - i + 1)) / 2 ) - 1 << nline;
-	// db(b);
-	// cout << moves << nline;
-
-	//brutforce tha ) : : : :
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) {
+	int n , k ; cin >> n >> k ;
+	string arr[n];
+	for (int i = 0 ; i < n ; i ++) {
 		cin >> arr[i];
 	}
-
-	int totMOves = 3123750003126250  ;
-	for (int pos = 0; pos < n; pos++) {
-		long long prev = 0, sum = 0;
-		for (int i = pos - 1; i >= 0; i--) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-		}
-		prev = 0;
-		for (int i = pos + 1; i < n; i++) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-
-		}
-		totMOves = min(totMOves, sum);
-	}
-	cout << totMOves << nline;
+	cout << findOrder(arr, n, k);
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -170,9 +189,9 @@ int32_t main() {
 	// int t ; cin >> t;
 	int t = 1;
 
-	while (t--) {
-		solve();
-	}
+	// while (t--) {
+	solve();
+	// }
 }
 /* -----------------END OF PROGRAM --------------------*/
 

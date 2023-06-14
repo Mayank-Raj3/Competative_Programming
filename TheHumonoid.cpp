@@ -109,57 +109,66 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	// int n ; cin >> n ;
-	// vector<int> arr(n), b(n);
-	// set<int> st ;
-	// for (int i = 0 ; i < n ; i++) {
-	// 	cin >> arr[i];
-	// 	st.insert(arr[i]);
-	// }
-	// int moves  = 1 ;
-	// if (n == 2) {
-	// 	cout << 1 << nline;
-	// 	return ;
-	// }
-	// b[0] = -9;
-	// int big = *st.rbegin();
-	// int i = 2;
-	// for ( ; i < n ; i ++) {
-	// 	if (st.size() == 0) break;
-	// 	moves++;
-	// 	b[i] = *st.begin();
-	// 	st.erase(st.begin());
-	// }
-	// db(i);
-	// db(b);
+	int ans = 0 , n , h;
+	cin >> n >> h ;
+	vi  arr (n);
+	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
+	sort(all(arr));
 
-	// cout << moves + (((n - i ) * (n - i + 1)) / 2 ) - 1 << nline;
-	// db(b);
-	// cout << moves << nline;
-
-	//brutforce tha ) : : : :
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) {
-		cin >> arr[i];
-	}
-
-	int totMOves = 3123750003126250  ;
-	for (int pos = 0; pos < n; pos++) {
-		long long prev = 0, sum = 0;
-		for (int i = pos - 1; i >= 0; i--) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
+	auto kill = [&](int hel , vector<int> comb) {
+		int temp = 0 , ind  = 0;
+		for (int i = 0 ; i < n;) {
+			if (hel > arr[i]) {
+				hel += (arr[i]) / 2;
+				temp++;
+			}
+			else if (hel <= arr[i]) {
+				if (ind < comb.size()) {
+					hel = hel * comb[ind++];
+					if (hel > arr[i]) {
+						hel += (arr[i]) / 2;
+						temp++;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			i++;
 		}
-		prev = 0;
-		for (int i = pos + 1; i < n; i++) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
 
-		}
-		totMOves = min(totMOves, sum);
-	}
-	cout << totMOves << nline;
+		return temp ;
+	};
+	ans = max(ans, kill( h, {2, 2, 3}));
+	ans = max(ans, kill( h, {2, 3, 2}));
+	ans = max(ans, kill( h, {3, 2, 2}));
+	ans = max(ans, kill( h, {4, 3}));
+	ans = max(ans, kill( h, {3, 4}));
+	ans = max(ans, kill( h, {2, 6}));
+	ans = max(ans, kill( h, {6, 2}));
+	ans = max(ans, kill( h, {12}));
+	cout << ans << nline;
+
+	/*
+	ALT ANS
+
+		vector<ll> x = {2, 2, 3};
+
+		ll ans = 0;
+		do {
+			ll v = k;
+			ll p = 0, pt = 0;
+			for (ll i = 0; i < n; i++) {
+				while (pt < 3 && v <= a[i]) v *= x[pt++];
+				if (v > a[i]) {
+					++p;
+					v += a[i] / 2;
+				} else break;
+			}
+			ans = max(ans, p);
+		} while (next_permutation(x.begin(), x.end()));
+		cout << ans << '\n';
+	*/
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -167,8 +176,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();

@@ -110,7 +110,6 @@ void _print(map <T, V> v) {
 
 void solve() {
 	int n ; cin >> n ;
-	// vector<int> arr(n, 0);
 	if (n == 1) {
 		cout << 9 << nline;
 	} else if (n == 2) {

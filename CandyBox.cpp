@@ -109,57 +109,43 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	// int n ; cin >> n ;
-	// vector<int> arr(n), b(n);
-	// set<int> st ;
-	// for (int i = 0 ; i < n ; i++) {
-	// 	cin >> arr[i];
-	// 	st.insert(arr[i]);
-	// }
-	// int moves  = 1 ;
-	// if (n == 2) {
-	// 	cout << 1 << nline;
-	// 	return ;
-	// }
-	// b[0] = -9;
-	// int big = *st.rbegin();
-	// int i = 2;
-	// for ( ; i < n ; i ++) {
-	// 	if (st.size() == 0) break;
-	// 	moves++;
-	// 	b[i] = *st.begin();
-	// 	st.erase(st.begin());
-	// }
-	// db(i);
-	// db(b);
-
-	// cout << moves + (((n - i ) * (n - i + 1)) / 2 ) - 1 << nline;
-	// db(b);
-	// cout << moves << nline;
-
-	//brutforce tha ) : : : :
 	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) {
-		cin >> arr[i];
+	map<int, int> mpp;
+	for (int i = 0 ; i < n; i ++) {
+		int x ; cin >> x ;
+		mpp[x]++;
 	}
-
-	int totMOves = 3123750003126250  ;
-	for (int pos = 0; pos < n; pos++) {
-		long long prev = 0, sum = 0;
-		for (int i = pos - 1; i >= 0; i--) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-		}
-		prev = 0;
-		for (int i = pos + 1; i < n; i++) {
-			prev += arr[i] - prev % arr[i];
-			sum += prev / arr[i];
-
-		}
-		totMOves = min(totMOves, sum);
+	vi temp;
+	vector<int> arr ;
+	set<int> st;
+	for (auto it :  mpp) {
+		temp.pb(it.ss);
 	}
-	cout << totMOves << nline;
+	int ans = 0 ;
+	sort(all(temp));
+	reverse(all(temp));
+	db(temp);
+	for (auto it : temp) {
+		if (arr.size() == 0) {
+			arr.pb(it);
+		} else {
+			if (it >= arr.back())
+				arr.pb(max(0LL, (arr.back() - 1)));
+			else {
+				arr.pb(it);
+
+			}
+		}
+	}
+	db(arr);
+	for (auto it : arr) {
+		st.insert(it);
+	}
+	for (auto it : st) {
+		ans += it;
+	}
+	cout << ans << nline;
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -167,8 +153,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
