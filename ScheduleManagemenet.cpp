@@ -109,8 +109,48 @@ void _print(map <T, V> v) {
 
 
 void solve() {
+	int n , m ; cin >> n >> m ;
+	vector<int> arr(m);
+	map<int, int> mpp;
+	for (int i = 0; i < m; i++) {
+		cin >> arr[i];
+	}
+	for (int i = 1 ; i <= n ; i++) {
+		mpp[i] = 0;
+	}
+	for (auto it : arr) {
+		mpp[it]++;
+	}
 
+	auto check = [&](int hrs) {
+		/*
+			phle apne kam karlenge bande aur agr time jada bach rha tho
+			vo time vo dusro ko de skte
 
+		*/
+		int twohrs_work = 0, left = 0;
+		for (int i = 1  ; i <= n; i++) {
+			if (mpp[i] < hrs ) {
+				twohrs_work += (hrs - mpp[i]) / 2;
+			} else {
+				left += (mpp[i] - hrs);
+			}
+		}
+		return  (twohrs_work >= left);
+	};
+
+	int lo = 1 , hi = 2 * m, ans = 0;
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		if (check(mid)) {
+			ans = mid ;
+			hi = mid - 1 ;
+		} else {
+			lo  = mid + 1;
+		}
+	}
+
+	cout << ans << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

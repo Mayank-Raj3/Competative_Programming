@@ -1,10 +1,10 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-#define int 						  long long
-#define ld 							  long double
-#define nline						  "\n"
-#define ff 							  first
+#define int                           long long
+#define ld                               long double
+#define nline                          "\n"
+#define ff                               first
 #define ss                            second
 #define pb                            push_back
 #define int                           long long
@@ -12,7 +12,7 @@ using namespace std;
 #define rfl(i,n, k)                   for (int i = n; i >= k; i--)
 #define fel(a,x)                      for (auto& a : x)
 #define mp                            make_pair
-#define ppb 						  pop_back
+#define ppb                           pop_back
 #define ps(x, y)                      fixed << setprecision(y) << x
 #define setbit(x)                     __builtin_popcount(x);
 #define all(var)                      var.begin(), var.end()
@@ -30,16 +30,16 @@ using namespace std;
 #define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
 // Builtin data types
-typedef pair<int, int> 	              pii     ;
+typedef pair<int, int>                   pii     ;
 typedef vector<int>                   vi      ;
 typedef vector<string>                vs      ;
-typedef vector<pii> 				  vpi     ;
+typedef vector<pii>                   vpi     ;
 typedef vector <pair<int , int> >     vpi     ;
 typedef vector<bool>                  vb      ;
 typedef vector<vector<int>>           vvi     ;
-typedef map<int, int> 				  mpii    ;
-typedef set<int>   					  seti    ;
-typedef multiset<int> 				  mseti	  ;
+typedef map<int, int>                   mpii    ;
+typedef set<int>                         seti    ;
+typedef multiset<int>                   mseti      ;
 typedef unordered_set<int>            useti   ;
 typedef unordered_map<int, int>       umapii  ;
 typedef unsigned long long            ull     ;
@@ -67,95 +67,82 @@ template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
 template <class T, class V>
 void _print(pair <T, V> p) {
-	cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";
+    cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";
 }
 template <class T>
 void _print(vector <T> v) {
-	cerr << "[ ";
-	for (T i : v) {
-		_print(i);
-		cerr << " ";
-	}
-	cerr << "]";
+    cerr << "[ ";
+    for (T i : v) {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
 }
 template <class T>
 void _print(set <T> v) {
-	cerr << "[ ";
-	for (T i : v) {
-		_print(i);
-		cerr << " ";
-	}
-	cerr << "]";
+    cerr << "[ ";
+    for (T i : v) {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
 }
 template <class T>
 void _print(multiset <T> v) {
-	cerr << "[ ";
-	for (T i : v) {
-		_print(i);
-		cerr << " ";
-	}
-	cerr << "]";
+    cerr << "[ ";
+    for (T i : v) {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
 }
 template <class T, class V>
 void _print(map <T, V> v) {
-	cerr << "[ ";
-	for (auto i : v) {
-		_print(i);
-		cerr << " ";
-	}
-	cerr << "]";
+    cerr << "[ ";
+    for (auto i : v) {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
+int countOccurrences(const string& input, const string& word) {
+    int pos = 0;
+    int count = 0;
 
+    while ((pos = input.find(word, pos)) != string::npos) {
+        count++;
+        pos += word.length();
+    }
 
+    return count;
+}
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i++) cin >> arr[i];
-	db(arr);
+    string s; cin >> s;
+    int cnt = 0;
+    vector<string> arr = { "Danil", "Olya", "Slava", "Ann" , "Nikita"};
+    for (auto it : arr)
+        cnt += countOccurrences(s, it);
 
-	auto offset = [&](int start , int end ) {
-		int maxi = max_element(arr.begin() , arr.begin() + end + 1) - arr.begin();
-		rotate(arr.begin(), arr.begin() + maxi + 1 , arr.begin() + end + 1);
-		return maxi ;
-	};
-	vector<int> temp = arr;
-	stable_sort(all(temp));
-	vector<vector<int>> ans;
-	for (int i = n - 1 ; i >= 0 ;  i--) {
-		if (temp[i] != arr[i]) {
-			int d = offset(0, i);
-			if (1 != i + 1)
-				ans.pb({ 1, i + 1, d + 1});
-		}
-
-	}
-	cout << ans.size() << nline;
-	for (auto it : ans) {
-		for (auto i : it) {
-			cout << i << " ";
-		}
-		cout << nline;
-	}
-
-	db(arr);
-	db(nline);
-
-
-
+    db(cnt);
+    if (cnt == 1) {
+        YES
+    } else {
+        NO
+    }
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
-	freopen("Error.txt", "w", stderr);
+    freopen("Error.txt", "w", stderr);
 #endif
-	jay_shri_ram;
+    jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+    // int t ; cin >> t;
+    int t = 1;
 
-	while (t--) {
-		solve();
-	}
+    while (t--) {
+        solve();
+    }
 }
 /* -----------------END OF PROGRAM --------------------*/
 

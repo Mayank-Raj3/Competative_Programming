@@ -106,24 +106,32 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
+int reverse(int x) {
+	string str = to_string(x);
+	reverse(str.begin(), str.end());
+	return stoi(str);
+}
 
 void solve() {
-	int n ; cin >> n ;
-	if (n == 1) {
-		cout << 9 << nline;
-	} else if (n == 2) {
-		cout << 98 << nline;
-	}
-	else {
-		cout << 989;
-		int x = 0;
-		for (int i = 3 ; i < n; i++) {
-			cout << abs(x % 10);
-			x--;
+	int n , m ; cin >> n >> m ;
+	set<string> st ;
+	string p , ans ;
+	for (int i = 0 ; i < n ; i++) {
+		string s ; cin >> s;
+		st.insert(s);
+		string  r = s ;
+		reverse(all(r));
+		if (s == r) {
+			p = s;
+		} else if (st.count(r)) {
+			ans += s;
 		}
-		cout << nline;
 	}
+	auto temo = ans;
+	reverse(all(temo));
+	ans += p + temo;
+	cout << ans.length() << nline;
+	cout << ans << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -131,8 +139,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();
