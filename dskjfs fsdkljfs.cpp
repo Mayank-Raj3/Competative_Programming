@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -109,56 +110,7 @@ void _print(map <T, V> v) {
 
 void solve() {
 	int n ; cin >> n ;
-	map<int , int> mpp1, mpp2;
-	vi arr(n), brr(n);
-	for (int i = 0 ; i < n; i ++) {
-		cin >> arr[i];
-		mpp1[arr[i]] = 1;
-	}
-	for (int i = 0 ; i < n; i ++) {
-		cin >> brr[i];
-		mpp2[brr[i]] = 1;
-	}
-	int i = 0 ;
-	while (i < n - 1) {
-		int cnt = 1 ;
-		while (i < n - 1 && arr[i] == arr[i + 1]) {
-			cnt++;
-			i++;
-		}
-		if (cnt > mpp1[arr[i]] )
-			mpp1[arr[i]] = cnt;
-		i++;
-	}
-	i = 0 ;
-	while (i < n - 1) {
-		int cnt = 1 ;
-		while (i < n - 1 && brr[i] == brr[i + 1]) {
-			cnt++;
-			i++;
-		}
-		if (cnt > mpp2[brr[i]] )
-			mpp2[brr[i]] = cnt;
-		i++;
-	}
-
-
-	int res = 1 ;
-	for (auto it  : mpp1) {
-		auto fd = mpp2.find(it.ff) ;
-		if (fd != mpp2.end()) {
-			res = max(res, (fd->ss + it.ss));
-		}
-	}
-	db(mpp1);
-	db(mpp2);
-	for (auto it : mpp1) {
-		res = max(res, (it.ss));
-	}
-	for (auto it : mpp2) {
-		res = max(res, (it.ss));
-	}
-	cout << res << nline;
+	cout << n << nline;
 
 }
 int32_t main() {
@@ -168,11 +120,12 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	// int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();
 	}
 }
 /* -----------------END OF PROGRAM --------------------*/
+
 
