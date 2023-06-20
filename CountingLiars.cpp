@@ -105,57 +105,48 @@ void _print(map <T, V> v) {
 	}
 	cerr << "]";
 }
-//-------------------------------Think&Code----------------------------------*/
 
 
 void solve() {
 	int n ; cin >> n ;
-	vi arr(n);
-	int sum = 0LL ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] < 0)
-			sum += (-arr[i] * 1LL)
-			       ;
-		else {
-			sum += (arr[i] * 1LL);
-		}
-	}
-	int cnt = 0LL , i = 0;
-	int ind = -1 ;
+	vector<pair<char, int>> arr(n);
+	for (int i = 0 ; i < n; i ++) cin >> arr[i].ff >> arr[i].ss;
+	int ans = n ;
 	for (int i = 0 ; i < n ; i ++) {
-		if (arr[i] < 0) {
-			ind = i;
-		}
-	}
-	while (i < n) {
-		bool f = false;
-		if (arr[i] < 0) {
-			cnt++;
-			int j = i ;
-			while (j <= ind && arr[j] <= 0) {
-				f = true;
-				j++;
+		char ch = arr[i].ff;
+		int num = arr[i].ss ;
+		int liar = 0;
+		if (ch == 'L') {
+			for (int j = 0 ; j < n ; j++) {
+
+				if (arr[j].ss > num) {
+					liar++;
+				}
 			}
-			i = j - 1;
+		} else {
+			for (int j = 0 ; j < n ; j++) {
+				if (arr[j].ss < num) {
+					liar++;
+				}
+			}
 		}
-		i++;
+		ans = min(ans, liar);
 	}
-	cout << sum << " " << cnt << nline;
+	cout << ans << nline;
 
 }
+
+
+
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	solve();
 
-	while (t--) {
-		solve();
-	}
 }
 /* -----------------END OF PROGRAM --------------------*/
 

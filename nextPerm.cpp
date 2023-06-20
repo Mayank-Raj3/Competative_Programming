@@ -110,39 +110,14 @@ void _print(map <T, V> v) {
 
 void solve() {
 	int n ; cin >> n ;
-	vi arr(n);
-	int sum = 0LL ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] < 0)
-			sum += (-arr[i] * 1LL)
-			       ;
-		else {
-			sum += (arr[i] * 1LL);
-		}
+	vector<int> arr(n);
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	vector<vector<int>> ans;
+	do {
+		ans.pb(arr);
 	}
-	int cnt = 0LL , i = 0;
-	int ind = -1 ;
-	for (int i = 0 ; i < n ; i ++) {
-		if (arr[i] < 0) {
-			ind = i;
-		}
-	}
-	while (i < n) {
-		bool f = false;
-		if (arr[i] < 0) {
-			cnt++;
-			int j = i ;
-			while (j <= ind && arr[j] <= 0) {
-				f = true;
-				j++;
-			}
-			i = j - 1;
-		}
-		i++;
-	}
-	cout << sum << " " << cnt << nline;
-
+	while (next_permutation(all(arr))) ;
+	db(ans);
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -150,8 +125,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

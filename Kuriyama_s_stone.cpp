@@ -109,40 +109,39 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vi arr(n);
-	int sum = 0LL ;
+	int n; cin >>  n ;
+	vector<int> arr(n), pref(n), prefs(n);
 	for (int i = 0 ; i < n ; i++) {
 		cin >> arr[i];
-		if (arr[i] < 0)
-			sum += (-arr[i] * 1LL)
-			       ;
-		else {
-			sum += (arr[i] * 1LL);
+		pref[i] = arr[i];
+		if (i) {
+			pref[i] = pref[i] + pref[i - 1];
 		}
 	}
-	int cnt = 0LL , i = 0;
-	int ind = -1 ;
-	for (int i = 0 ; i < n ; i ++) {
-		if (arr[i] < 0) {
-			ind = i;
+	sort(all(arr));
+	for (int i = 0 ; i < n ; i++) {
+		prefs[i] = arr[i];
+		if (i) {
+			prefs[i] = prefs[i] + prefs[i - 1];
 		}
 	}
-	while (i < n) {
-		bool f = false;
-		if (arr[i] < 0) {
-			cnt++;
-			int j = i ;
-			while (j <= ind && arr[j] <= 0) {
-				f = true;
-				j++;
-			}
-			i = j - 1;
+	int  q ; cin >> q ;
+	while (q--) {
+		int t , l , r ; cin >> t >> l >> r ;
+		if (t == 1) {
+			r--, l--;
+			if (l - 1 >= 0)
+				cout << pref[r] - pref[l - 1] << nline;
+			else
+				cout << pref[r] << nline;
+		} else {
+			r--, l--;
+			if (l - 1 >= 0)
+				cout << prefs[r] - prefs[l - 1] << nline;
+			else
+				cout << prefs[r] << nline;
 		}
-		i++;
 	}
-	cout << sum << " " << cnt << nline;
-
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -150,8 +149,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

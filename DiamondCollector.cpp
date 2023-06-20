@@ -105,57 +105,39 @@ void _print(map <T, V> v) {
 	}
 	cerr << "]";
 }
-//-------------------------------Think&Code----------------------------------*/
 
 
 void solve() {
-	int n ; cin >> n ;
+	freopen("diamond.in", "r", stdin);
+	int n , k ; cin >> n >>  k ;
+	int maxi = 0 ;
 	vi arr(n);
-	int sum = 0LL ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] < 0)
-			sum += (-arr[i] * 1LL)
-			       ;
-		else {
-			sum += (arr[i] * 1LL);
-		}
-	}
-	int cnt = 0LL , i = 0;
-	int ind = -1 ;
-	for (int i = 0 ; i < n ; i ++) {
-		if (arr[i] < 0) {
-			ind = i;
-		}
-	}
-	while (i < n) {
-		bool f = false;
-		if (arr[i] < 0) {
-			cnt++;
-			int j = i ;
-			while (j <= ind && arr[j] <= 0) {
-				f = true;
-				j++;
+	for (int i = 0 ; i < n; i++) cin >> arr[i];
+	vi ans ;
+	for (int i = 0 ; i < n; i ++) {
+		int cnt  = 0 ;
+		for (int j =  0 ; j < n; j ++) {
+			if (arr[j] >= arr[i] && arr[j] <= arr[i] + k) {
+				cnt++;
 			}
-			i = j - 1;
 		}
-		i++;
+		maxi = max(maxi, cnt);
 	}
-	cout << sum << " " << cnt << nline;
-
+	freopen("diamond.out", "w", stdout);
+	cout << maxi << endl;
 }
+
+
+
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	solve();
 
-	while (t--) {
-		solve();
-	}
 }
 /* -----------------END OF PROGRAM --------------------*/
 

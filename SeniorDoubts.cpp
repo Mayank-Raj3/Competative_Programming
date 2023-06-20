@@ -109,49 +109,50 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vi arr(n);
-	int sum = 0LL ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] < 0)
-			sum += (-arr[i] * 1LL)
-			       ;
-		else {
-			sum += (arr[i] * 1LL);
-		}
-	}
-	int cnt = 0LL , i = 0;
-	int ind = -1 ;
-	for (int i = 0 ; i < n ; i ++) {
-		if (arr[i] < 0) {
-			ind = i;
-		}
-	}
-	while (i < n) {
-		bool f = false;
-		if (arr[i] < 0) {
-			cnt++;
-			int j = i ;
-			while (j <= ind && arr[j] <= 0) {
-				f = true;
-				j++;
-			}
-			i = j - 1;
-		}
-		i++;
-	}
-	cout << sum << " " << cnt << nline;
+	// int n ; cin >> n ;
+	// string s; cin >> s ;
+	// char ans = s[0];
+	// for (int i = 0 ; i < n ; i ++) {
+	// 	ans = ans^'M'^'F';
+	// 	if (ans == s[i]) {
+	// 		No
+	// 		return ;
+	// 	}
+	// }
+	// Yes
 
-}
+
+	// int n ; cin >> n ;
+	// cout << ((n / 500) * 1000 ) + (5 * ((n % 500) / 5)) << nline;
+
+
+	int m, n; cin >> n >> m;
+	vector<int> arr(n);
+	for (int i = 0; i < n; i++) cin >> arr[i];
+	int sum = accumulate(all(arr), 0LL), cnt = 0;
+	for (int i = 0; i < n; i++)
+		if (arr[i] * 4 * m >= sum)
+			cnt++;
+
+	if (cnt >= m)
+		Yes
+			else
+				No
+				/*
+				or we can sort the array and just check weather m-1 satisfies the
+				condition or not
+				*/
+
+
+			}
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

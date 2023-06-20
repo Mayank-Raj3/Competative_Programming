@@ -109,33 +109,27 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , x ; cin >> n >> x ;
-	vector<int> arr(n), odd , even ;
-	for (int i = 0 ; i < n ; i ++) {
-		cin >> arr[i] ;
-		if (arr[i] % 2) {
-			odd.pb(arr[i]);
+	int n, x; cin >> n >> x;
+	int odd(0), even(0) ;
+	for (int i = 0; i < n; ++i) {
+		int in; cin >> in;
+		if (in & 1) {
+			odd++;
 		} else {
-			even.pb(arr[i]);
+			even++;
 		}
 	}
-
-	if (x % 2) {
-		if (odd.size() >= x) {
-			YES
-			return ;
-		}
-		else {
-			int s = odd.size();
-			if (s % 2 == 0) {
-				s--;
-			}
-
-			if (even.size())
-
-			}
+	if (x == n) {
+		// odd agr odd occrance me hua
+		// even se frk nhi padega
+		//  odd&1 = 1 then odd  , else even
+		cout << (odd & 1 ? "Yes" : "No") << nline;
+	} else if (!odd || (!even && !(x & 1))) {
+		//odd 0 ya fir (odd 0 && x even )
+		No
+	} else {
+		Yes
 	}
-
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -144,7 +138,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	//int t=1;
+	// int t = 1;
 
 	while (t--) {
 		solve();
