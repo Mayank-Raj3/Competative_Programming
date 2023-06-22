@@ -109,27 +109,19 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int x ; cin >> x ;
-	// 500 - 1000 hap , 5 - 5 ;
-	// x=1024/500 =: 4bar
-	//
-	int hap  = (x / 500) * 1000;
-	int remaning_money = (x % 500) ;
-	hap += (remaning_money / 5) * 5;
-	cout << hap << nline;
-
-
-
-
-
-
-
-
-
-
-
-
-
+	int n ; cin >> n ;
+	vector<pair<int, int>> arr(n);
+	for (int i = 0 ; i < n; i ++) cin >> arr[i].ff >> arr[i].ss;
+	sort(all(arr));
+	int ans = - 1 ;
+	for (int i = 0 ; i < n ; i ++) {
+		if (ans <= arr[i].ss ) {
+			ans = arr[i].ss;
+		} else {
+			ans = arr[i].ff;
+		}
+	}
+	cout << ans << nline;
 
 }
 int32_t main() {
@@ -138,8 +130,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

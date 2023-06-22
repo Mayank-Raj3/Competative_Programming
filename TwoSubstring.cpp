@@ -109,26 +109,55 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int x ; cin >> x ;
-	// 500 - 1000 hap , 5 - 5 ;
-	// x=1024/500 =: 4bar
-	//
-	int hap  = (x / 500) * 1000;
-	int remaning_money = (x % 500) ;
-	hap += (remaning_money / 5) * 5;
-	cout << hap << nline;
+	string s; cin >> s ;
+	int n = s.size();
+	if (n <= 3) {
+		NO
+		return ;
+	}
+
+	// auto found = s.find("BAB");
+	// auto found2 = s.find("ABA");
+	// if (found != string::npos || found2 != string::npos ) {
+	// 	NO
+	// 	return ;
+	// }
+	multiset<int> ab, ba, temp;
+	for (int i = 0 ; i < n - 1 ; i++) {
+		if (s[i] == 'A' && s[i + 1] == 'B' ) {
+			ab.insert(i + 1);
+		}
+		if (s[i] == 'B' && s[i + 1] == 'A') {
+			ba.insert(i + 1);
+			temp.insert(i + 1);
+		}
+	}
+
+	if (ab.size() == 0 ||  ba.size() == 0) {
+		NO
+		return ;
+	}
+
+	while (ba.size() != 0) {
+		auto it = ab.upper_bound(*ba.begin() + 1);
+		if (it != ab.end() && abs(*ba.begin() - *it) > 1) {
+			YES
+			return ;
+		}
+		ba.erase(ba.begin());
+	}
+
+	while (ab.size() != 0) {
+		auto it = temp.upper_bound(*ab.begin() + 1);
+		if (it != temp.end() && abs(*ab.begin() - *it) > 1) {
+			YES
+			return ;
+		}
+		ab.erase(ab.begin());
+	}
 
 
-
-
-
-
-
-
-
-
-
-
+	NO
 
 
 }
@@ -138,8 +167,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

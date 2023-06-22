@@ -7,7 +7,6 @@ void printF(int ind , char arr[], int n , vector<char> &ds) {
 		}
 		if (ds.size() == 0) {
 			cout << "{}" ;
-
 		}
 		cout << endl;
 		return ;

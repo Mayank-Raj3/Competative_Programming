@@ -106,30 +106,50 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
-
+set<int> st;
 void solve() {
-	int x ; cin >> x ;
-	// 500 - 1000 hap , 5 - 5 ;
-	// x=1024/500 =: 4bar
-	//
-	int hap  = (x / 500) * 1000;
-	int remaning_money = (x % 500) ;
-	hap += (remaning_money / 5) * 5;
-	cout << hap << nline;
+	db(st);
+	string s; cin >> s;
+	int n = s.size();
 
+	auto found = s.find("8");
+	auto found2 = s.find("0");
+	if (found != string::npos   ) {
+		YES
+		cout << 8 << nline;
+		return ;
+	}
+	if (found2 != string::npos   ) {
+		YES
+		cout << 0 << nline;
+		return ;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
+	for (int i = 0 ; i < n ; i++) {
+		for (int j = i + 1 ; j < n ; j++) {
+			string m = "";
+			m += s[i];
+			m += s[j];
+			if (stoi(m) % 8 == 0) {
+				YES
+				cout << m << nline;
+				return ;
+			}
+			for (int k = j + 1 ; k < n ; k++) {
+				string t1 = "";
+				t1 += s[i];
+				t1 += s[j];
+				t1 += s[k];
+				if (stoi(t1) % 8 == 0) {
+					YES
+					cout << t1 << nline;
+					return ;
+				}
+			}
+		}
+	}
+	NO
+	return ;
 
 }
 int32_t main() {
@@ -137,9 +157,11 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-
-	int t ; cin >> t;
-	//int t=1;
+	for (int i = 0 ; i <= 100 ; i += 8) {
+		st.insert(i);
+	}
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();
