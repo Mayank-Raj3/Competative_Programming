@@ -1,58 +1,153 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define ib ios_base::sync_with_stdio(false)
-#define ct cin.tie(NULL)
-#define inf INT_MAX
+#include<bits/stdc++.h>
 using namespace std;
+#define int 						  long long
+#define ld 							  long double
+#define nline						  "\n"
+#define ff 							  first
+#define ss                            second
+#define pb                            push_back
+#define int                           long long
+#define fl(i,k,n)                     for (int i = k; i < n; i++)
+#define rfl(i,n, k)                   for (int i = n; i >= k; i--)
+#define fel(a,x)                      for (auto& a : x)
+#define mp                            make_pair
+#define ppb 						  pop_back
+#define ps(x, y)                      fixed << setprecision(y) << x
+#define setbit(x)                     __builtin_popcount(x);
+#define all(var)                      var.begin(), var.end()
+#define desc                          greater<int>()
+#define spc                           <<" "<<
+#define YES                           cout << "YES\n";
+#define NO                            cout << "NO\n";
+#define Yes                           cout << "Yes\n";
+#define No                            cout << "No\n";
+#define minus1                        cout << "-1\n";
+#define one                           cout << "1\n";
+#define gcd(a, b)                     __gcd(a, b)
+#define PI                            3.141592653589793238462
+#define sz(x) (                       (int)(x).size())
+#define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-/*
+// Builtin data types
+typedef pair<int, int> 	              pii     ;
+typedef vector<int>                   vi      ;
+typedef vector<string>                vs      ;
+typedef vector<pii> 				  vpi     ;
+typedef vector <pair<int , int> >     vpi     ;
+typedef vector<bool>                  vb      ;
+typedef vector<vector<int>>           vvi     ;
+typedef map<int, int> 				  mpii    ;
+typedef set<int>   					  seti    ;
+typedef multiset<int> 				  mseti	  ;
+typedef unordered_set<int>            useti   ;
+typedef unordered_map<int, int>       umapii  ;
+typedef unsigned long long            ull     ;
+//constants
+const int MAX_N = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 1e9;
+const int EPS = 1e-9;
 
-1. Think Greedy
-2. Think Brute Force
-3. Think solution in reverse order
-4. Think DP [ check constraints carefully ]
-5. Check base cases for DP and prove solution for Greedy
-6. Think Graph
+//debugger
+#ifndef ONLINE_JUDGE
+#define db(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define db(x)
+#endif
+void _print(int t) {cerr << t;}
+void _print(string t) {cerr << t;}
+void _print(char t) {cerr << t;}
+void _print(ld t) {cerr << t;}
+void _print(double t) {cerr << t;}
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V>
+void _print(pair <T, V> p) {
+	cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";
+}
+template <class T>
+void _print(vector <T> v) {
+	cerr << "[ ";
+	for (T i : v) {
+		_print(i);
+		cerr << " ";
+	}
+	cerr << "]";
+}
+template <class T>
+void _print(set <T> v) {
+	cerr << "[ ";
+	for (T i : v) {
+		_print(i);
+		cerr << " ";
+	}
+	cerr << "]";
+}
+template <class T>
+void _print(multiset <T> v) {
+	cerr << "[ ";
+	for (T i : v) {
+		_print(i);
+		cerr << " ";
+	}
+	cerr << "]";
+}
+template <class T, class V>
+void _print(map <T, V> v) {
+	cerr << "[ ";
+	for (auto i : v) {
+		_print(i);
+		cerr << " ";
+	}
+	cerr << "]";
+}
+//-------------------------------Think&Code----------------------------------*/
 
-*/
-#define int long long
 
 void solve() {
-	int n, q;
-	cin >> n >> q;
-	int arr[n];
-	for (int i = 0 ; i < n;  i++) {
-		cin >> arr[i];
+	int n , k , q ; cin >> n >> k >> q ;
+	vi diff(200, 0);
+	vi arr;
+	for (int i = 0 ; i < n ; i++) {
+		int l , r ; cin >> l >> r ;
+		diff[l] += 1;
+		diff[r + 1] -= 1; // diffrence array
 	}
-	int diff[n + 1] {};
-	sort(arr, arr + n);
+	for (int i = 1 ; i < 200 ; i++)
+		diff[i] += diff[i - 1]; // prefix sum
 
-	for (int i = 0 ; i < q ; i ++) {
-		int l , r;
-		cin >> l >> r;
-		diff[l] ++;
-		if (r != n) diff[r + 1] --;
+	db(diff);
+	for (int i = 0 ; i < 200 ; i++) {
+		if (diff[i] >= k) { // checking if greater than k
+			arr.pb(i);
+		}
 	}
-	for (int i = 1 ; i <= n ; i ++) diff[i] += diff[i - 1];
+	db(arr);
 
-	sort(diff, diff + n + 1);
-	int ind = n;
-	ll total = 0LL;
-	while (ind > 0) {
-		total += (arr[ind - 1] * diff[ind]);
-		ind --;
+	while (q--) {
+		int l1, r1; cin >> l1 >> r1;
+		auto it1 = lower_bound(all(arr), l1) - arr.begin();
+		auto it2 = upper_bound(all(arr), r1) - arr.begin();
+		cout << (it2 - it1) << nline << nline;
 	}
-	cout << total << "\n";
 }
+
 
 int32_t main() {
-	// your code goes here
-	ib;
-	ct;
-// 	int t;
-// 	cin >> t;
-// 	while (t -- > 0) {
-	solve();
-// 	}
-	return 0;
+#ifndef ONLINE_JUDGE
+	freopen("Error.txt", "w", stderr);
+#endif
+	jay_shri_ram;
+
+	// int t ; cin >> t;
+	int t = 1;
+
+	while (t--) {
+		solve();
+	}
 }
+/* -----------------END OF PROGRAM --------------------*/
+

@@ -1,62 +1,42 @@
-//      .....All...copyright....Mynk28nov.........;
 #include<bits/stdc++.h>
 using namespace std;
-#define  ll long long
-#define ld long double
-#define nline "\n"
 
-const int MAX_N = 1e5 + 5;
-const ll MOD = 1e9 + 7;
-const ll INF = 1e9;
-const ld EPS = 1e-9;
+typedef long long ll;
 
-void solve() {
-    ll n , q ; cin >> n >> q;
-    ll arr[n];
-    ll even = 0  , odd = 0 ;
-    ll sum = 0;
-    for (ll i = 0 ; i < n ; i ++) {
-        cin >> arr[i];
-        if (arr[i] % 2 == 0) even++;
-        else odd++;
-        sum += arr[i];
-    }
+void SOLVE() {
+	// ll n , k , q , t ;
+	// cin >> n >> k >> q;
+	// t = n;
+	// int a[200002] = {0LL};
+	// long pre[200002];
 
-    while (q--) {
-        int a, b;
-        cin >> a >> b;
-        if (a == 0) {
-            sum += (b * even);
-            if (b % 2 != 0) {
-                odd += even;
-                even = 0;
-            }
+	// int li, ri = 0;
 
-        } else {
-            sum += (b * odd);
-            if (b % 2 != 0) {
-                even += odd;
-                odd = 0;
-            }
-        }
-        cout << sum  << '\n';
-    }
+	// while (t--) {
+	// 	cin >> li >> ri;
+	// 	a[li] += 1;
+	// 	if (ri != 200001) {
+	// 		a[ri + 1] -= 1;
+	// 	}
+	// }
 
+	// for (int i = 1; i <= 200001; i++) {
+	// 	a[i] = a[i] + a[i - 1];
+	// }
 
-
-
-
-
-
+	// for (int j = 0; j <= 200001; j++) {
+	// 	pre[j] = pre[j - 1] + (a[j] >= k ? 1 : 0);
+	// }
+	// cout << pre[-1];
+	// while (q--) {
+	// 	cin >> li >> ri;
+	// 	cout << pre[ri] - pre[li - 1] << endl;
+	// }
+	vector<int> arr(2);
+	cout << arr[-1];
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-
-    int t ; cin >> t;
-
-    while (t--) {
-        solve();
-    }
+	SOLVE();
+	return 0;
 }

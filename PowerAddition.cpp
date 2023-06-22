@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -108,40 +109,38 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , k , q ; cin >> n >> k >> q ;
-	vi diff(200003, 0);
-	vi arr;
-	for (int i = 0 ; i < n ; i++) {
-		int l , r ; cin >> l >> r ;
-		diff[l] += 1;
-		diff[r + 1] -= 1; // diffrence array
+	int n ; cin >> n ;
+	vector<int> arr(n);
+	for (int i = 0 ; i < n ; i ++) {
+		cin >> arr[i];
 	}
-	for (int i = 1 ; i < 200003 ; i++)
-		diff[i] += diff[i - 1]; // prefix sum
-
-	for (int i = 0 ; i < 200003 ; i++) {
-		if (diff[i] >= k) { // checking if greater than k
-			arr.pb(i);
+	db(arr);
+	set<int> st ;
+	int t = 0 ;
+	for (int i = 1 ; i < n ; i++) {
+		if (arr[i] < arr[i - 1]) {
+			int diff = arr[i - 1] - arr[i];
+			for (int j = 0 ; j < 33 ; j++) {
+				int temp = 1LL << j;
+				if (temp > diff) {
+					t = max(t, j);
+					arr[i] += diff;
+					break;
+				}
+			}
 		}
 	}
+	cout << t << nline;
 
-	while (q--) {
-		int l1, r1; cin >> l1 >> r1;
-		auto it1 = lower_bound(all(arr), l1) - arr.begin();
-		auto it2 = upper_bound(all(arr), r1) - arr.begin();
-		cout << it2 - it1 << nline;
-	}
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
@@ -149,4 +148,4 @@ int32_t main() {
 }
 /* -----------------END OF PROGRAM --------------------*/
 
- 
+
