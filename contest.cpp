@@ -109,39 +109,41 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vi arr(n);
-	int sum = 0LL ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] < 0)
-			sum += (-arr[i] * 1LL)
-			       ;
-		else {
-			sum += (arr[i] * 1LL);
-		}
+
+	int n, k, q;
+	cin >> n >> k >> q;
+
+	vector<pair<int, int>> v(n);
+	for (int i = 0; i < n; i++)
+	{
+		cin >> v[i].first >> v[i].second;
 	}
-	int cnt = 0LL , i = 0;
-	int ind = -1 ;
-	for (int i = 0 ; i < n ; i ++) {
-		if (arr[i] < 0) {
-			ind = i;
-		}
+
+	vector<long long> pref(200002);
+	for (int i = 0; i < n; i++)
+	{
+		pref[v[i].first]++;
+		pref[v[i].second + 1]--;
 	}
-	while (i < n) {
-		bool f = false;
-		if (arr[i] < 0) {
-			cnt++;
-			int j = i ;
-			while (j <= ind && arr[j] <= 0) {
-				f = true;
-				j++;
-			}
-			i = j - 1;
-		}
-		i++;
+
+	for (int i = 1; i <= 200002; i++)
+		pref[i] += pref[i - 1];
+
+	vector<int> t(200002);
+	for (int i = 0; i <= 200002; i++)
+		t[i] = pref[i] >= k;
+
+	for (int i = 1; i <= 200002; i++)
+		t[i] += t[i - 1];
+
+	while (q--)
+	{
+		int l, r;
+		cin >> l >> r;
+
+		cout << t[r] - t[l - 1] << endl;
 	}
-	cout << sum << " " << cnt << nline;
+
 
 }
 int32_t main() {
@@ -150,8 +152,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

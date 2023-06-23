@@ -107,23 +107,32 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-// Print a single line contains "IS DIGIT" if X is digit
-// otherwise, print "ALPHA" in the first line followed by a
-// new line that contains "IS CAPITAL" if X is a capital letter
-// and "IS SMALL" if X is a small letter.
+
 void solve() {
-	char ch ;
-	cin >> ch ;
-	if (isalpha(ch)  && isupper(ch)) {
-		cout << "ALPHA" << endl;
-		cout << "IS CAPITAL" << endl;
-	} else if (isalpha(ch)  && islower(ch)) {
-		cout << "ALPHA" << endl;
-		cout << "IS SMALL" << endl;
+	int n ; cin >> n ;
+	vector<int> arr(n);
+	for (int i = 0 ; i < n; i ++) cin >> arr[i];
+	int k = 0 ;
+	vector<int> b = arr;
+	sort(all(b));
+	int mini = b[0];
+	for (int i = 0; i < n ; i ++  ) {
+		if (arr[i] != b[i] && arr[i] % mini != 0) {
+			No
+			return ;
+		}
 	}
-	else if (isdigit(ch)) {
-		cout << "IS DIGIT" << endl;
-	}
+	YES
+
+	/*
+	INDEA:
+
+	jo devide nhi nhi karega uska gcd min kabi nhi ayega tho
+	usko change nhi kar skte aur agr vo correct place men nhi ha tho ham nhi kar skte chaneg
+	// aur jo divide karta ha usko ham shi jgh pe la skte swap karkr ke
+
+
+	*/
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -131,8 +140,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
