@@ -118,18 +118,20 @@ void solve() {
 	}
 	for (int i = 1 ; i < 200003 ; i++)
 		diff[i] += diff[i - 1]; // prefix sum
-
+	// db(diff);
 	for (int i = 0 ; i < 200003 ; i++) {
 		if (diff[i] >= k) { // checking if greater than k
 			arr.pb(i);
 		}
 	}
 
+	db(arr);
 	while (q--) {
 		int l1, r1; cin >> l1 >> r1;
 		auto it1 = lower_bound(all(arr), l1) - arr.begin();
+		cout << it1 << " " << nline;
 		auto it2 = upper_bound(all(arr), r1) - arr.begin();
-		cout << it2 - it1 << nline;
+		// cout << it2 - it1 << nline;
 	}
 }
 
@@ -148,5 +150,3 @@ int32_t main() {
 	}
 }
 /* -----------------END OF PROGRAM --------------------*/
-
- 

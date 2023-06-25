@@ -109,48 +109,6 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-
-	if (n == 1 || n == 100) {
-		cout << n << nline ;
-		return ;
-	}
-	if (n == 2) {
-		cout << 1 << nline;
-		return ;
-	}
-	int cnt = 0 , cnt2 = 0;
-	int temp = n, temp2 = n ;
-	while (temp % 5 != 0) {
-		cnt++;
-		temp++;
-	}
-	while (temp2 % 5 != 0) {
-		cnt2++;
-		temp2--;
-	}
-	// cout << cnt << " " << cnt2 << nline;
-	if (cnt < cnt2) {
-		cout << n + cnt << nline;
-	} else {
-		cout << n - cnt2 << nline;
-	}
-
-	// vector<int> arr;
-	// arr.pb(1);
-	// for (int i = 5 ; i <= 100 ; i += 5) {
-	// 	arr.pb(i);
-	// }
-	// db(arr);
-	// int ans = *lower_bound(all(arr), n);
-	// int ansi = lower_bound(all(arr), n) - arr.begin();
-
-	// if (abs(n - ans ) >= abs(n - arr[ansi - 1]) ) {
-	// 	cout <<  arr[ansi - 1] ;
-	// } else {
-	// 	cout << ans ;
-	// }
-
 
 }
 int32_t main() {
@@ -159,11 +117,17 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
-		solve();
+		int n ;
+		cin >> n;
+		vector<int> arr(n);
+		for (int i = 0 ; i < n ;  i++) cin >> arr[i];
+		cout << n << nline;
+		for (int i = 0 ; i < n ;  i++) cout << arr[i] << " ";
+		cout << nline << nline;
 	}
 }
 /* -----------------END OF PROGRAM --------------------*/

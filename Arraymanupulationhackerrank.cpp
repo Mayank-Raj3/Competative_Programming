@@ -25,7 +25,6 @@ long arrayManipulation(int n, vector<vector<int>> queries) {
 	}
 
 
-
 }
 
 int main()
