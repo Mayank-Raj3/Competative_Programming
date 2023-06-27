@@ -111,32 +111,12 @@ void _print(map <T, V> v) {
 void solve() {
 	int n ; cin >> n ;
 	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i++) cin >> arr[i];
-	int lo = 0 , hi = 1e9 , ans = 0 ;
-	sort(all(arr));
-	auto check = [&](int time) {
-		int i = 0, j = 0;
-		// average hamesa time se kam rehga
-		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time)j++;
-		i = j;
-		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time)j++;
-		i = j;
-		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time)j++;
-		i = j;
-		return (j == n);
-	};
-	while (lo <= hi) {
-		int mid = (lo + hi) / 2;
-		if (check(mid)) {
-			ans = mid;
-			hi = mid - 1 ;
-		}
-		else {
-			lo = mid + 1;
-		}
-	}
-	cout << ans << nline;
-
+	int sum = 0 , Xor = 0 ;
+	for (int i = 0 ; i < n ; i++) {cin >> arr[i]; sum += arr[i]; Xor ^= arr[i];}
+	cout << 2 << nline;
+// think easy just try to make thing easy try to make to 0
+//
+	cout << (sum + Xor) << " " << Xor << nline;
 
 }
 int32_t main() {

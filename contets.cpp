@@ -109,29 +109,31 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int x ; cin >> x ;
-	// 500 - 1000 hap , 5 - 5 ;
-	// x=1024/500 =: 4bar
-	//
-	int hap  = (x / 500) * 1000;
-	int remaning_money = (x % 500) ;
-	hap += (remaning_money / 5) * 5;
-	cout << hap << nline;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	int n;
+	cin >> n;
+	vector<int> arr(n);
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	int ans = INT_MAX;
+	for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			for (int k = j + 1; k < n; k++) {
+				int a = abs(arr[i] - arr[j]);
+				int b = abs(arr[j] - arr[k]);
+				int c = abs(arr[k] - arr[i]);
+				ans = min(ans, a + c);
+				ans = min(ans, a + b);
+				ans = min(ans, b + c);
+			}
+		}
+	}
+	cout << ans << endl;
 }
+
+
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);

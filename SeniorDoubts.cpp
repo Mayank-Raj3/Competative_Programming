@@ -109,30 +109,32 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++ ) cin >> arr[i];
+	int h , w ; cin >> h >> w ;
+	// vector<string> arr(h);
 
-	int count = 0;
-	for (int i = 0; i < n - 1; i++) {
-		if (arr[i] == arr[i + 1] || arr[i] > arr[i + 1]) {
-			count++;
-		}
-	}
-	if (count > 1) {
-		NO
-	}
+	int n = 5 ;
+	vector<string> arr(n, string(5, '5'));
+	db(arr);
 
-	for (int i = 1 ; i < n  ; i ++) {
-		if (arr[i - 1] > arr[i]) {
-			if (i > 2 &&  arr[i - 2] <= arr[i])
-				arr[i - 1] = arr[i];
-			else {
-				arr[i] = arr[i - 1];
-			}
-		}
-	}
+	// int c = 0 ;
+	// for (int i = 0; i < h; i++)
+	// {
+	// 	for (int j = 0; j < w; j++)
+	// 	{
+	// 		if (arr[i][j] == '#')
+	// 			c++;
 
+	// 	}
+
+	// }
+	// cout << c << nline;
+	// db(arr);
+
+	// vector<vector<int>> arr(2, vector<int>(2, 0));
+	// db(arr);
+	// string temp(5, '0');
+	// db(temp);
+	// vector<int> variable(len, kise initialize karna ha );
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -140,8 +142,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

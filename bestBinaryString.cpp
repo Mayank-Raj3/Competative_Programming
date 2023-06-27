@@ -109,35 +109,16 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i++) cin >> arr[i];
-	int lo = 0 , hi = 1e9 , ans = 0 ;
-	sort(all(arr));
-	auto check = [&](int time) {
-		int i = 0, j = 0;
-		// average hamesa time se kam rehga
-		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time)j++;
-		i = j;
-		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time)j++;
-		i = j;
-		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time)j++;
-		i = j;
-		return (j == n);
-	};
-	while (lo <= hi) {
-		int mid = (lo + hi) / 2;
-		if (check(mid)) {
-			ans = mid;
-			hi = mid - 1 ;
+	string s ; cin >> s ;
+	char temp = '0';
+	for (int i = 0 ; i < s.size(); i++) {
+		if (s[i] == '?') {
+			s[i] = temp;
+			continue;
 		}
-		else {
-			lo = mid + 1;
-		}
+		temp = s[i];
 	}
-	cout << ans << nline;
-
-
+	cout << s << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
