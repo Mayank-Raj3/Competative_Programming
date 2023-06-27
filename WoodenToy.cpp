@@ -111,27 +111,32 @@ void _print(map <T, V> v) {
 void solve() {
 	int n ; cin >> n ;
 	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++ ) cin >> arr[i];
-
-	int count = 0;
-	for (int i = 0; i < n - 1; i++) {
-		if (arr[i] == arr[i + 1] || arr[i] > arr[i + 1]) {
-			count++;
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	int lo = 0 , hi = 1e9 , ans = 0 ;
+	sort(all(arr));
+	auto check = [&](int time) {
+		int i = 0, j = 0, cnt = 0;
+		// average hamesa time se kam rehga
+		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time) j++;
+		i = j;
+		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time) j++;
+		i = j;
+		while (j < n && (arr[j] - arr[i] + 1) / 2 <= time) j++;
+		i = j;
+		return ( j == n);
+	};
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		if (check(mid)) {
+			ans = mid;
+			hi = mid - 1 ;
+		}
+		else {
+			lo = mid + 1;
 		}
 	}
-	if (count > 1) {
-		NO
-	}
+	cout << ans << nline;
 
-	for (int i = 1 ; i < n  ; i ++) {
-		if (arr[i - 1] > arr[i]) {
-			if (i > 2 &&  arr[i - 2] <= arr[i])
-				arr[i - 1] = arr[i];
-			else {
-				arr[i] = arr[i - 1];
-			}
-		}
-	}
 
 }
 int32_t main() {

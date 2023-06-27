@@ -109,27 +109,35 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++ ) cin >> arr[i];
+	int n , m ; cin >> n >> m ;
+	// n < m
+	// 3 5
+	// 1 1 1
 
-	int count = 0;
-	for (int i = 0; i < n - 1; i++) {
-		if (arr[i] == arr[i + 1] || arr[i] > arr[i + 1]) {
-			count++;
-		}
+	//n = 10 m = 1
+	//
+	if (n == 1 ||  m == 1) {
+		YES
+		return;
 	}
-	if (count > 1) {
+	if (n < m) {
 		NO
+		return ;
 	}
+	else {
+		//n>=m
+		//20 19
 
-	for (int i = 1 ; i < n  ; i ++) {
-		if (arr[i - 1] > arr[i]) {
-			if (i > 2 &&  arr[i - 2] <= arr[i])
-				arr[i - 1] = arr[i];
-			else {
-				arr[i] = arr[i - 1];
+		for (int i = 2 ; i * i <= n ; i++ ) {
+			if (n % i == 0 ) {
+				n = i;
+				break ;
 			}
+		}
+		if (n <= m) {
+			NO
+		} else {
+			YES
 		}
 	}
 
