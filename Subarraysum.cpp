@@ -116,14 +116,14 @@ void solve() {
 		cin >> arr[i];
 	}
 	int cnt  = 0 ;
-	int temp = 0, left = 0 ;
+	int temp = 1, left = 0 ;
 	for (int i = 0 ; i < n; i++) {
-		temp += arr[i];
-		while (left < i && 	temp > sum) {
-			temp -= arr[left++];
+		temp *= arr[i];
+		while (left < i && 	temp >= sum) {
+			temp /= arr[left++];
 		}
-		if (temp == sum) {
-			cnt++;
+		if (temp < sum) {
+			cnt += (i - left + 1);
 		}
 	}
 	cout << cnt << nline;

@@ -114,7 +114,9 @@ void solve() {
 	for (int i =  0 ; i < n; i++) {
 		cin >> arr[i];
 	}
-	auto check = [&](int mid) {return arr[mid] > arr[mid + 1];};
+	auto check = [&](int mid) {
+		return arr[mid] > arr[mid + 1];
+	};
 	int l = 0 , r = n - 1 , ans = -1 ;
 	while (l <= r) {
 		int mid = (l + r) / 2;

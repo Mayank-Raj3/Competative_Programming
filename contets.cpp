@@ -28,6 +28,7 @@ using namespace std;
 #define PI                            3.141592653589793238462
 #define sz(x) (                       (int)(x).size())
 #define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#include <numeric>
 
 // Builtin data types
 typedef pair<int, int> 	              pii     ;
@@ -108,40 +109,48 @@ void _print(map <T, V> v) {
 //-------------------------------Think&Code----------------------------------*/
 
 
-void solve() {
-
-	int n;
-	cin >> n;
-	vector<int> arr(n);
-	for (int i = 0; i < n; i++) {
-		cin >> arr[i];
+int lcmo(int a, int b) {
+	return a / gcd(a, b) * b;
+}
+bool cmp(pair<pair<int, int>, int>a, pair<pair<int, int>, int>b) {
+	if (a.ff.ff <  b.ff.ff) {
+		return true ;
 	}
-	int ans = INT_MAX;
-	for (int i = 0; i < n; i++) {
-		for (int j = i + 1; j < n; j++) {
-			for (int k = j + 1; k < n; k++) {
-				int a = abs(arr[i] - arr[j]);
-				int b = abs(arr[j] - arr[k]);
-				int c = abs(arr[k] - arr[i]);
-				ans = min(ans, a + c);
-				ans = min(ans, a + b);
-				ans = min(ans, b + c);
-			}
-		}
-	}
-	cout << ans << endl;
+	return false ;
 }
 
+void solve() {
+	int n ; cin >> n ;
+	vector<pair<pair<int, int>, int>>arr(n);
+	int lcm = 1;
+	int gcd = 1 ;
+	int prod = 1LL;
+	for (int i = 0 ; i < n ; i ++) {
+		int a , b ; cin >> a >> b ;
+		arr[i].ff.ff = a;
+		arr[i].ff.ss = (a + b);
+		arr[i].ss = i + 1;
+		lcm = lcmo(arr[i].ff.ss, lcm);
+	}
+	for (int i = 0 ; i < n ; i ++) {
+		arr[i].ff.ff = (long long)( lcm / arr[i].ff.ff);
+		arr[i].ff.ss = lcm;
+	}
+	sort(all(arr), cmp);
+	db(arr);
+	for (int i = 0 ; i < n ; i ++) {
+		cout << arr[i].ss << " ";
+	}
 
-
+}
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

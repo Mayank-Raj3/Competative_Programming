@@ -106,32 +106,67 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
-
-void solve() {
-	string s; cin >> s;
-	int n = s.size();
-	int ans = pow(9, n - 1);
-	int temp = 1;
-	for (int i = 0; i < n; i++) {
-		int num = temp * (s[i] - '0' - 1);
-		num *= (int)pow(9, n - 1 - i);
-		ans = max(ans, num);
-		temp *= (s[i] - '0');
+bool areBracketsBalanced(string s) {
+	int i = -1;
+	for (auto& ch : s) {
+		if (ch == '(')
+			s[++i] = ch;
+		else {
+			if (i >= 0 && (s[i] == '(' && ch == ')'))
+				i--;
+			else
+				return false;
+		}
 	}
-	ans = max(ans, temp);
-	cout << ans << nline;
+	return i == -1;
 }
 
+void solve() {
+	int n ; cin >> n ;
+	string s; cin >> s ;
+	stack<int> st ;
+	int cnt = count(all(s), '(');
+	int cnt2 = count(all(s), ')');
+	if (cnt != cnt2) {
+		minus1
+		return ;
+	}
+	string temp = s ;
+	reverse(all(temp));
+	if (areBracketsBalanced(s) || areBracketsBalanced(temp)) {
+		cout << 1 << nline;
+		for (int i = 0 ; i < n ; i++) cout << "1 ";
+		cout << nline;
+		return ;
+	}
+	vector<int> ans(n, 2);
+	for (int i = 0; i < n; i++) {
+		if (s[i] == '(') {
+			st.push(i);
+		}
+		else if (st.size()) {
+			ans[st.top()] = 1;
+			ans[i] = 1;
+			st.pop();
+		}
+	}
 
+	cout << 2 << nline;
+	for (auto it : ans) {
+		cout << it << " ";
+	}
+	cout << nline;
+
+
+}
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();

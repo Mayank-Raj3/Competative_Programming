@@ -109,29 +109,70 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	string s; cin >> s;
-	int n = s.size();
-	int ans = pow(9, n - 1);
-	int temp = 1;
-	for (int i = 0; i < n; i++) {
-		int num = temp * (s[i] - '0' - 1);
-		num *= (int)pow(9, n - 1 - i);
-		ans = max(ans, num);
-		temp *= (s[i] - '0');
+	int n ; cin >> n ;
+	int q ; cin >> q ;
+	vector<int> arr(n);
+	for (int i = 0 ; i < n; i++) cin >> arr[i];
+	int lo = 1 , hi = n - 1 , ind = -1;
+
+	auto check = [&](int mid ) {
+		if ( arr[mid] > arr[mid - 1]) {
+			return true;
+		}
+		return false;
+	};
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		if (check(mid)) {
+			ind = mid;
+			lo = mid + 1 ;
+		} else {
+			hi = mid - 1;
+		}
 	}
-	ans = max(ans, temp);
-	cout << ans << nline;
+
+	while (q--) {
+		int k ; cin >> k ;
+		lo = 0;
+		hi = ind - 1;
+		while (lo <= hi) {
+			int mid = (lo + hi) / 2;
+			if (arr[mid] == k) {
+				cout << (mid + 1) << " ";
+				break;
+			} else if (arr[mid] > k) {
+				hi = mid - 1;
+			} else {
+				lo = mid + 1;
+			}
+		}
+
+		lo = ind;
+		hi = n - 1;
+		while (lo <= hi) {
+			int mid = (lo + hi) / 2;
+			if (arr[mid] == k) {
+				cout << (mid + 1) << " ";
+				break;
+			} else if (arr[mid] > k) {
+				lo = mid + 1;
+			} else {
+				hi = mid - 1;
+			}
+		}
+		cout << nline;
+
+	}
+
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();

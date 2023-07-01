@@ -107,23 +107,42 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
 void solve() {
-	string s; cin >> s;
-	int n = s.size();
-	int ans = pow(9, n - 1);
-	int temp = 1;
+	int n, m;
+	cin >> n >> m;
+	vector<string> grid(n);
+	vector<vector<int>> visited(n, vector<int>(m, 0));
 	for (int i = 0; i < n; i++) {
-		int num = temp * (s[i] - '0' - 1);
-		num *= (int)pow(9, n - 1 - i);
-		ans = max(ans, num);
-		temp *= (s[i] - '0');
+		cin >> grid[i];
 	}
-	ans = max(ans, temp);
-	cout << ans << nline;
+	bool pathF = false;
+	int dx[8] = {0, 1, 0, -1, 1, 1, -1, -1};
+	int dy[8] = {1, 0, -1, 0, 1, -1, -1, 1};
+	function<void(int, int, int)> dfs = [&](int x, int y, int ind) {
+		if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y])
+			return;
+		if (grid[x][y] != "snuke"[ind % 5])
+			return;
+		if (x == n - 1 && y == m - 1) {
+			pathF = true;
+			return;
+		}
+		visited[x][y] = 1;
+		for (int i = 0; i < 4; i++) {
+			int row = dx[i] + x, col = dy[i] + y;
+			dfs(row, col, ind + 1);
+		}
+	};
+
+
+	dfs(0, 0, 0);
+	if (pathF) {
+		Yes
+	} else {
+		No
+	}
+
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);

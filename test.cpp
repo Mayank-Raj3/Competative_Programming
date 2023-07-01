@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -106,36 +107,43 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
 void solve() {
-	int n , k , q ; cin >> n >> k >> q ;
-	vi diff(200, 0);
-	vi arr;
-	for (int i = 0 ; i < n ; i++) {
-		int l , r ; cin >> l >> r ;
-		diff[l] += 1;
-		diff[r + 1] -= 1; // diffrence array
+	int n, m;
+	cin >> n >> m;
+	vector<string> grid(n);
+	vector<vector<int>> visited(n, vector<int>(m, 0));
+	for (int i = 0; i < n; i++) {
+		2 3
+		cin >> grid[i];
 	}
-	for (int i = 1 ; i < 200 ; i++)
-		diff[i] += diff[i - 1]; // prefix sum
-
-	db(diff);
-	for (int i = 0 ; i < 200 ; i++) {
-		if (diff[i] >= k) { // checking if greater than k
-			arr.pb(i);
+	bool pathF = false;
+	int dx[8] = {0, 1, 0, -1, 1, 1, -1, -1};
+	int dy[8] = {1, 0, -1, 0, 1, -1, -1, 1};
+	function<void(int, int, int)> dfs = [&](int x, int y, int ind) {
+		if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y])
+			return;
+		if (grid[x][y] != "snuke"[ind % 5])
+			return;
+		if (x == n - 1 && y == m - 1) {
+			pathF = true;
+			return;
 		}
-	}
-	db(arr);
+		visited[x][y] = 1;
+		for (int i = 0; i < 4; i++) {
+			int row = dx[i] + x, col = dy[i] + y;
+			dfs(row, col, ind + 1);
+		}
+	};
 
-	while (q--) {
-		int l1, r1; cin >> l1 >> r1;
-		auto it1 = lower_bound(all(arr), l1) - arr.begin();
-		auto it2 = upper_bound(all(arr), r1) - arr.begin();
-		cout << (it2 - it1) << nline << nline;
+
+	dfs(0, 0, 0);
+	if (pathF) {
+		Yes
+	} else {
+		No
 	}
+
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
@@ -150,4 +158,5 @@ int32_t main() {
 	}
 }
 /* -----------------END OF PROGRAM --------------------*/
+
 
