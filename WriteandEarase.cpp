@@ -109,60 +109,18 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	int q ; cin >> q ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) cin >> arr[i];
-	int lo = 1 , hi = n - 1 , ind = -1;
-
-	auto check = [&](int mid ) {
-		if ( arr[mid] > arr[mid - 1]) {
-			return true;
-		}
-		return false;
-	};
-	while (lo <= hi) {
-		int mid = (lo + hi) / 2;
-		if (check(mid)) {
-			ind = mid;
-			lo = mid + 1 ;
-		} else {
-			hi = mid - 1;
-		}
+	int n; cin >> n ;
+	map<int, int> mpp;
+	for (int i = 0 ; i < n ; i ++) {
+		int x; cin >> x ;
+		mpp[x]++;
 	}
-
-	while (q--) {
-		int k ; cin >> k ;
-		lo = 0;
-		hi = ind - 1;
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
-			if (arr[mid] == k) {
-				cout << (mid + 1) << " ";
-				break;
-			} else if (arr[mid] > k) {
-				hi = mid - 1;
-			} else {
-				lo = mid + 1;
-			}
-		}
-
-		lo = ind
-		     ;		hi = n - 1;
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
-			if (arr[mid] == k) {
-				cout << (mid + 1) << " ";
-				break;
-			} else if (arr[mid] > k) {
-				lo = mid + 1;
-			} else {
-				hi = mid - 1;
-			}
-		}
-		cout << nline;
-
+	int ans = 0 ;
+	for (auto it : mpp) {
+		if (it.ss % 2)
+			ans++;
 	}
+	cout << ans << nline;
 
 }
 int32_t main() {
@@ -171,8 +129,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

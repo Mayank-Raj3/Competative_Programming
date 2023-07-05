@@ -110,59 +110,28 @@ void _print(map <T, V> v) {
 
 void solve() {
 	int n ; cin >> n ;
-	int q ; cin >> q ;
 	vector<int> arr(n);
 	for (int i = 0 ; i < n; i++) cin >> arr[i];
-	int lo = 1 , hi = n - 1 , ind = -1;
+	int lo = 0 , hi = n - 1 , ind = 0;
 
 	auto check = [&](int mid ) {
-		if ( arr[mid] > arr[mid - 1]) {
-			return true;
-		}
-		return false;
+		return ( arr[0] > arr[mid]);
 	};
 	while (lo <= hi) {
 		int mid = (lo + hi) / 2;
 		if (check(mid)) {
 			ind = mid;
-			lo = mid + 1 ;
-		} else {
 			hi = mid - 1;
+		} else {
+			lo = mid + 1;
 		}
 	}
 
-	while (q--) {
-		int k ; cin >> k ;
-		lo = 0;
-		hi = ind - 1;
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
-			if (arr[mid] == k) {
-				cout << (mid + 1) << " ";
-				break;
-			} else if (arr[mid] > k) {
-				hi = mid - 1;
-			} else {
-				lo = mid + 1;
-			}
-		}
+	// for (int i = 0  ; i < n ; i++) {
+	// 	cout << check(i) << " ";
+	// }
 
-		lo = ind
-		     ;		hi = n - 1;
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
-			if (arr[mid] == k) {
-				cout << (mid + 1) << " ";
-				break;
-			} else if (arr[mid] > k) {
-				lo = mid + 1;
-			} else {
-				hi = mid - 1;
-			}
-		}
-		cout << nline;
-
-	}
+	cout << ind << nline;
 
 }
 int32_t main() {

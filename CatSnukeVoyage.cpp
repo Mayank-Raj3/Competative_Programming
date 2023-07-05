@@ -106,63 +106,50 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
+vector<vector<pair<int, int>>> adj;
 
+void dijkstra(int s, vector<int> & d, vector<int> & p) {
+	int n = adj.size();
+	d.assign(n, INF);
+	p.assign(n, -1);
+	vector<bool> u(n, false);
 
+	d[s] = 0;
+	for (int i = 0; i < n; i++) {
+		int v = -1;
+		for (int j = 0; j < n; j++) {
+			if (!u[j] && (v == -1 || d[j] < d[v]))
+				v = j;
+		}
+
+		if (d[v] == INF)
+			break;
+
+		u[v] = true;
+		for (auto edge : adj[v]) {
+			int to = edge.first;
+			int len = edge.second;
+
+			if (d[v] + len < d[to]) {
+				d[to] = d[v] + len;
+				p[to] = v;
+			}
+		}
+	}
+}
 void solve() {
-	int n ; cin >> n ;
-	int q ; cin >> q ;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n; i++) cin >> arr[i];
-	int lo = 1 , hi = n - 1 , ind = -1;
+	int v; cin >>  v;
+	int m ; cin >> m ;
 
-	auto check = [&](int mid ) {
-		if ( arr[mid] > arr[mid - 1]) {
-			return true;
-		}
-		return false;
-	};
-	while (lo <= hi) {
-		int mid = (lo + hi) / 2;
-		if (check(mid)) {
-			ind = mid;
-			lo = mid + 1 ;
-		} else {
-			hi = mid - 1;
-		}
+	vector<int> adj[v];
+	for (int i = 0 ; i < m ; i++) {
+		int l , r ; cin >> l >> r ;
+		l--, r--;
+		adj[l].pb()
 	}
+	int source = 0, dest = v - 1;
 
-	while (q--) {
-		int k ; cin >> k ;
-		lo = 0;
-		hi = ind - 1;
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
-			if (arr[mid] == k) {
-				cout << (mid + 1) << " ";
-				break;
-			} else if (arr[mid] > k) {
-				hi = mid - 1;
-			} else {
-				lo = mid + 1;
-			}
-		}
-
-		lo = ind
-		     ;		hi = n - 1;
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
-			if (arr[mid] == k) {
-				cout << (mid + 1) << " ";
-				break;
-			} else if (arr[mid] > k) {
-				lo = mid + 1;
-			} else {
-				hi = mid - 1;
-			}
-		}
-		cout << nline;
-
-	}
+	printShortestDistance(adj, source, dest, v - 1);
 
 }
 int32_t main() {
@@ -171,8 +158,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();
