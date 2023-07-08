@@ -109,43 +109,35 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m, h ; cin >> n >> m >> h ;
-	vector<pair<int, int>> ans ;
-	vector<vector<int>> arr(n, vector<int>(m));
-	vector<vector<int>> sorted;
-	for (int i = 0 ; i < n ; i ++) {
-		for (int j = 0 ; j < m ; j++) {
-			cin >> arr[i][j];
-		}
-		sort(all(arr[i]));
-		sorted.pb(arr[i]);
-	}
-	for (int i = 0 ; i < n ; i ++) {
-		for (int j = 0 ; j < m ; j++) {
-			if (j)
-				arr[i][j] += arr[i][j - 1];
-		}
-		for (int j = 0 ; j < m ; j++) {
-			if (j)
-				arr[i][j] += arr[i][j - 1];
-		}
-		for (int j = 0 ; j < m ; j++) {
-			if (j)
-				sorted[i][j] += sorted[i][j - 1];
-		}
-
-		int cnt = 0, last = -1, falg = 0   ;
-		for (int j = 0 ; j < n; j++) {
-			if (sorted[i][j] <= h) {
-				last = arr[i][j];
+	int n , k ; cin >> n >> k ;
+	vi arr(n);
+	for (int i = 0  ; i < n ; i++) cin >> arr[i];
+	auto check = [&](int mid ) {
+		int cnt = 0, time = 0 , maxi = -1 ;
+		for (int i = 0 ; i < n ; i++ ) {
+			if (arr[i] > mid) return false;
+			if ((time + arr[i]) <= mid) {
+				time += arr[i];
 			} else {
-				ans.pb({cnt + 1, arr[i][j]});
-				f = 0 ;
-				break;
+				time = arr[i] ;
+				++cnt;
 			}
 		}
-	}
+		return cnt < k;
+	};
+	int ans = 0 ;
+	int lo = 0 ,  hi = accumulate(all(arr), 0LL);
 
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		if (check(mid)) {
+			ans = mid ;
+			hi = mid - 1 ;
+		} else {
+			lo = mid + 1;
+		}
+	}
+	cout << ans << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -163,29 +155,3 @@ int32_t main() {
 /* -----------------END OF PROGRAM --------------------*/
 
 
-<? xml version = "1.0" encoding = "utf-8"?> <manifest xmlns: android = "http://schemas.android.com/apk/res/android" package = "com.example.guessnumbergame"> <application android: allowBackup = "true" android: icon = "@mipmap/ic_launcher" android: label = "@string/app_name" android: roundIcon = "@mipmap/ic_launcher_round" android: supportsRtl = "true" android: theme = "@style/AppTheme"> <activity android: name = ".GuessPage"> < / activity > <activity android: name = ".MainActivity"> < intent - filter > < action android : name = "android.intent.action.MAIN" / > < category android : name = "android.intent.category.LAUNCHER" / > < / intent - filter > < / activity > < / application > < / manifest >
-
-
-void solve()
-{
-    int n;
-    cin >> n;
-    int ans = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        int p = i;
-        int cnt = 0;
-        for (int j = 2; j * j <= p; j++)
-        {
-            if (p % j == 0)
-                cnt++;
-            while (p % j == 0)
-                p /= j;
-        }
-        if (p > 1)
-            cnt++;
-        if (cnt == 2)
-            ans++;
-    }
-    cout << ans << "\n";
-}

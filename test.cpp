@@ -107,42 +107,27 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
+
 void solve() {
-	int n, m;
-	cin >> n >> m;
-	vector<string> grid(n);
-	vector<vector<int>> visited(n, vector<int>(m, 0));
-	for (int i = 0; i < n; i++) {
-		2 3
-		cin >> grid[i];
-	}
-	bool pathF = false;
-	int dx[8] = {0, 1, 0, -1, 1, 1, -1, -1};
-	int dy[8] = {1, 0, -1, 0, 1, -1, -1, 1};
-	function<void(int, int, int)> dfs = [&](int x, int y, int ind) {
-		if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y])
-			return;
-		if (grid[x][y] != "snuke"[ind % 5])
-			return;
-		if (x == n - 1 && y == m - 1) {
-			pathF = true;
-			return;
+	int n , d , h ; cin >> n >> d >> h;
+	vi arr(n);
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	sort(all(arr));
+	ld ans = 0 ;
+	for (int i = 0 ; i < n - 1; i++ ) {
+		int dif = arr[i + 1] - arr[i];
+		ld m = 0, cm = 0 ;
+		if (dif < h) {
+			m = ((dif - h) * 1.0);
+			m *= ((dif - h) * 1.0);
+			m *= (d * 1.0);
+			m /= (2.0 * h);
 		}
-		visited[x][y] = 1;
-		for (int i = 0; i < 4; i++) {
-			int row = dx[i] + x, col = dy[i] + y;
-			dfs(row, col, ind + 1);
-		}
-	};
-
-
-	dfs(0, 0, 0);
-	if (pathF) {
-		Yes
-	} else {
-		No
+		ans += ((d * h * 1.0) / 2.0);
+		ans -= m;
 	}
-
+	ans += ((d * h) / 2.0);
+	cout << ps(ans, 7)  << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -150,8 +135,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
