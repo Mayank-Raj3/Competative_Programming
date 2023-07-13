@@ -1,4 +1,6 @@
 
+#include<bits/stdc++.h>
+using namespace std;
 #define int 						  long long
 #define ld 							  long double
 #define nline						  "\n"
@@ -104,61 +106,54 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-set<int> st;
 
-vector<int> sieve(int n) {int*arr = new int[n + 1](); vector<int> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
-vi prime(1e6);
-int mex(vector<int> &arr, int N)
-{
 
-	// sort the array
-	sort(arr.begin(), arr.end());
-
-	int mex = 0;
-	for (int idx = 0; idx < N; idx++)
-	{
-		if (arr[idx] == mex)
-		{
-			// Increment mex
-			mex += 1;
+void solve() {
+	int n , m ; cin >> n >> m ;
+	vector<vector<int>> arr(n + 1);
+	for (int i = 0 ; i < m ; i ++) {
+		int l , r ; cin >> l >> r ;
+		arr[l].pb(r);
+		arr[r].pb(l);
+	}
+	db(arr);
+	vector<int> vis(n + 1, 0);
+	int cnt = 0 ;
+	function<void(int)> dfs = [&](int node) {
+		vis[node] = 1 ;
+		for (auto it :  arr[node]) {
+			if (vis[it] != 1)
+				dfs(it);
+		}
+	};
+	vi ans ;
+	vector<pair<int , int >> temp ;
+	for (int i = 1 ; i <= n ; i++) {
+		if (vis[i] != 1) {
+			ans.pb(i);
+			cnt++;
+			dfs(i);
 		}
 	}
+	for (int i =  1 ; i < ans.size() ; i++ ) {
+		temp.pb({ans[i - 1], ans[i]});
+	}
 
-	// Return mex as answer
-	return mex;
-}
-void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	arr[n / 2] = 1;
-	arr[0] = 3;
-	arr[n - 1] = 2;
-	if (n == 1) {
-		cout << 1 << nline;
-		return ;
+	cout << temp.size() << nline;
+	for (auto it : temp) {
+		cout << it.ff << " " << it.ss << nline;
 	}
-	if (n == 2) {
-		cout << 2 << " " << 1 << nline;
-		return  ;
-	}
-	int num = 4 ;
-	for (int i = 1 ; i < n / 2 ; i++)
-		arr[i] = num++;
-	for (int i = n / 2 + 1 ; i < n - 1 ; i++)
-		arr[i] = num++;
 
-	for (auto it : arr) {
-		cout << it << " ";
-	}
-	cout << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t;
-	// int t = 1;
+
+	// int t ; cin >> t;
+	int t = 1;
+
 	while (t--) {
 		solve();
 	}

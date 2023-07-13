@@ -1,4 +1,6 @@
 
+#include<bits/stdc++.h>
+using namespace std;
 #define int 						  long long
 #define ld 							  long double
 #define nline						  "\n"
@@ -104,61 +106,53 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-set<int> st;
 
-vector<int> sieve(int n) {int*arr = new int[n + 1](); vector<int> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
-vi prime(1e6);
-int mex(vector<int> &arr, int N)
-{
 
-	// sort the array
-	sort(arr.begin(), arr.end());
+void solve() {
+	int n ; cin >> n;
+	vector<string> arr (n);
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	set<char> st ;
+	for (int i  = 0 ; i < n ; i++) {
+		st.insert(arr[i][i]);
+	}
+	for (int i = 0 ; i < n ; i++) {
+		st.insert(arr[i][ n - 1 - i]);
+	}
 
-	int mex = 0;
-	for (int idx = 0; idx < N; idx++)
-	{
-		if (arr[idx] == mex)
-		{
-			// Increment mex
-			mex += 1;
+	if (st.size() != 1) {
+		NO
+		return ;
+	}
+	set<char> tempp;
+	for (int i = 0 ; i < n ; i++) {
+		for (int j = 0 ; j < n ; j ++ ) {
+			if (i == j) continue;
+			if (j == n - 1 - i ) {
+				continue;
+			}
+			tempp.insert(arr[i][j]);
 		}
 	}
 
-	// Return mex as answer
-	return mex;
-}
-void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	arr[n / 2] = 1;
-	arr[0] = 3;
-	arr[n - 1] = 2;
-	if (n == 1) {
-		cout << 1 << nline;
+	if (tempp.size() == 1 && st.size() == 1 && *tempp.begin() != *st.begin()) {
+		YES
 		return ;
+	} else {
+		NO
 	}
-	if (n == 2) {
-		cout << 2 << " " << 1 << nline;
-		return  ;
-	}
-	int num = 4 ;
-	for (int i = 1 ; i < n / 2 ; i++)
-		arr[i] = num++;
-	for (int i = n / 2 + 1 ; i < n - 1 ; i++)
-		arr[i] = num++;
 
-	for (auto it : arr) {
-		cout << it << " ";
-	}
-	cout << nline;
 }
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t;
-	// int t = 1;
+
+	// int t ; cin >> t;
+	int t = 1;
+
 	while (t--) {
 		solve();
 	}

@@ -1,4 +1,6 @@
 
+#include<bits/stdc++.h>
+using namespace std;
 #define int 						  long long
 #define ld 							  long double
 #define nline						  "\n"
@@ -104,61 +106,59 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-set<int> st;
 
-vector<int> sieve(int n) {int*arr = new int[n + 1](); vector<int> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
-vi prime(1e6);
-int mex(vector<int> &arr, int N)
-{
 
-	// sort the array
-	sort(arr.begin(), arr.end());
-
-	int mex = 0;
-	for (int idx = 0; idx < N; idx++)
-	{
-		if (arr[idx] == mex)
-		{
-			// Increment mex
-			mex += 1;
+void solve() {
+	int n ; cin >> n ;
+	vi arr(n);
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
+	}
+	vector<int> prefeven(n, 0) , prefodd(n, 0);
+	prefodd[0] = arr[0];
+	for (int i = 1; i < n; i++) {
+		if (i % 2 == 0) {
+			prefeven[i] = prefeven[i - 1];
+			prefodd[i] = prefodd[i - 1] + arr[i];
+		}
+		else {
+			prefeven[i] = prefeven[i - 1] + arr[i];
+			prefodd[i] = prefodd[i - 1] ;
 		}
 	}
 
-	// Return mex as answer
-	return mex;
-}
-void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	arr[n / 2] = 1;
-	arr[0] = 3;
-	arr[n - 1] = 2;
-	if (n == 1) {
-		cout << 1 << nline;
-		return ;
+	//made prefix sum of odd and even
+	db(prefeven);
+	db(prefodd);
+	int even , odd, ans = 0;
+	for (int i = 0; i < n; i++) {
+		odd = 0 , even = 0;
+		odd += prefodd[i];
+		even += prefeven[i];
+		if (i != 0) {
+			odd += prefeven[n - 1] - prefeven[i - 1];
+			even += prefodd[n - 1] - prefodd[i - 1];
+		}
+		else {
+			odd += prefeven[n - 1];
+			even += prefodd[n - 1];
+		}
+		if (odd == even) ans++;
 	}
-	if (n == 2) {
-		cout << 2 << " " << 1 << nline;
-		return  ;
-	}
-	int num = 4 ;
-	for (int i = 1 ; i < n / 2 ; i++)
-		arr[i] = num++;
-	for (int i = n / 2 + 1 ; i < n - 1 ; i++)
-		arr[i] = num++;
 
-	for (auto it : arr) {
-		cout << it << " ";
-	}
-	cout << nline;
+	cout << ans;
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t;
-	// int t = 1;
+
+	// int t ; cin >> t;
+	int t = 1;
+
 	while (t--) {
 		solve();
 	}

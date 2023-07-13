@@ -1,4 +1,6 @@
 
+#include<bits/stdc++.h>
+using namespace std;
 #define int 						  long long
 #define ld 							  long double
 #define nline						  "\n"
@@ -104,61 +106,59 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-set<int> st;
 
-vector<int> sieve(int n) {int*arr = new int[n + 1](); vector<int> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
-vi prime(1e6);
-int mex(vector<int> &arr, int N)
-{
 
-	// sort the array
-	sort(arr.begin(), arr.end());
-
-	int mex = 0;
-	for (int idx = 0; idx < N; idx++)
-	{
-		if (arr[idx] == mex)
-		{
-			// Increment mex
-			mex += 1;
+void solve() {
+	string s; cin >> s ;
+	int n = s.size();
+	vector<pair<int, int>> even;
+	for (int i = 0 ; i < n ; i++ ) {
+		if ((s[i] - '0') % 2 == 0) {
+			even.pb({s[i] - '0', i});
 		}
 	}
 
-	// Return mex as answer
-	return mex;
-}
-void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	arr[n / 2] = 1;
-	arr[0] = 3;
-	arr[n - 1] = 2;
-	if (n == 1) {
-		cout << 1 << nline;
+
+	if (even.size() == 0) {
+		minus1
 		return ;
 	}
-	if (n == 2) {
-		cout << 2 << " " << 1 << nline;
-		return  ;
+	string temp = s ;
+	for (auto it : even) {
+		if (it.ff < (temp[n - 1] - '0')) {
+			swap(temp[it.ss], temp[n - 1]);
+			cout << temp << nline;
+			return ;
+		}
 	}
-	int num = 4 ;
-	for (int i = 1 ; i < n / 2 ; i++)
-		arr[i] = num++;
-	for (int i = n / 2 + 1 ; i < n - 1 ; i++)
-		arr[i] = num++;
 
-	for (auto it : arr) {
-		cout << it << " ";
+	for (int i = even.size() - 1 ; i >= 0; i--) {
+		if (s[even[i].ss] > (s[n - 1] - '0') ) {
+			swap(s[even[i].ss], s[n - 1]);
+			cout << s << nline;
+			return ;
+		}
 	}
-	cout << nline;
+
+	cout << max( temp, s) << nline;
+
+
+
+
+
+
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t;
-	// int t = 1;
+
+	// int t ; cin >> t;
+	int t = 1;
+
 	while (t--) {
 		solve();
 	}

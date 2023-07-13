@@ -108,13 +108,29 @@ void _print(map <T, V> v) {
 //-------------------------------Think&Code----------------------------------*/
 
 
-void solve() {
-	string s; cin >> s ;
-	int q ; cin >> q ;
-	while (q--) {
-		int n ; char x ; cin >> n >> x ;
+int cal(int num) {
+	int ans = 0;
+	while (num) {
+		ans += num % 10;
+		num /= 10;
 	}
+	return ans;
+}
 
+void solve() {
+	int n ; cin >> n ;
+	int k = 0 ;
+	int num = 0 ;
+	while (true) {
+		if (cal(num) == 10 ) {
+			k++;
+		}
+		if (k == n) {
+			cout << num << nline;
+			return ;
+		}
+		num++;
+	}
 
 }
 int32_t main() {
@@ -123,8 +139,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	// int t ; cin >> t;
+	int t = 1;
 
 	while (t--) {
 		solve();

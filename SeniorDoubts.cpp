@@ -109,21 +109,21 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	string s; cin >> s;
-	int n = s.size();
-	int ans = pow(9, n - 1);
-	int temp = 1;
-	for (int i = 0; i < n; i++) {
-		int num = temp * (s[i] - '0' - 1);
-		num *= (int)pow(9, n - 1 - i);
-		ans = max(ans, num);
-		temp *= (s[i] - '0');
+	map<char, int> mpp;
+	string s; cin >> s ;
+	for (auto it : s) {
+		mpp[it]++;
 	}
-	ans = max(ans, temp);
-	cout << ans << nline;
+	db(mpp);
+	for (auto it : mpp) {
+		db(it);
+		db(it.second) ; //freq
+		if (it.second == 1) {
+
+		}
+
+	}
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);

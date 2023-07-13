@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -108,49 +109,8 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<string> arr(n);
-	vector<char> temp;
-	for (int i = 0  ; i < n ; i++) {
-		cin >> arr[i];
-	}
-
-	for (int i = 0 ; i < n ; i ++) {
-		temp.pb(arr[0][i]);
-	}
-	for (int i = 1 ; i < n ; i ++) {
-		temp.pb(arr[i][n - 1]);
-	}
-
-	for (int i = n - 2 ; i >= 0  ; i --) {
-		temp.pb(arr[n - 1][i]);
-	}
-
-	for (int i = n - 2 ; i >= 0  ; i --) {
-		temp.pb(arr[i][0]);
-	}
 
 
-	int m = temp.size() - 1 ;
-
-	for (int i = 0 ; i < n ; i ++) {
-		arr[0][i] = temp[m++ % n];
-	}
-	for (int i = 1 ; i < n ; i ++) {
-		arr[i][n - 1] = temp[m++ % n];
-	}
-
-	for (int i = n - 2 ; i >= 0; i --) {
-		arr[n - 1][i] = temp[m++ % n];
-	}
-
-
-	for (int i = n - 2 ; i >= 1; i --) {
-		arr[i][0] = temp[m++ % n];
-	}
-	for (auto it : arr) {
-		cout << it << nline;
-	}
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -158,18 +118,15 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
-
+	int t ; cin >> t;
+	//int t=1;
+	int cnt = 0 ;
 	while (t--) {
 		solve();
+		cout << t << nline;
 	}
+
 }
 /* -----------------END OF PROGRAM --------------------*/
 
 
-// 00101
-// 11000
-// 00111
-// 00110
-// 10100

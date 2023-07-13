@@ -1,4 +1,6 @@
 
+#include<bits/stdc++.h>
+using namespace std;
 #define int 						  long long
 #define ld 							  long double
 #define nline						  "\n"
@@ -104,61 +106,37 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-set<int> st;
 
-vector<int> sieve(int n) {int*arr = new int[n + 1](); vector<int> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
-vi prime(1e6);
-int mex(vector<int> &arr, int N)
-{
 
-	// sort the array
-	sort(arr.begin(), arr.end());
-
-	int mex = 0;
-	for (int idx = 0; idx < N; idx++)
-	{
-		if (arr[idx] == mex)
-		{
-			// Increment mex
-			mex += 1;
-		}
-	}
-
-	// Return mex as answer
-	return mex;
-}
 void solve() {
 	int n ; cin >> n ;
 	vector<int> arr(n);
-	arr[n / 2] = 1;
-	arr[0] = 3;
-	arr[n - 1] = 2;
-	if (n == 1) {
-		cout << 1 << nline;
-		return ;
+	string s ; cin >> s ;
+	int sum = 0;
+	for (int i = 0 ; i < n ; i++) {
+		arr[i] = (s[i] - '0');
+		if (i) {
+			arr[i] += arr[i - 1];
+		}
 	}
-	if (n == 2) {
-		cout << 2 << " " << 1 << nline;
-		return  ;
+	int mini = arr[n - 1] ;
+	for (int i = 0 ; i < n ; i ++) {
+		if (i != 0) {
+			int p1 = arr[i], p2 = arr[n - 1] - arr[i - 1];
+			mini = min((p1 + p2), mini);
+		}
 	}
-	int num = 4 ;
-	for (int i = 1 ; i < n / 2 ; i++)
-		arr[i] = num++;
-	for (int i = n / 2 + 1 ; i < n - 1 ; i++)
-		arr[i] = num++;
-
-	for (auto it : arr) {
-		cout << it << " ";
-	}
-	cout << nline;
+	cout << mini << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t;
-	// int t = 1;
+
+	// int t ; cin >> t;
+	int t = 1;
+
 	while (t--) {
 		solve();
 	}
