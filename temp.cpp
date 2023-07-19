@@ -109,18 +109,23 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	ld n , m ; cin >> n >> m ;
 
-	ld ans = LLONG_MAX  ;
-	for (int i = 0 ; i <= 10; i++) {
-		ld base = sqrtl(i + 1);
-		ld ops = 1.0 * (i) * m;
-		ld div  = (n / base * 1.0);
-		ans = min((div + ops), ans);
+	int n ; cin >> n ;
+	int lo = 1 , hi = 1e6 ;
+	int ans = 0 ;
+	if (n == 1) {
+		cout << 0 << nline;
+		return ;
 	}
-	cout << ps(ans, 10) << nline;
-
-
+	else {
+		int a = long(sqrtl(n));
+		if (a * a >= n)
+			cout << 2 * a - 2 << endl;
+		else if ( a * (a + 1) >= n )
+			cout << a * 2 - 1 << endl;
+		else
+			cout << 2 * a << endl;
+	}
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -128,8 +133,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();

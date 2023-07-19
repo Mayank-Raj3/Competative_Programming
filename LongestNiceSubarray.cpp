@@ -106,19 +106,46 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
+int longestNiceSubarray(vector<int>& arr) {
+	int n = arr.size();
+	vector<int> bits(32);
+	int ans = 0 , left = 0, right = 0  ;
+	while (right < n) {
+		for (int i = 0 ; i < 32 ; i++) {
+			if (( 1 << i) & arr[right]) {
+				bits[i]++;
+			}
+		}
+		auto andO = [&]() {
+			for (int i = 0 ; i < 32 ; i ++) {
+				if (bits[i] > 1) {
+					return true;
+				}
+			}
+			return false ;
+		};
+		while (left < right && andO()) {
+			for (int i = 0 ; i < 32 ; i ++) {
+				if ((1 << i)&arr[left]) {
+					bits[left]--;
+				}
+			}
+			left++;
+		}
+		ans = max(ans , right - left  + 1);
+		right++;
+	}
+	return ans ;
+}
 
 void solve() {
-	ld n , m ; cin >> n >> m ;
-
-	ld ans = LLONG_MAX  ;
-	for (int i = 0 ; i <= 10; i++) {
-		ld base = sqrtl(i + 1);
-		ld ops = 1.0 * (i) * m;
-		ld div  = (n / base * 1.0);
-		ans = min((div + ops), ans);
+	int n ; cin >> n ;
+	vi arr(n);
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
 	}
-	cout << ps(ans, 10) << nline;
+	cout << longestNiceSubarray(arr);
+
 
 
 }
@@ -128,7 +155,6 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
 	int t = 1;
 
 	while (t--) {
