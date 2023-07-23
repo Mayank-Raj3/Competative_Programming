@@ -48,7 +48,7 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const int EPS = 1e-9;
-#define ll long long
+
 //debugger
 #ifndef ONLINE_JUDGE
 #define db(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -109,38 +109,25 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n;
-	cin >> n;
-	ll a[n];
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-	}
-	int plen = 2, len = 2, maxi = 2;
-	for (int i = 2; i < n; i++) {
-		int j = i ;
+	int n , m ; cin >> n >> m;
+	vector<string> arr(n);
+	for (int  i = 0 ; i < n ; i ++) cin >> arr[i];
+	int ax =  0 , ay  = 0, f = 1;
+	function < void(int, int )> dfs = [&](int x, int y ) {
+		if (arr[x][y] == 'R') {
 
-		while ( j < n && a[j] - a[j - 1] == a[j - 1] - a[j - 2]) {
-			len++ ;
-			j++;
 		}
-		i = j - 1;
-		//plen = len;
-		maxi = max(maxi, len);
-		len = 2;
-	}
-	if (n == 1)
-	{
-		cout << 1;
-	}
-	if (n == 2)
-	{
-		cout << 2;
-	}
-	else {
-		cout << maxi;
-	}
-	cout << '\n';
+		else if (arr[x][y] == 'U' && f) {
 
+		} else if (arr[x][y] == 'L' && f) {
+
+		} else {
+
+		}
+
+	};
+	dfs(0, 0);
+	cout << ax << " " << ay << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -148,8 +135,7 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	int t = 1;
 
 	while (t--) {
 		solve();

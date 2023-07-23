@@ -107,12 +107,50 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
+int t;
 void solve() {
-	vector<vector<int>> arr(3, vector<int>(4, 0));
+	vi arr(6);
+	for (int i = 0; i < 6; ++i) {
+		cin >> arr[i];
+	}
+	db(arr);
+	string s; cin >> s;
+	int top = arr[0], bottom = arr[5], front = arr[1], back = arr[4], left = arr[3], right = arr[2];
+	for (auto it : s) {
+		if (it == 'N') {
+			t = top;
+			top = front;
+			front = bottom;
+			bottom = back;
+			back = t;
+		}
+		else if (it == 'S') {
+			t = top;
+			top = back;
+			back = bottom;
+			bottom = front;
+			front = t;
+		}
+		else if (it == 'W') {
+			t = top;
+			top = right;
+			right = bottom;
+			bottom = left;
+			left = t;
+		}
+		else {
+			t = top;
+			top = left;
+			left = bottom;
+			bottom = right;
+			right = t;
+		}
+	}
 
-
+	cout << top << nline;
 }
+
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
@@ -121,7 +159,6 @@ int32_t main() {
 
 	int t ; cin >> t;
 	//int t=1;
-
 	while (t--) {
 		solve();
 	}

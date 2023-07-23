@@ -48,7 +48,7 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const int EPS = 1e-9;
-#define ll long long
+
 //debugger
 #ifndef ONLINE_JUDGE
 #define db(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -109,37 +109,26 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n;
-	cin >> n;
-	ll a[n];
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
+	int n , fd ; cin >>  n >> fd ;
+	vector<int> adj[n];
+	int ans = 1;
+	for (int i = 0 ; i <  n ; i++) {
+		int x ; cin >> x ;
+		adj[i].pb(x - 1);
 	}
-	int plen = 2, len = 2, maxi = 2;
-	for (int i = 2; i < n; i++) {
-		int j = i ;
-
-		while ( j < n && a[j] - a[j - 1] == a[j - 1] - a[j - 2]) {
-			len++ ;
-			j++;
+	vector<int> vis(n);
+	vis[fd - 1] = 1;
+	function < void(int )> dfs = [&](int nd) {
+		vis[nd] = 1;
+		for (auto it : adj[nd]) {
+			if (!vis[it]) {
+				ans++;
+				dfs(it);
+			}
 		}
-		i = j - 1;
-		//plen = len;
-		maxi = max(maxi, len);
-		len = 2;
-	}
-	if (n == 1)
-	{
-		cout << 1;
-	}
-	if (n == 2)
-	{
-		cout << 2;
-	}
-	else {
-		cout << maxi;
-	}
-	cout << '\n';
+	};
+	dfs(fd - 1);
+	cout << ans << nline;
 
 }
 int32_t main() {
@@ -148,8 +137,7 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	int t = 1;
 
 	while (t--) {
 		solve();

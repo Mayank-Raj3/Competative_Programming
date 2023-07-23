@@ -48,7 +48,7 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const int EPS = 1e-9;
-#define ll long long
+
 //debugger
 #ifndef ONLINE_JUDGE
 #define db(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -106,40 +106,39 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
-
-void solve() {
-	int n;
-	cin >> n;
-	ll a[n];
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-	}
-	int plen = 2, len = 2, maxi = 2;
-	for (int i = 2; i < n; i++) {
-		int j = i ;
-
-		while ( j < n && a[j] - a[j - 1] == a[j - 1] - a[j - 2]) {
-			len++ ;
-			j++;
+int maxConsecutiveAnswers(string s, int k) {
+	int n  = s.size();
+	auto check = [&](int mid ) {
+		int cnt = 0 , sx = 0 ;
+		int left = 0 ;
+		for (int i = 0 ; i < n ; i ++) {
+			sx += s[i] == 'T';
+			int len = i - left + 1;
+			if (len == mid) {
+				if (len - sx <= k || (sx <= k)) {
+					return true;
+				}
+				sx -= s[left++] == 'T';
+			}
 		}
-		i = j - 1;
-		//plen = len;
-		maxi = max(maxi, len);
-		len = 2;
+		return false;
+	};
+	int lo = 1 , hi = n, ans = 1 ;
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		if (check(mid)) {
+			ans = mid ;
+			lo = mid + 1 ;
+		} else {
+			hi = mid - 1 ;
+		}
 	}
-	if (n == 1)
-	{
-		cout << 1;
-	}
-	if (n == 2)
-	{
-		cout << 2;
-	}
-	else {
-		cout << maxi;
-	}
-	cout << '\n';
+	return ans ;
+}
+void solve() {
+	string s ; cin >> s ;
+	int n ; cin >> n ;
+	cout <<	maxConsecutiveAnswers(s, n) << nline;
 
 }
 int32_t main() {
@@ -148,8 +147,7 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	int t = 1;
 
 	while (t--) {
 		solve();

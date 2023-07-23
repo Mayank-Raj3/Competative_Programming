@@ -48,7 +48,7 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const int EPS = 1e-9;
-#define ll long long
+
 //debugger
 #ifndef ONLINE_JUDGE
 #define db(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -109,38 +109,27 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n;
-	cin >> n;
-	ll a[n];
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
+	vector<string> arr(8);
+	int n = 8 , m = 8 ;
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
 	}
-	int plen = 2, len = 2, maxi = 2;
-	for (int i = 2; i < n; i++) {
-		int j = i ;
-
-		while ( j < n && a[j] - a[j - 1] == a[j - 1] - a[j - 2]) {
-			len++ ;
-			j++;
+	int x = -1 , y = -1 ;
+	for (int i = 0  ; i < n; i++) {
+		for (int j = 0 ; j < n ; j++)
+			if (arr[i][j] >= 'a' && arr[i][j] <= 'z') {
+				x = i , y = j ;
+				break;
+			}
+	}
+	string ans = "";
+	for (int i = 0  ; i < 8 ; i++) {
+		if (arr[i][y] >= 'a' && arr[i][y] <= 'z') {
+			ans += arr[i][y];
 		}
-		i = j - 1;
-		//plen = len;
-		maxi = max(maxi, len);
-		len = 2;
 	}
-	if (n == 1)
-	{
-		cout << 1;
-	}
-	if (n == 2)
-	{
-		cout << 2;
-	}
-	else {
-		cout << maxi;
-	}
-	cout << '\n';
 
+	cout << ans << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

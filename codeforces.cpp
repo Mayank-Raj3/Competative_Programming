@@ -48,7 +48,7 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const int EPS = 1e-9;
-#define ll long long
+
 //debugger
 #ifndef ONLINE_JUDGE
 #define db(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -109,37 +109,26 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n;
-	cin >> n;
-	ll a[n];
-	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-	}
-	int plen = 2, len = 2, maxi = 2;
-	for (int i = 2; i < n; i++) {
-		int j = i ;
-
-		while ( j < n && a[j] - a[j - 1] == a[j - 1] - a[j - 2]) {
-			len++ ;
-			j++;
+	int n ; cin >> n ;
+	vector<int> arr(n), ans(n + 1);
+	map<int, int> mpp;
+	// set<int> st;
+	for (int i = 0  ; i < n ; i ++) {
+		cin >> arr[i];
+		if (arr[i] <= n && arr[i] != 0) {
+			mpp[arr[i]]++;
+			// st.insert(arr[i]);
 		}
-		i = j - 1;
-		//plen = len;
-		maxi = max(maxi, len);
-		len = 2;
 	}
-	if (n == 1)
-	{
-		cout << 1;
+	for (int i = 1; i <= n; i++) {
+		for (int j = i; j <= n; j += i) {
+			ans[j] += mpp[i];
+		}
+
 	}
-	if (n == 2)
-	{
-		cout << 2;
-	}
-	else {
-		cout << maxi;
-	}
-	cout << '\n';
+	int maxi =  *max_element(ans.begin(), ans.end()) ;
+	cout << maxi << nline;
+
 
 }
 int32_t main() {
