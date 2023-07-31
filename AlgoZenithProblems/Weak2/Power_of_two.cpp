@@ -108,23 +108,26 @@ void _print(map <T, V> v) {
 //-------------------------------Think&Code----------------------------------*/
 
 
+// For each test case, print the number of pairs
+// (i, j) such that i < j and Ai + Aj is a power of 2.
 void solve() {
+	map<int, int> mpp;
 	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
+	vector<int> arr(n);
+	for (int i = 0 ; i < n ; i ++) {
+		cin >> arr[i];
+		mpp[arr[i]]++;
 	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
+	int cnt = 0 ;
+	for (int i = 0 ; i < n ; i++) {
+		mpp[arr[i]]--;
+		for (int j = 0 ; j < 32 ; j++) {
+			int num = 1LL << j;
+			cnt += mpp[num - arr[i]];
+		}
 	}
-	cout << sum << nline;
+	cout << cnt << nline;
+
 
 }
 int32_t main() {
@@ -134,7 +137,6 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	//int t=1;
 
 	while (t--) {
 		solve();

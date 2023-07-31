@@ -109,22 +109,23 @@ void _print(map <T, V> v) {
 
 
 void solve() {
+// where, a, b, and c are prime numbers, then
+// the number of divisors of N is given by the formula:
+// ( p + 1 ) ( q + 1 ) ( r + 1 ) …
 	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
+	int ans = 1 ;
+	for (int i = 2 ; i * i <= n ; i++) {
+		int cnt = 0 ;
+		while (n % i == 0) {
+			n /= i;
+			cnt++;
+		}
+		ans *= (cnt + 1);
 	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
-	}
-	cout << sum << nline;
+	if (n > 1)
+		ans *= 2;
+
+	cout << ans << nline;
 
 }
 int32_t main() {

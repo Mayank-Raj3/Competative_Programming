@@ -1,44 +1,45 @@
-//linked list
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
-
-class node {
-  string name ;
-  int roll ;
-  node * next ;
-public:
-  node() {
-    name = "";
-    roll = -1 ;
-    next = NULL ;
+using ll = long long;
+#define m 1000000007
+const ll N = 1e8 ;
+ll f[N];
+ll inv[N];
+ll binpow(ll a, ll b) {
+  ll ans = 1;
+  while (b) {
+    if (b % 2 == 1) {
+      ans = (ans * a) % m;
+    }
+    a = (a * a) % m;
+    b /= 2;//yaha pr galti kari thi
   }
-
-  node(string n ,  int r ) {
-    name = n;
-    roll = r;
-    next = NULL ;
-  }
-  friend void add(node*);
-  friend void display();
-};
-
-node * first;
-
-void add(node *  x) {
-
+  return ans;
 }
-void display() {
-
-}
-
-int main() {
-  char ch ; cin >> ch ;
-  while (ch == 'y') {
-    string name ; int roll ;
-    cin >> name >> roll;
-    node * x = new  node(name, roll);
-    add(x);
-    cout << "Y/n" << en;
-    cin >> ch ;
+void prec() {
+  f[0] = 1;
+  for (int i = 1; i < N ; ++i)
+  {
+    f[i] = (f[i - 1] * i) % m; //factorial ban gaya
   }
+  inv[N - 1] = binpow(f[N - 1], m - 2);
+  for (int i = N - 2; i >= 0; --i)
+  {
+    inv[i] = (inv[i + 1] * (i + 1)) % m;
+  }
+}
+void solve()
+{
+  int n;
+  cin >> n;
+  int ans = f[n] * inv[4] % m * inv[n - 4] % m;
+  cout << (((ans % m) + m) % m) << "\n";
+}
+signed main()
+{
+  ios::sync_with_stdio(0);
+  cin.tie(0), cout.tie(0);
+  prec();
+  int t; cin >> t; while (t -- )
+    solve();
 }

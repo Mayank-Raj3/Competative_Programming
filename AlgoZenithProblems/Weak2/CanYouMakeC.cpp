@@ -107,25 +107,31 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
+/*
+The reason why we need to find the GCD of A and B to determine
+the existence of integer solutions for the equation A x + B y = C
+is based on Bezout's identity.
+Bezout's identity states that for any two integers a and b,
+their greatest common divisor (GCD) can be expressed as the smallest positive integer
+that can be expressed as a linear combination of a and b,
+that is: g c d ( a , b ) = a x + b y where x and y are integers.
+This shows that if the GCD of A and B divides C,
+then there exists a solution for the equation A x + B y = C in integers.
+Conversely, if the GCD of A and B does not divide C,
+then there cannot be a solution for the equation A x + B y = C in integers.
+Thus, by finding the GCD of A and B and checking whether it divides C,
+we can determine the existence of integer solutions for the equation A x + B y = C .
+*/
 
 void solve() {
-	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
-	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
-	}
-	cout << sum << nline;
 
+	int a , b , c ; cin >> a >> b >> c ;
+	int gc = gcd(a, b);
+	if (!(c % gc)) {
+		Yes
+	} else {
+		No
+	}
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

@@ -109,22 +109,25 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
+	int n , k , q ;
+	cin >> n >> k >> q ;
+	vector<int> arr(1e6 + 2), pref(1e6 + 2);
+	for (int i = 1 ; i <= n; i++) {
+		int l , r ; cin >> l >> r ;
+		arr[l]++;
+		arr[r + 1]--;
 	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
+	for (int i = 1 ; i <= 1e6 + 2 ; i++) {
+		arr[i] += arr[i - 1];
+		arr[i] >= k ? pref[i] = 1 : pref[i] = 0;
 	}
-	cout << sum << nline;
+	for (int i = 1 ; i <= 1e6 + 2 ; i++) {
+		pref[i] += pref[i - 1];
+	}
+	while (q--) {
+		int l , r; cin >> l >> r ;
+		cout << pref[r] - pref[l - 1] << nline;
+	}
 
 }
 int32_t main() {
@@ -133,8 +136,7 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
+	int t = 1;
 
 	while (t--) {
 		solve();

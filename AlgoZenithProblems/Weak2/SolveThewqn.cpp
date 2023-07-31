@@ -107,25 +107,53 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
+int binpow(int a, int b, int mod) {
+	a %= mod;
+	int res = 1;
+	while (b > 0) {
+		if (b & 1)res = (res * a) % mod;
+		a = (a * a * 1ll) % mod;
+		b = b >> 1;
+	} return res;
+}
 
-void solve() {
-	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
-	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
-	}
-	cout << sum << nline;
+void solve()
+{
+	int  a, b, c, p;
+	char op1, op2;
+	string ch; char br1, br2;
+	cin >> br1 >> a >> op1 >> b >> op2 >> c >> br2 >> ch >> p;
+	map<char, int> mpp;
+	mpp['/'] = 4; mpp['*'] = 3; mpp['+'] = 2; mpp['-'] = 2;
+	int ans ;
+	auto calc = [&](int a , int b , int mod , int ch) {
+		if (ch == '+') {
+			return (a % mod + b % mod) % mod;
+		}
+		else if (ch == '-')
+		{
+			return ((a % mod - b % mod ) + mod) % mod;
+		}
+		else if (ch == '*')
+		{
+			return (a % mod * b % mod) % mod;
+		}
+		else {
+			return (a % mod * binpow(b, mod - 2, mod) % mod) % mod;
+		}
+	};
 
+	if (mpp[op1] >= mpp[op2]) {
+		ans = calc(a, b, p, op1);
+		ans = calc(ans, c, p, op2);
+	}
+	else {
+		ans = calc(b, c, p, op2);
+		ans = calc(a, ans, p, op1);
+	}
+
+	ans = (ans + p) % p;
+	cout << ans << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

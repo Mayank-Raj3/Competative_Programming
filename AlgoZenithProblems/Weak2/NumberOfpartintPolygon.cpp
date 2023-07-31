@@ -107,24 +107,45 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
+vi fact(2e5 + 5);
+vi factinv(2e5 + 1);
+
+int binpow(int a, int b, int mod) {
+	a %= mod;
+	int res = 1;
+	while (b > 0) {
+		if (b & 1)res = (res * a) % mod;
+		a = (a * a * 1ll) % mod;
+		b = b >> 1;
+	} return res;
+}
+
+void ncr() {
+	fact[0] = 1;
+	fact[1] = 1;
+	for (int i = 2 ; i <= 2e5 + 1; i++) {
+		fact[i] = (fact[i - 1] * i) % MOD;
+	}
+	factinv[2e5 + 1] = binpow(fact[2e5 + 1], MOD - 2, MOD);
+	for (int i = 2e5 ; i >= 0; i--) {
+		factinv[i] = (factinv[i + 1] % MOD * (i + 1) % MOD) % MOD;
+	}
+}
 
 void solve() {
-	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
-	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
-	}
-	cout << sum << nline;
+
+	int n; cin >> n ;
+
+	int NOD = (n % MOD * (n - 3) % MOD) % MOD;
+	NOD = (NOD % MOD * binpow(2, MOD - 2, MOD) % MOD) % MOD;
+
+
+	int a = n - 1, b = n - 2 , c = n - 3;
+	int ans =	(a * b) % MOD;
+	ans = (ans * c) % MOD;
+	ans = (ans * n) % MOD;
+	int NOI =  (ans % MOD * factinv[4] % MOD) % MOD ;
+	cout << ( NOI + NOD) % MOD + 1LL << nline;
 
 }
 int32_t main() {
@@ -132,7 +153,7 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-
+	ncr();
 	int t ; cin >> t;
 	//int t=1;
 

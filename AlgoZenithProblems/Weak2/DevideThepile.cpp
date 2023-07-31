@@ -110,21 +110,16 @@ void _print(map <T, V> v) {
 
 void solve() {
 	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
+	int gc  = 0;
+	for (int i = 0 ; i < n ; i ++) {
+		int x ; cin >> x ;
+		gc = gcd(x, gc);
 	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
+	if (gc == 1 || gc == 0) {
+		No
+	} else {
+		Yes
 	}
-	cout << sum << nline;
 
 }
 int32_t main() {

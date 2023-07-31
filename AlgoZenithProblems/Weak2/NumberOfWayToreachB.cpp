@@ -107,32 +107,43 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
+vi fact(2e5 + 5);
+vi factinv(2e5 + 1);
+
+int binpow(int a, int b, int mod) {
+	a %= mod;
+	int res = 1;
+	while (b > 0) {
+		if (b & 1)res = (res * a) % mod;
+		a = (a * a * 1ll) % mod;
+		b = b >> 1;
+	} return res;
+}
 
 void solve() {
-	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
-	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
-	}
-	cout << sum << nline;
 
+	int n , m ; cin >> n >> m ;
+	int ans = fact[(n + m)] % MOD;
+	ans = (ans * factinv[n]) % MOD;
+	ans = (ans * factinv[m]) % MOD;
+	cout << ans << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-
+	fact[0] = 1;
+	fact[1] = 1;
+	for (int i = 2 ; i <= 2e5 + 1; i++) {
+		fact[i] = (fact[i - 1] * i) % MOD;
+	}
+	factinv[2e5 + 1] = binpow(fact[2e5 + 1], MOD - 2, MOD);
+	for (int i = 2e5 ; i >= 0; i--) {
+		// 1/5! * 5 karenge to 1/4! aajayega
+		// 1/(5*4*3*2*1) * 5 = > 1/4!
+		factinv[i] = (factinv[i + 1] % MOD * (i + 1) % MOD) % MOD;
+	}
 	int t ; cin >> t;
 	//int t=1;
 

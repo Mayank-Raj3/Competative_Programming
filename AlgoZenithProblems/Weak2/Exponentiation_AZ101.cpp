@@ -106,25 +106,30 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
+int binpow(int a, int b, int mod) {
+	a %= mod;
+	int res = 1;
+	while (b > 0) {
+		if (b & 1)res = (res * a) % mod;
+		a = (a * a * 1ll) % mod;
+		b = b >> 1;
+	} return res;
+}
 
 void solve() {
-	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
-	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
-	}
-	cout << sum << nline;
+	int a , b , c , mod ;
+	cin >> a >> b >> c >> mod ;
+
+	int pow = binpow(b, c, mod - 1);
+	int ans = binpow(a, pow, mod);
+
+//2
+	if (b == 0 && c != 0) {
+		one
+	} else if (a == 0 || a % mod == 0) {
+		cout << 0 << nline;
+	} else
+		cout << ans << nline;
 
 }
 int32_t main() {

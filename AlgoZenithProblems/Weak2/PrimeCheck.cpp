@@ -107,24 +107,20 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
+vector<bool> isprime(1e7 + 2);
 void solve() {
 	int n ; cin >> n ;
-	int k ; cin >> k ;
-	priority_queue<int> pq ;
-	for (int i = 0 ; i < n ;  i++) {
-		int m ; cin >> m ;
-		pq.push(m);
+	if (n == 1) {
+		NO
+		return ;
 	}
-	int sum = 0 ;
-	while (k--) {
-		int ele = pq.top();
-		sum += (ele);
-		pq.pop();
-		if (ele != 2)
-			pq.push(ele / 2);
+	if (!isprime[n]) {
+		YES
+	} else {
+		NO
 	}
-	cout << sum << nline;
+	// can be done in O(n) also
+
 
 }
 int32_t main() {
@@ -134,8 +130,13 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	//int t=1;
-
+	int n = 1e7;
+	for (int i = 2 ; i * i <= n ; i++) {
+		if (isprime[i] == 0) {
+			for (int j = 2 * i; j <= n; j += i)
+				isprime[j] = 1;
+		}
+	}
 	while (t--) {
 		solve();
 	}
