@@ -109,23 +109,44 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
-	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
-		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
-			}
-		}
+	int n , m ; cin >> n >> m ;
+	vector<int> s1(n), s2(m);
+	for (auto &it : s1) cin >> it ;
+	for (auto &it : s2) cin >> it ;
+	vector<int> v(n + m);
+	vector<int>::iterator it;
+	sort(all(s1));
+	sort(all(s2));
+	set<int> st ;
+	for (auto it : s1) {
+		st.insert(it);
 	}
-	cout << ans << nline;
+	for (auto it : s2) {
+		st.insert(it);
+	}
+	for (auto it : st) {
+		cout << it << " ";
+	}
+	cout << nline;
+	it = set_intersection (all(s1), all(s2), v.begin());
+	v.resize(it - v.begin());
+	set<int> inte ;
+	for (auto it : v) {
+		inte.insert(it);
+		cout << it << " ";
+	}
+	cout << nline;
+
+	for (auto it : v) {
+		st.erase(it);
+	}
+	for (auto it : s2) {
+		st.erase(it);
+	}
+	for (auto it : st) {
+		cout << it << " ";
+	}
+	cout << nline;
 
 }
 int32_t main() {
@@ -135,7 +156,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();
@@ -144,3 +165,11 @@ int32_t main() {
 /* -----------------END OF PROGRAM --------------------*/
 
 
+// 1 2 3 4 5 6 9
+// 4 5
+// 1 2
+// 1 4 5 6 7
+
+// 4 5
+// 1 2 3
+// 1 2 3

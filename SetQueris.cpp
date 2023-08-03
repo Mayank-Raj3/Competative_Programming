@@ -109,23 +109,26 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
-	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
+	int n ; cin >> n ;
+	set<int> presentInSet , notPresent ;
+	while (n--) {
+		int type , x ; cin >> type >> x ;
+		if (type == 1) {
+			presentInSet.insert(x); // insert kar rha
+			notPresent.erase(x); // aur ab present ho gya tho delete
+			if (presentInSet.find(x + 1) == presentInSet.end()) {
+				//agr x+1 nhi ha tho dal rha kyuki ye > dega
+				notPresent.insert(x + 1);
+			}
+
 		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
+			if (presentInSet.find(x ) == presentInSet.end()) {
+				cout << x << nline;
+			} else {
+				cout << *notPresent.lower_bound(x) << nline;
 			}
 		}
 	}
-	cout << ans << nline;
 
 }
 int32_t main() {
@@ -135,7 +138,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();

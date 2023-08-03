@@ -109,24 +109,25 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
+	int n , m ; cin >> n >> m ;
+	multiset<int> ms1 , ms2 ;
+	for (int i = 0 ; i < n ; i++) {
+		int l , r ; cin >> l >> r ;
+		ms1.insert((l * r));
+	} for (int i = 0 ; i < m ; i++) {
+		int l , r ; cin >> l >> r ;
+		ms2.insert((l * r));
+	}
+
 	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
-		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
-			}
+	for (auto it : ms2) {
+		auto fd = ms1.find(it);
+		if ( fd != ms1.end()) {
+			ms1.erase(fd);
+			ans++;
 		}
 	}
 	cout << ans << nline;
-
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -135,7 +136,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();

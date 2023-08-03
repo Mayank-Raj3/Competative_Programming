@@ -109,24 +109,23 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
-	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
+	int n ; cin >> n ;
+	vi  arr(n);
+	multiset<int> ms;
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
+	}
+	for (int i = 0 ; i < n ; i++) {
+		auto lb  = ms.upper_bound(arr[i]);
+		if (lb == ms.end()) {
+			ms.insert(arr[i]);
 		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
-			}
+			ms.erase(lb);
+			ms.insert(arr[i]);
+
 		}
 	}
-	cout << ans << nline;
-
+	cout << ms.size() << nline;
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -135,7 +134,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();

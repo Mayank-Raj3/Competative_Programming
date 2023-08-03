@@ -107,25 +107,48 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
+/*
+ou are given Q queries and have to perform the following operations:
 
+add x y - add student name X (string) for marks y (integer).
+If it already exists, add a new entry.
+erase x - erase the first current entry of student with name x
+eraseall x - erase all entries of student with name x
+print x - print the first entry of marks of student with name x,
+if entry is not there for x, print 0.
+*/
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
-	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
-		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
-			}
+	int n ; cin >> n ;
+	multimap<string , int> mpp;
+	for (int i = 0 ; i < n ; i ++) {
+		string s; cin >> s ;
+		if (s == "add") {
+			string m ; int n ; cin >> m >> n ;
+			mpp.insert({m, n});
 		}
+		else if (s == "print") {
+			string  m ; cin >> m ;
+			if (mpp.find(m) != mpp.end())
+				cout << mpp.lower_bound(m)->ss << nline;
+			else {
+				cout << 0 << nline;
+			}
+		} else if (s == "erase") {
+			string m ; cin >> m ;
+			auto it = mpp.find(m);
+			if (it != mpp.end()) {
+				mpp.erase(it);
+			}
+			// cout << "e";
+		} else {
+			string m ; cin >> m ;
+			mpp.erase(m);
+		}
+		// for (auto it : mpp) {
+		// 	cout << it.ff << " " << it.ss << nline;
+		// }
+		// cout << nline;
 	}
-	cout << ans << nline;
 
 }
 int32_t main() {
@@ -135,7 +158,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();

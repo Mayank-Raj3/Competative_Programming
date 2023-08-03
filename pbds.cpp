@@ -1,5 +1,9 @@
 
 #include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
 using namespace std;
 #define int 						  long long
 #define ld 							  long double
@@ -28,6 +32,10 @@ using namespace std;
 #define PI                            3.141592653589793238462
 #define sz(x) (                       (int)(x).size())
 #define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+template <typename T>
+using ordered_set = tree<T, null_type, less <T>, rb_tree_tag, tree_order_statistics_node_update>;
+
 
 // Builtin data types
 typedef pair<int, int> 	              pii     ;
@@ -107,25 +115,32 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
-	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
-		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
+	ordered_set<int> st ;
+	int n ; cin >> n ;
+	for (int i = 0 ; i < n ; i ++) {
+		string s; cin >> s ;
+		if (s == "add") {
+			int x ; cin >> x ;
+			st.insert(x);
+		} else if (s == "remove") {
+			int x ; cin >> x ;
+			if (st.find(x) != st.end()) {
+				st.erase(x);
 			}
+		} else if (s == "find") {
+			int x ; cin >> x ;
+			if (x < st.size()) {
+				cout << *st.find_by_order(x) << nline;
+			} else {
+				cout << -1 << nline;
+			}
+		} else {
+			int x; cin >> x ;
+			cout << st.order_of_key(x) << nline;
+
 		}
 	}
-	cout << ans << nline;
 
 }
 int32_t main() {
@@ -135,7 +150,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();

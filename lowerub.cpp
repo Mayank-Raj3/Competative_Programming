@@ -106,26 +106,45 @@ void _print(map <T, V> v) {
 	cerr << "]";
 }
 //-------------------------------Think&Code----------------------------------*/
-
+/*
+1 x - Find the smallest Element ≥ x
+2 x - Find the smallest Element > x
+3 x - Find the number of elements ≤ x
+4 x - Find the number of elements < x
+*/
 
 void solve() {
-	string s ; cin >> s;
-	stack<char> st ;
-	int n = s.size();
-	int ans = 0 ;
-	for (int i = 0 ; i < n; i++) {
-		if (s[i] == '(') {
-			st.push('(');
-		} else {
-			if (!st.empty()) {
-				if (st.top() == '(') {
-					ans += 2;
-					st.pop();
-				}
+	int n , q ; cin >> n >> q ;
+	vector<int> arr(n);
+	for (int i = 0 ; i < n  ; i++) cin >> arr[i];
+	sort(all(arr));
+
+	while (q--) {
+		int t ; cin >> t ;
+		int x ; cin >> x ;
+		if (t == 1) {
+			auto it = lower_bound(all(arr), x);
+			if (it == arr.end()) {
+				cout << -1 << " ";
+				continue;
 			}
+			cout << *it << " ";
+		} else if (t == 2) {
+			auto it = upper_bound(all(arr), x);
+			if (it == arr.end()) {
+				cout << -1 << " ";
+				continue;
+			}
+			cout << *it << " ";
+		} else if (t == 3) {
+			auto it = upper_bound(all(arr), x) - arr.begin();
+			cout << it << " ";
+		} else {
+			auto it = lower_bound(all(arr), x) - arr.begin();
+			cout << it << " ";
 		}
 	}
-	cout << ans << nline;
+	cout << nline;
 
 }
 int32_t main() {
@@ -135,7 +154,7 @@ int32_t main() {
 	jay_shri_ram;
 
 	int t ; cin >> t;
-	int t = 1;
+	//int t=1;
 
 	while (t--) {
 		solve();
