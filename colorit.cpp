@@ -94,7 +94,7 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 // if we want set then chang less_equls to less
 // in multiset use --lower_bound() to find and erase
 //  find_by_order(k): It returns to an iterator to the kth element
-// order_of_key(k) : It returns to the number of items that are strictly smaller
+//  order_of_key(k) : It returns to the number of items that are strictly smaller
 */
 
 /*{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}*/
@@ -106,27 +106,13 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
-		}
-		sum += (arr[i]);
-	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	int n , k ; cin >> n >> k ;
+	int ans = binpow((k - 1), n - 1, mod);
+	cout << mod_mul(k, ans, mod) << nline;
+
 }
+
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
