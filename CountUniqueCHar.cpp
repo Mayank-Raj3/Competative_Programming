@@ -104,41 +104,33 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
+
+void solve() {
+	int n ; cin >> n ;
+	string s ; cin >> s ;
+	vi occ[26];
+	for (int i = 0 ; i < 26; i++) {
+		occ[i].pb(-1);
+	}
 	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+		occ[s[i] - 'a'].pb(i);
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+	for (int i = 0 ; i < 26 ; i++) {
+		occ[i].pb(n);
 	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
 	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+	// (ontribution technique
+	// iterate on char and a_____a_____a
+	//                        x     y
+	//                  -1 0     i     n
+	//             cnt+=  (1*(i)) + (n-i*i)
+	for (int i = 0 ; i < 26 ; i++) {
+		for (int j = 1 ; j < (occ[i].size() - 1) ; j++) {
+			cnt += (occ[i][j] - occ[i][j - 1]) * (occ[i][j + 1] - occ[i][j]);
 		}
-		cout << cnt << " ";
 	}
+	cout << cnt << nline;
+
 }
 
 
@@ -147,7 +139,7 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int t ; cin >> t ; while (t--)
+		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
