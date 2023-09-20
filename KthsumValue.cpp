@@ -109,8 +109,8 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m , k ; cin >> n >> m >>  k;
-
+	int n  , k ; cin >> n  >>  k;
+	int m =  n ;
 	vi arr(n), brr(m);
 	for (int i = 0 ; i < n ; i++) {
 		cin >> arr[i];
@@ -150,12 +150,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	int t ; cin >> t;
-	//int t=1;
 
-	while (t--) {
-		solve();
-	}
+	solve();
 }
 /* -----------------END OF PROGRAM --------------------*/
 

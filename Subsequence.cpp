@@ -12,9 +12,8 @@ void printF(int ind , char arr[], int n , vector<char> &ds) {
 		return ;
 	}
 	printF(ind + 1, arr, n, ds);
-
-
 	ds.push_back(arr[ind]);
+	//not take
 	printF(ind + 1, arr, n, ds);
 	ds.pop_back();
 
