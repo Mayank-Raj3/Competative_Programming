@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -24,7 +23,6 @@ using namespace std;
 #define No                            cout << "No\n";
 #define minus1                        cout << "-1\n";
 #define one                           cout << "1\n";
-#define gcd(a, b)                     __gcd(a, b)
 #define PI                            3.141592653589793238462
 #define sz(x) (                       (int)(x).size())
 #define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -47,7 +45,7 @@ typedef unsigned long long            ull     ;
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
-const int EPS = 1e-9;
+
 
 //debugger
 #ifndef ONLINE_JUDGE
@@ -107,35 +105,51 @@ void _print(map <T, V> v) {
 }
 //-------------------------------Think&Code----------------------------------*/
 
-
-void solve() {
-	int n , m ;
-	cin >> n >> m;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
-		}
-		cout << j << " ";
-	}
+int gcd (int a, int b) {
+	if (b == 0)
+		return a;
+	else
+		return gcd (b, a % b);
 }
+void solve() {
+	int n ; cin >> n;
+	map<pair<int, int>, int> mpp;
+	vector<int> arr(n) , brr(n);
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
+	}
+	for (int i = 0 ; i < n ; i++) {
+		cin >> brr[i];
+	}
+	int cnt = 0;
+	for (int i = 0 ; i < n ; i++) {
+		if (arr[i] != 0 ) {
+			int gc = gcd(arr[i], brr[i]);
+			mpp[ { -brr[i] / gc, arr[i] / gc}]++;
+		}
+		else if (brr[i] == 0) cnt++;
+	}
+
+	db(mpp);
+	int maxi = 0;
+	for (auto it : mpp)
+		maxi = max(maxi, it.second);
+
+	cout << maxi + cnt << nline ;
+
+}
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
 	}
 }
 /* -----------------END OF PROGRAM --------------------*/
-
-

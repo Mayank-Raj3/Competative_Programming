@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -109,19 +108,26 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
+	int n ; cin >> n ;
+	set<int> presentInSet , notPresent ;
+	while (n--) {
+		int type , x ; cin >> type >> x ;
+		if (type == 1) {
+			presentInSet.insert(x);
+			notPresent.erase(x);
+			if (presentInSet.find(x + 1) == presentInSet.end()) {
+				notPresent.insert(x + 1);
+			}
+
+		} else {
+			if (presentInSet.find(x ) == presentInSet.end()) {
+				cout << x << nline;
+			} else {
+				cout << *notPresent.lower_bound(x) << nline;
+			}
 		}
-		cout << j << " ";
 	}
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -129,13 +135,11 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
 	}
 }
 /* -----------------END OF PROGRAM --------------------*/
-
-

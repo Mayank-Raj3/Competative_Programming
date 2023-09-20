@@ -47,7 +47,6 @@ typedef unsigned long long            ull     ;
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
-const int EPS = 1e-9;
 
 //debugger
 #ifndef ONLINE_JUDGE
@@ -109,18 +108,34 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
+	int n , m ; cin >> n >> m ;
+	map<int, vector<pair<int, int>>> mpp;
+	for (int i = 1 ; i <= m ; i++) {
+		int l , r ; cin >> l >> r ;
+		mpp[l].pb({r, i});
+	}
+	map<int, string> ans ;
+	for (auto &it : mpp) {
+		sort(all(it.ss));
+		string t = to_string(it.ff);
+		int len1 = t.size();
+		string s1((6 - len1), '0');
+		s1 += t;
+		db(it.ss)
+		for (int i = 0 ; i < it.ss.size() ; i++) {
+			string t1 = to_string(i + 1);
+			int len2 = t1.size();
+			string s2((6 - len2), '0');
+			s2 += t1;
+			ans[it.ss[i].ss] = s1 + s2;
+
 		}
-		cout << j << " ";
+
+	}
+	db(mpp);
+	db(ans);
+	for (auto it : ans) {
+		cout << it.ss << nline;
 	}
 }
 int32_t main() {
@@ -129,12 +144,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
 
-	while (t--) {
-		solve();
-	}
+	solve();
 }
 /* -----------------END OF PROGRAM --------------------*/
 

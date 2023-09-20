@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -106,26 +106,65 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
-	int n ; cin >> n ;
+	/*
+	______________________________________________
+	mid * k balls chiiye
+	mid = 6  , {2,5}, {1,4} ,
+	sum  = 5 + 4  so if sum>=mid*k
+	______________________________________________
+	______________________________________________
+	1-5 , 2-3 , 3-2 {ball,freq} k = 2
+
+	mid = 4,sum = (1 mese min(mid,5)=4) +(2 mese min(mid,3)=3)+(3 mese min(mid,3)=2) = 9
+
+	[4 balls a] [3 balls  b] [2 balls c]
+
+	[ab]
+	[ab]
+	[ab]
+
+	rem a - 1 , b = 0 , c =2
+
+	[ac]
+
+	rem a - 1 , b = 0 , c =1
+	sum>=mid*k
+
+	tab hamesh har box me distint ayega :- aur k box me hoga
+	*/
+
+	int n , k ; cin >> n >> k ;
 	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
+	map<int, int> mpp;
 	for (int i = 0 ; i < n ; i++) {
 		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+		mpp[arr[i]]++;
+	}
+
+	db(mpp)
+	auto check = [&](int mid ) {
+		int cnt = 0 ;
+		for (auto it : mpp) {
+			cnt += min(mid , it.ss);
 		}
-		sum += (arr[i]);
+
+		return cnt >= (mid * k);
+	};
+
+
+	int lo = 0 , hi = 1e9 + 5, ans = 0 ;
+	while (lo <= hi) {
+		int mid = (lo + hi ) / 2 ;
+		if (check(mid)) {
+			ans = mid ;
+			lo = mid + 1 ;
+		} else {
+			hi = mid - 1 ;
+		}
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	cout << ans << nline;
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -136,3 +175,4 @@ int32_t main() {
 		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

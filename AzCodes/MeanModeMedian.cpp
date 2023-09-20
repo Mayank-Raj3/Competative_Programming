@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -104,27 +104,132 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
+struct cmp {
+	bool operator()(const pii a, const pii b) const {
+		if (a.first == b.first) {
+			return a.second > b.second;
+		}
+		return a.first < b.first;
+	}
+};
+
+struct dashboard {
+	int sum = 0 , sqsum = 0 ;
+	int cnt  = 0 ;
+	map<int, int> freq;
+	multiset<pii,  cmp> freq_order;
+	multiset<int> smaller, higher ;
+	void balance() {
+		while (smaller.size() < higher.size()) {
+			smaller.insert(*higher.begin());
+			higher.erase(higher.begin());
+		}
+		while (smaller.size() > higher.size() + 1) {
+			auto it = *smaller.rbegin();
+			smaller.erase(smaller.find(it));
+			higher.insert(it);
+		}
+	}
+	void insert(int x ) {
+
+		sqsum = mod_add(sqsum, mod_mul(x , x, mod), mod);
+		sum = mod_add(sum , x, mod);
+		cnt += 1;
+
+
+		//mode
+		if (freq_order.find({freq[x], x}) != freq_order.end()) {
+			freq_order.erase(freq_order.find({freq[x], x}));
+		}
+		freq[x]++;
+		freq_order.insert({freq[x], x});
+
+		//median
+		if (smaller.size() == 0) {
+			smaller.insert(x);
+		}
+		else if (*smaller.rbegin() >= x) {
+			smaller.insert(x);
+		}
+		else {
+			higher.insert(x);
+		}
+		balance();
+	}
+	void remove(int x ) {
+		sqsum = mod_sub(sqsum, mod_mul(x , x, mod), mod);
+		sum = mod_sub(sum , x, mod);
+		cnt -= 1;
+		// remove mode
+		if (freq_order.find({freq[x], x}) != freq_order.end()) {
+			freq_order.erase(freq_order.find({freq[x], x}));
+		}
+		freq[x]--;
+		freq_order.insert({freq[x], x});
+		//median
+		if (higher.count(x)) {
+			higher.erase(higher.find(x));
+		} else {
+			smaller.erase(smaller.find(x));
+		}
+		balance();
+
+	}
+	int mean() {
+		return mod_div(sum , cnt, mod) ;
+	}
+	int variance() {
+		return mod_sub((mod_div(sqsum , cnt, mod)) , (mod_mul(mean(), mean(), mod)), mod) ;
+	}
+	int  mode() {
+
+		// for (auto i : freq_order)
+		// 	cerr << i.ff << " " << i.ss << "\n";
+
+		// cerr << nline;
+		return freq_order.rbegin()->ss;
+	}
+	int median() {
+		if ((smaller.size() + higher.size()) % 2) {
+			return *smaller.rbegin();
+		} else {
+			return mod_div(mod_add(*higher.begin() , *smaller.rbegin(), mod),  2, mod);
+		}
+	}
+	int count () {
+		return cnt ;
+	}
+};
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+	dashboard d ;
+
+	int q ; cin >> q ;
+	while (q--) {
+		string s; cin >> s ;
+		if (s == "insert") {
+			int x ; cin >> x ;
+			d.insert(x) ;
+		} else if (s == "remove") {
+			int x ; cin >> x ;
+			d.remove(x) ;
+		} else if (s == "getMean") {
+			if (d.count() == 0) {
+				cout << -1 << nline;
+			} else
+				cout << d.mean() << nline;
 		}
-		sum += (arr[i]);
-	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
+		else if (s == "getMode") {
+			if (d.count() == 0) {
+				cout << -1 << nline;
+			} else
+				cout << d.mode() << nline;
+		} else if (s == "getMedian") {
+			if (d.count() == 0) {
+				cout << -1 << nline;
+			} else
+				cout << d.median() << nline;
+		}
 	}
 }
 int32_t main() {
@@ -136,3 +241,4 @@ int32_t main() {
 		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

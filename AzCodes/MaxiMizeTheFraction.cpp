@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -107,25 +107,30 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 void solve() {
 	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+	int  k ; cin >> k  ;
+	vector<int> arr(n), brr(n);
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	for (int i = 0 ; i < n ; i++) cin >> brr[i];
+	ld ans = 0.0 ;
+	ld low = 0 , hi = accumulate(all(arr), 0.0);
+	while (abs(low - hi) > 1e-12) {
+		ld mid = (low + hi) / 2.0;
+		priority_queue<ld, vector<ld> , greater<ld>> pq ;
+
+		for (int i = 0 ; i <  n ; i++) {
+			pq.push(arr[i] - mid * brr[i]);
 		}
-		sum += (arr[i]);
+
+		ld sum = 0.0 ;
+		while (pq.size() > k) pq.pop();
+		while (pq.size()) sum += pq.top(), pq.pop();
+		if (sum >= 0 ) ans = mid , low = mid ;
+		else hi = mid ;
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	cout << ps(ans , 6) << nline;
+
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -136,3 +141,4 @@ int32_t main() {
 		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

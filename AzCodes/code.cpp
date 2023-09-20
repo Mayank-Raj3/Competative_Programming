@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 #define int 						  long long
@@ -109,19 +108,30 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
+	int n ; cin >> n ;
 	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
+	for (int i = 0 ; i < n; i++) cin >> arr[i];
+	int ans = arr[0], t = arr[0] , cnt = 0 ;
+	vector<int> temp(n, -1);
+	for (int i = 0 ; i < n ; i ++) {
+		ans &= arr[i];
+		if (ans == 0) {
+			cnt++;
+			if (i + 1 < n)
+				ans = arr[i + 1];
 		}
-		cout << j << " ";
+		t &= arr[i];
 	}
+	if (t != 0) {
+		cout << 1 << nline;
+	} else {
+		cout <<  cnt << nline;
+
+	}
+
+
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -129,8 +139,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();
@@ -138,4 +148,4 @@ int32_t main() {
 }
 /* -----------------END OF PROGRAM --------------------*/
 
-
+ 

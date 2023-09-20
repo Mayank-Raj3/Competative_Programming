@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -103,36 +103,31 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
   if (found != string::npos)
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*
+If t i th =1, change the x i th -th character of S to c i th .
+ If t i th =2, convert all uppercase letters in S to lowercase (do not use x i th ,c i th for this operation).
+ If t i th =3, convert all lowercase letters in S to uppercase (do not use x i th ,c i th for this operation).
+*/
 
+struct dashboard {
+	multiset<int> lower , upper;
+
+	void upToLb()
+
+};
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
-		}
-		sum += (arr[i]);
-	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

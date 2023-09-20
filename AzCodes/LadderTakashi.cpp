@@ -47,7 +47,7 @@ typedef unsigned long long            ull     ;
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
-const int EPS = 1e-9;
+
 
 //debugger
 #ifndef ONLINE_JUDGE
@@ -109,19 +109,31 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
-		}
-		cout << j << " ";
+	int n ; cin >> n ;
+	map<int, vi> mpp;
+	for (int i = 0 ; i < n ; i++) {
+		int l , r ; cin >> l >> r ;
+		mpp[l].pb(r);
+		mpp[r].pb(l);
 	}
+	db(mpp);
+
+	// vector<int> vis() here we cant make vis array we have to use vis set
+	set<int> vis ;
+	function<void(int)> dfs = [&](int node) {
+		vis.insert(node);
+		for (auto it : mpp[node]) {
+			if (!vis.count(it)) {
+				dfs(it);
+			}
+		}
+	};
+
+
+	dfs(1);
+	cout << *vis.rbegin() << nline;
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

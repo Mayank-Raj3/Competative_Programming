@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -107,32 +107,34 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 void solve() {
 	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+	int k = ceil((n * n) / 2.0) ;
+	auto check = [&](int mid) {
+		int cnt = 0 ;
+		for (int i = 1 ; i <= n ; i++) {
+			cnt += min(n , (mid / i));
 		}
-		sum += (arr[i]);
+		return cnt >= k;
+	};
+	int lo = 0 , hi = n * n, ans = 0  ;
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2 ;
+		if (check(mid)) {
+			ans = mid ;
+			hi = mid - 1 ;
+		} else {
+			lo = mid + 1;
+		}
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	cout << ans << nline;
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

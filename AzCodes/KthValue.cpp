@@ -47,7 +47,7 @@ typedef unsigned long long            ull     ;
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
-const int EPS = 1e-9;
+
 
 //debugger
 #ifndef ONLINE_JUDGE
@@ -109,19 +109,48 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
+	int n , m , q ; cin >> n >> m >> q ;
 	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
-		}
-		cout << j << " ";
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
 	}
+	vector<int> diff(n + 2, 0);
+	while (m--) {
+		int l , r ; cin >> l >> r ;
+		diff[l]++; diff[r + 1]--;
+	}
+	for (int i = 1 ; i < n + 2; i++) {
+		diff[i] += diff[i - 1];
+	}
+
+	map<int, int> mpp, ans;
+	for (int i = 0 ; i < n ; i++) {
+		if (diff[i + 1] != 0) {//!=0 bexause may be that element is neve encounderd in that l , r
+			mpp[arr[i]] += diff[i + 1];// + dalna hoga idr because  array me duplicates ho skte tho vo bhi incude ho skta ha
+			// = dalne se over ride ho rha ha
+		}
+	}
+	vector<pair<int, int>> a;
+	for (auto it :  mpp) {
+		a.pb({it.ss, it.ff});
+	}
+	for (int i = 1 ; i < a.size();  i++) {
+		a[i].ff += a[i - 1].ff;
+	}
+	while (q--) {
+		int k ; cin >> k ;
+		pair<int, int> p = {k, -MOD};
+		auto low = lower_bound(a.begin(), a.end(), p);
+		if (low == a.end()) {
+			cout << -1 << " ";
+		}
+		else {
+			cout << (*low).ss << " ";
+		}
+
+	}
+	cout << nline;
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -129,8 +158,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();

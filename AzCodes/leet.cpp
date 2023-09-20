@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -108,24 +108,43 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 void solve() {
 	int n ; cin >> n ;
 	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	int psi[n];
+	stack<int> s;
 	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+		while (s.empty() == false && arr[i] <= arr[s.top()]) {
+			s.pop();
 		}
-		sum += (arr[i]);
+		if (s.empty() )
+			psi[i] = 0;
+		else
+			psi[i] = s.top() + 1;
+
+		s.push(i);
 	}
-	if (n == 1) {
-		NO
-		return ;
+	while (!s.empty())
+		s.pop();
+	int nsi[n];
+	for (int i = n - 1 ; i >= 0 ; i--) {
+
+		while (s.empty() == false && arr[i] <= arr[s.top()]) {
+			s.pop();
+		}
+
+		if (s.empty() )
+			nsi[i] = n - 1;
+		else
+			nsi[i] = s.top() - 1;
+
+		s.push(i);
 	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
+	int maxi = -100000;
+	for (int i = 0 ; i < n ; i++) {
+		maxi = max(maxi, ((nsi[i] - psi[i] + 1 ) * arr[i] ));
 	}
+	cout << maxi << nline;
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -136,3 +155,4 @@ int32_t main() {
 		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

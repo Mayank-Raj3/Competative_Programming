@@ -1,9 +1,6 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -71,7 +68,6 @@ template <class T> void _print(multiset <T> v);
 template <class T, class V>
 void _print(pair <T, V> p) { cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}"; } template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) { _print(i); cerr << " "; } cerr << "]"; } template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) { _print(i); cerr << " "; } cerr << "]"; } template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) { _print(i); cerr << " "; } cerr << "]"; } template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) { _print(i); cerr << " "; } cerr << "]"; }
 /*{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}*/
-
 int inv(int i) {if (i == 1) return 1; return (mod - ((mod / i) * inv(mod % i)) % mod) % mod;}
 void extendgcd(int a, int b, int*v) {if (b == 0) {v[0] = 1; v[1] = 10; v[2] = a; return ;} extendgcd(b, a % b, v); int x = v[1]; v[1] = v[0] - v[1] * (a / b); v[0] = x; return;} //pass an arry of size1 3
 int mod_add(int a, int b, int m) {a = a % m; b = b % m; return (((a + b) % m) + m) % m;}
@@ -83,19 +79,9 @@ int binpow(int a, int b, int mod) {a %= mod; int res = 1; while (b > 0) {if (b &
 int mminv(int a, int b) {int arr[3]; extendgcd(a, b, arr); return mod_add(arr[0], 0, b);} //for non prime b
 int mminvprime(int a, int b) {return binpow(a, b - 2, b);}
 int mod_div(int a, int b, int m) {a = a % m; b = b % m; return (mod_mul(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
-
 // first four is adjacent after digonal
 int dx[8] = {0, 1, 0, -1, 1, 1, -1, -1};
 int dy[8] = {1, 0, -1, 0, 1, -1, -1, 1};
-
-/*
-template <typename T>
-using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
-// if we want set then chang less_equls to less
-// in multiset use --lower_bound() to find and erase
-//  find_by_order(k): It returns to an iterator to the kth element
-// order_of_key(k) : It returns to the number of items that are strictly smaller
-*/
 
 /*{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}*/
 /*
@@ -104,35 +90,65 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
-		}
-		sum += (arr[i]);
+	int n , q , k ; cin >> n >> q >> k ;
+	vector<int> kk(n + 2, 1);
+	kk[0] = 1;
+	for (int i = 1 ; i <= n ; i++)
+		kk[i] = mod_mul(kk[i - 1], k, mod);
+
+	vi pref(n + 2);
+	db(kk);
+	while (q--) {
+		int a , l , r ;
+		cin >> a >> l >> r ;
+		int temp = mod_mul(a, kk[r - l + 1], mod);
+		pref[l] = mod_add(pref[l], a, mod);
+		pref[r + 1] = mod_sub(pref[r + 1], temp, mod);
+
 	}
-	if (n == 1) {
-		NO
-		return ;
+
+	for (int i = 1 ; i <= n  ; i++) {
+		pref[i] = mod_add(pref[i] , mod_mul(pref[i - 1] , k, mod), mod);
+		cout << pref[i] << " ";
 	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+
+	cout << nline;
 }
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+
+	// int t ; cin >> t ; while (t--)
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+
+
+
+
+
+// 1 234565 20738840 605970552 481534907 234669798 320782555 359486867 36367594 564626900 707871413 0
+
+
+
+// arr [ 0 2814780 523006687 465622629 199349012 300672460 114432322 22968247 446405589 552225461 707871413 0 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

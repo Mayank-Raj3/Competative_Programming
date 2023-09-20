@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -107,32 +107,64 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 void solve() {
 	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+	string s ; cin >> s  ;
+	int q ; cin >> q ;
+	vector<int> up(26), lo(26);
+	for (auto it : s) {
+		if (isupper(it)) {
+			up[it - 'A']++;
+		} else {
+			lo[it - 'a']++;
 		}
-		sum += (arr[i]);
 	}
-	if (n == 1) {
-		NO
-		return ;
+
+	while (q--) {
+		int t , ind ; char  ch ; cin >> t >> ind >> ch ;
+		--ind;
+		if (t == 1) {
+			char ct = s[ind];
+			if (isupper(s[ind])) {
+				if (up[ct - 'A'] > 0)
+					up[ct - 'A']--;
+			} else {
+				if (lo[ct - 'a'] > 0)
+					lo[ct - 'a']--;
+			}
+
+			if (isupper(ch)) {
+				up[ch - 'A']++;
+			} else {
+				lo[ch - 'a']++;
+			}
+			s[ind] = ch;
+		} else if (t == 2) {
+			for (auto &it : s) {
+				if (isupper(it)) {
+					tolower(it);
+				}
+			}
+
+
+		} else {
+			for (auto &it : s) {
+				if (islower(it)) {
+					toupper(it);
+				}
+			}
+		}
 	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	cout << s << nline;
+
+	db(lo);
+	db(up);
+	db(nline)
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -106,33 +106,53 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+	// int q ; cin >> q ;
+
+	auto cntDigTillThisPoint = [&](int n ) {
+		int sum = 0 ;
+		for (int i = 1 ; i <= n  ; i *= 10) {
+			sum += (n - i + 1);
 		}
-		sum += (arr[i]);
+		return sum ;
+	};
+	int q = 1 ;
+	while (q--) {
+		int k ; cin >> k ;
+		int lo = 1 , hi = 1e18 , ans = 0 ;
+		while (lo <= hi) {
+			int mid = (lo + hi) / 2;
+
+			if (cntDigTillThisPoint(mid) >= k) {
+				ans = mid ;
+				hi = mid - 1 ;
+			} else {
+				lo = mid + 1 ;
+			}
+		}
+
+		int prevNum = cntDigTillThisPoint(ans - 1);
+		string s = to_string(ans);
+
+
+		for (int i = 0 ; i < s.size(); i++) {
+			if ((prevNum + i + 1 ) == k) {
+				ans = (s[i] - '0');
+				break;
+			}
+		}
+
+		cout << ans << nline;
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

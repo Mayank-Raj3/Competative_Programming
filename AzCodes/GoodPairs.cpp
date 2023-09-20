@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -107,25 +107,24 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 void solve() {
 	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
+	vi arr(n), brr(n), crr(n);
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	for (int i = 0 ; i < n ; i++) cin >> brr[i];
+	for (int i = 0 ; i < n ; i++) crr[i] = arr[i] - brr[i];
+	sort(all(crr));
+	int cnt = 0 ;
 	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+		if (crr[i] <= 0) {
+			auto it = upper_bound(all(crr), -crr[i]) - crr.begin();
+			cnt += 1ll * (n - it);
 		}
-		sum += (arr[i]);
+		else {
+			cnt += 1ll * (n - i - 1);
+		}
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+
+	cout << cnt << nline;
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -136,3 +135,4 @@ int32_t main() {
 		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

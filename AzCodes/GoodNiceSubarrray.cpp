@@ -109,19 +109,37 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
-	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
-		}
-		cout << j << " ";
+
+	int n ; cin >> n ;
+	int k ; cin >> k ;
+	vi arr(n);
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i];
 	}
+	vi pref(n + 1);
+	for (int i = 1 ; i <= n ; i ++) {
+		if (arr[i - 1] % 2) {
+			pref[i] = 1;
+		}
+	}
+	set<int> st;
+	int ind = -1 ;
+	for (int i = 1 ; i <= n ; i++) {
+		if (i) {
+			pref[i] += pref[i - 1];
+			st.insert(pref[i]);
+		}
+	}
+	for (int i = 0 ; i < n ; i++) {
+		if (st.count(pref[i] - k)) {
+			ind = i ;
+			cout << ind << nline;
+			break;
+		}
+	}
+	db(st);
+	db(pref);
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE

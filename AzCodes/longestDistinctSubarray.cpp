@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -106,26 +106,27 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+
+	int n ; cin  >> n ;
+	vi arr(n);
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+
+	int l = 0;
+	int ans = 0;
+	map<int, int> mpp;
+	for (int i = 0; i < n; ++i) {
+
+
+		while (mpp[arr[i]] == 1) {
+			mpp[arr[l]]--;
+			l++;
 		}
-		sum += (arr[i]);
+		mpp[arr[i]]++;
+
+		ans = max(ans, i - l + 1);
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	cout << ans << "\n";
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -136,3 +137,4 @@ int32_t main() {
 		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

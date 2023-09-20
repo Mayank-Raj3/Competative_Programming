@@ -47,7 +47,7 @@ typedef unsigned long long            ull     ;
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
-const int EPS = 1e-9;
+
 
 //debugger
 #ifndef ONLINE_JUDGE
@@ -109,19 +109,36 @@ void _print(map <T, V> v) {
 
 
 void solve() {
-	int n , m ;
-	cin >> n >> m;
+	int n , k ; cin >> n >> k ;
 	vector<int> arr(n);
-	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
-	vector<int> brr(m);
-	for (int i = 0 ; i < m ; i ++) cin >> brr[i];
-	int i = 0 , j = 0 ;
-	for (int i = 0 ; i < m; i++) {
-		while (j < n && brr[i] > arr[j]) {
-			j++;
+	for (int i = 0 ; i < n ; i++ ) cin >> arr[i];
+	int lo = 0, hi = 1e18, ans = 0;
+	sort(all(arr));
+	int mini = arr[0];
+	int sum = accumulate(all(arr), 0ll);
+	auto check = [&](int mid) {
+		int cnt = mid ;
+		if (sum <= k) return true;
+		for (auto it : arr) {
+			if (cnt && (it - mini) > 0) {
+				sum -= mini;
+				cnt--;
+			}
 		}
-		cout << j << " ";
+		sum -= cnt;
+		return sum <= k;
+	};
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		if (check(mid)) {
+			ans = mid;
+			hi = mid - 1;
+		} else {
+			lo = mid + 1;
+		}
 	}
+	cout << ans << nline;
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
@@ -129,8 +146,8 @@ int32_t main() {
 #endif
 	jay_shri_ram;
 
-	// int t ; cin >> t;
-	int t = 1;
+	int t ; cin >> t;
+	//int t=1;
 
 	while (t--) {
 		solve();

@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -104,35 +104,82 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
+/*
+1 x: Add x in structure.
 
+2 x: Remove x from the structure if present in the structure.
+If x doesn't present in the structure, do nothing.
+If there are multiple occurrences of x, delete only one occurrence of x.
+
+3 ?: Print the sum of the top K elements.
+If the structure contains less than K elements,
+then print the sum of all elements present in the structure.
+If the structure is empty, then print 0.
+
+
+
+*/
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
+	int sum = 0 ;
+	multiset<int> temp , topK;
+	int q , k ; cin >> q >> k ;
+
+	while (q--) {
+
+		int t ; cin >> t ;
+		if (t == 1) {
+			int x ; cin >> x ;
+			if (topK.size() < k) {
+				topK.insert(x);
+				sum += x;
+			} else {
+				int fr = *topK.begin();
+				if (x > fr) {
+					sum -= fr;
+					sum += x;
+					topK.erase(topK.begin());
+					topK.insert(x);
+					temp.insert(fr);
+				} else {
+					temp.insert(x);
+				}
+			}
+		} else if (t == 2) {
+
+			int x ; cin >> x ;
+			if (temp.find(x) != temp.end()) {
+				temp.erase(temp.find(x));
+			}
+			else {
+				if (topK.find(x) != topK.end()) {
+					topK.erase(topK.find(x));
+					sum -= x;
+
+					if (temp.size() == 0 ) continue;
+					int lar = *temp.rbegin();
+					sum += lar;
+					topK.insert(lar);
+					temp.erase(temp.find(*temp.rbegin()));
+				}
+			}
+
+
+		} else  {
+			char ch ; cin >> ch ;
+			cout << sum << nline;
 		}
-		sum += (arr[i]);
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+
+
+
 }
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+
