@@ -104,50 +104,62 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+int arr[100100];
+int tre[400400];
+void build(int ind , int l , int r ) {
+	if (l == r) {
+		tre[ind] = arr[l];
+		return;
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
+	int mid = (l + r) / 2;
+	build(2 * ind, l, mid);
+	build(2 * ind + 1, mid + 1, r);
+	tre[ind] = __gcd(tre[2 * ind] , tre[2 * ind + 1]);
 }
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
+void update(int ind , int l , int r , int pos , int val) {
+	if (pos < l || pos > r)
+		return ;
+	if (l == r) {
+		tre[ind] = val;
+		arr[l] = val;
+		return;
+	}
+	int mid = (l + r) / 2;
+	update(2 * ind, l, mid, pos, val);
+	update(2 * ind + 1, mid + 1, r, pos, val);
+	tre[ind] = __gcd(tre[2 * ind] , tre[2 * ind + 1]);
+}
+
+int query(int ind , int l , int r , int lq , int rq ) {
+	if (l > rq || lq > r)
+		return 0;
+	if (lq <= l && r <= rq) {
+		return tre[ind];
+	}
+	int mid = (l + r) / 2;
+	return __gcd(query(ind * 2, l, mid, lq, rq), query(ind * 2 + 1, mid + 1, r, lq, rq));
+}
+void solve() {
+	int n ; cin >> n ;
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	build(1, 0, n - 1);
+	int len = INT_MAX , right = 0 , j = 0 ;
+
+	while (right < n) {
+		while (j <= right  and query(1 , 0, n - 1 , j  , right ) == 1) {
+			len = min(len , right - j + 1 );
 			j++;
 		}
-		cout << cnt << " ";
+		right++;
 	}
+	len != (INT_MAX) ? cout << len << nline : minus1
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

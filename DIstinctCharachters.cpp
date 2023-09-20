@@ -104,41 +104,37 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+
+void solve() {
+	string s; cin >> s ;
+	int n  = sz(s);
+	int q ; cin >> q ;
+	set<int> arr[26];
+	for (int i = 0 ; i < n ; i ++ ) {
+		arr[s[i] - 'a'].insert(i + 1);
 	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+	while (q--) {
+		int ch ; cin >> ch ;
+		if (ch == 1) {
+			int pos ; cin >> pos ;
+			char ct ; cin >> ct ;
+			arr[s[pos - 1] - 'a'].erase(pos);
+			s[pos - 1] = ct;
+			arr[ct - 'a'].insert(pos);
+		} else {
+			int cnt =  0 ;
+			int l , r; cin >> l >> r ;
+			for (int i = 0 ; i < 26 ; i++) {
+				auto it = arr[i].lower_bound(l);
+				if (it != arr[i].end() and  * it <= r) {
+					cnt++;
+				}
+			}
+			cout << cnt << nline;
 		}
-		cout << cnt << " ";
 	}
+
 }
 
 
@@ -147,7 +143,7 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int t ; cin >> t ; while (t--)
+		solve();
 }
 /*----------------------------------endsHere----------------------------------*/

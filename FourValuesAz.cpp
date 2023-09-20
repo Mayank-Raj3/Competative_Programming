@@ -104,41 +104,29 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+void solve() {
+	int  n ; cin >> n ;
+	int target ; cin >> target;
+	vector<int> arr(n);
+	for (int i = 0 ; i < n ; i ++) cin >> arr[i];
+	map<int, pair<int, int>> mpp;
+	for (int b  =  n - 2 ; b >= 1 ; b--) {
+		for (int a = b - 1; a >= 0 ; a-- ) {
+			auto it = mpp.find(target - arr[a] - arr[b]);
+			if (it != mpp.end()) {
+				pair<int, int> ans = mpp[target - arr[a] - arr[b]];
+				// cout << arr[b] << " " << arr[a] << " " << ans.ff << " " << ans.ss << nline ;
+				YES
+				return ;
+			}
 		}
-		cout << cnt << " ";
+		int c = b ;
+		for (int d =  c + 1  ; d < n ; d++) {
+			mpp[arr[c] + arr[d]] = {arr[c], arr[d]} ;
+		}
 	}
+	NO
 }
 
 
@@ -147,7 +135,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

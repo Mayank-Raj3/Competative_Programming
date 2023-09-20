@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
+//using namespace __gnu_pbds;
 #define int 						  long long
 #define ll 							  long long
 #define ld 							  long double
@@ -104,50 +104,37 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+void solve() {
+	int n ; cin >> n ;
+	int k ; cin >> k ;
+	auto check = [&](int mid) {
+		int cnt = 0 ;
+		for (int i = 1 ; i <= n ; i++) {
+			cnt += min(n , (mid / i));
 		}
-		cout << cnt << " ";
+		return cnt >= k;
+	};
+	int lo = 0 , hi = n * n, ans = 0  ;
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2 ;
+		if (check(mid)) {
+			ans = mid ;
+			hi = mid - 1 ;
+		} else {
+			lo = mid + 1;
+		}
 	}
+	cout << ans << nline;
+
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+

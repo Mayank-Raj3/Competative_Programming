@@ -104,41 +104,51 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
+int n , k;
+vector<char> arr;
+set<string> ans ;
+void generateParenthesis(int ind, int depth) {
+	if (n == ind ) {
+		if (!depth ) {
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
+
+			string s = "";
+			int dep = 0 , cnt = 0;
+			for (auto it : arr) {
+				if (it == '(') {
+					dep++;
+				} else {
+					cnt = max(dep, cnt );
+					dep -- ;
+				}
+				s += it ;
+			}
+			if (cnt == k)
+				ans.insert(s);
+		}
+		return ;
+	}
+	// choice ( , )
+
+	arr.pb('(');
+	generateParenthesis(ind + 1, depth + 1);
+	arr.ppb();
+
+	if (depth) {
+		arr.pb(')');
+		generateParenthesis(ind + 1, depth - 1);
+		arr.ppb();
 	}
 
 }
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+
+void solve() {
+	cin >> n >> k ;
+	generateParenthesis(0, 0);
+	for (auto it : ans) {
+		cout << it << nline ;
 	}
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
-		}
-		cout << cnt << " ";
-	}
 }
 
 
@@ -147,7 +157,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

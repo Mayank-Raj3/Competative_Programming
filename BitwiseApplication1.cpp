@@ -104,41 +104,36 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+/*
+Given an array of N integers, find the sum of XOR of all pairs of numbers in the array, sum of XOR of all subset of numbers in the array, sum of AND of all pairs of numbers in the array, sum of AND of all subset of numbers in the array. Calculate it %1000000007.
+For pair you should select two index i, j such that i<j.
+*/
+void solve() {
+	int n ; cin >> n ;
+	vi arr(n);
+	int xorPSum  = 0;
+	int andPSum  = 0;
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	// 1a. all pair xor sum
+	for (int i = 0 ; i < 32 ; i++) {
+		// bit 1^0 = 1,0^1 = 1
+		int cnt1 = 0 , cnt0 = 0;
+		for (int j = 0 ; j < n ; j++) {
+			(arr[j] & (1 << i))	? cnt1++ : cnt0++;
 		}
-		cout << cnt << " ";
+		// cnt1*cnt0 * 2^bitpos
+		xorPSum = mod_add(mod_mul(mod_mul(cnt1, cnt0, mod), (1 << i), mod), xorPSum , mod);
+		andPSum = mod_add(mod_mul(mod_div(mod_mul(cnt1 , mod_sub(cnt1 , 1, mod), mod) ,  2, mod), 1 << i, mod), andPSum, mod);
 	}
+	//1b. sum of xor of all subset of arr
+	int xorArr = 0;
+
+
+	cout << xorPSum << " " << xorArr << " " << andPSum << " " << nline;
+
+
+
+
 }
 
 
@@ -147,7 +142,7 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int t ; cin >> t ; while (t--)
+		solve();
 }
 /*----------------------------------endsHere----------------------------------*/

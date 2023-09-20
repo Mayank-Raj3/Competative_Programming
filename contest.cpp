@@ -106,33 +106,30 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
-	int n ; cin >> n ;
-	vector<int> arr(n);
-	int sum = 0 , cnt = 0 ;
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-		if (arr[i] == 1) {
-			cnt++;
-		}
-		sum += (arr[i]);
+	int n;
+	cin >> n;
+	string s; cin >> s;
+	unordered_set<string>tt;
+	cout << s << nline ;
+
+	string q = s;
+	string p = "";
+	fl(i, 0, n) {
+		if (!q.empty())
+			q.erase(q.begin());
+		string k = p + q;
+		tt.insert(k);
+		p.push_back(s[i]);
 	}
-	if (n == 1) {
-		NO
-		return ;
-	}
-	int remSum = sum - (n - cnt);
-	if (sum >= ((n * (n + 1)) / 2) || ((cnt * 2) <= remSum)) {
-		YES
-	} else {
-		NO
-	}
+	cout << tt.size();
+
 }
+
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

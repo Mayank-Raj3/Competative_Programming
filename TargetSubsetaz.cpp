@@ -104,41 +104,45 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+vi subsetSum(vector<int> arr ) {
+	vi ans ;
+	for (int i = 0 ; i < (1 << arr.size()); i++) {
+		int sum = 0 ;
+		for (int j = 0 ; j < arr.size(); j++) {
+			if (i & (1 << j)) {
+				sum += arr[j];
+			}
+		}
+		ans.pb(sum);
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
+	sort(all(ans));
+	return ans ;
 }
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+
+void solve() {
+	int n , x ; cin >> n >> x ;
+	vector<int> arr(n), a, b;
+	for (int i = 0 ; i < n; i++) {
+		cin >> arr[i] ;
+		if (i % 2) {
+			a.pb(arr[i]);
+		} else {
+			b.pb(arr[i]);
+		}
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
+
+	vi firstSubsetsum  = subsetSum(a);
+	vi SecondSubsetsum  = subsetSum(b);
 
 	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
-		}
-		cout << cnt << " ";
-	}
+	// for (int i = 0 ; i < firstSubsetsum.size(); i++) {
+	// 	cnt += (upper_bound(all(SecondSubsetsum), (x - firstSubsetsum[i])) - SecondSubsetsum.begin());
+	// }
+
+	vector<int> ful = subsetSum(arr);
+
+	cnt += upper_bound(all(ful), x) - ful.begin();
+	cout << cnt << nline ;
 }
 
 
@@ -147,7 +151,7 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int t ; cin >> t ; while (t--)
+		solve();
 }
 /*----------------------------------endsHere----------------------------------*/

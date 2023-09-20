@@ -103,42 +103,33 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
   if (found != string::npos)
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*for (ld i  = 0 ; i < 64; i++) {
+		ld mid = (lo + hi) / 2.0 ;
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+		if ((mid * mid) >= c) {
+			hi = mid ;
+		} else {
+			lo =  mid ;
 		}
-		cout << cnt << " ";
+
+	}*/
+
+ld sqr(ld x) {
+	return  sqrtl(x) ;
+}
+void solve() {
+	ld c ; cin >> c ;
+	ld lo = 1  , hi = 1e10 ;
+	for (ld i  = 0 ; i < 64; i++) {
+		ld mid = (lo + hi) / 2.0 ;
+		if (((mid * mid) + sqr(mid)) >= c) {
+			hi = mid ;
+		} else {
+			lo =  mid ;
+		}
 	}
+
+	cout << ps( (lo + hi) / 2, 6) << nline;
 }
 
 
@@ -147,7 +138,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

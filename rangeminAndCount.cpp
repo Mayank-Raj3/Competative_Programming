@@ -104,41 +104,78 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+int arr[100100];
+struct node {
+	int mini , cnt  ;
+	node(int m = 1e9 , int c = 0) {
+		mini = m , cnt = c;
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
+};
+node tre[400400];
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
+node merge(node a, node  b ) {
+	if (a.mini == b.mini) {
+		return node(a.mini, (a.cnt + b.cnt));
+	} else if (a.mini < b.mini) {
+		return a;
+	} else {
+		return b ;
 	}
+}
+
+void build(int ind , int l , int r ) {
+	if (l == r) {
+		tre[ind] = node(arr[l], 1);
+		return ;
+	}
+	int mid = (l + r) / 2 ;
+	build(2 * ind , l, mid);
+	build(2 * ind + 1 , mid + 1, r);
+	tre[ind] = merge(tre[ind * 2], tre[ind * 2 + 1]);
 
 }
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+
+void update(int ind , int l , int r , int pos , int val ) {
+	if (pos < l || pos > r)
+		return ;
+	if (l == r) {
+		tre[ind] = node(val, 1);
+		arr[l] = val;
+		return;
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+	int mid = (l + r) / 2;
+	update(2 * ind , l, mid, pos, val);
+	update(2 * ind + 1 , mid + 1, r, pos, val);
+	tre[ind] = merge(tre[ind * 2], tre[ind * 2 + 1]);
+}
+
+node query(int ind , int l , int r , int lq , int rq ) {
+	if (l > rq || lq > r)
+		return node();
+	if (lq <= l && r <= rq) {
+		return tre[ind];
+	}
+	int mid = (l + r) / 2;
+	return merge(query(ind * 2, l, mid, lq, rq) , query(ind * 2 + 1, mid + 1, r, lq, rq));
+
+}
+void solve() {
+	int n ; cin >> n ;
+	int q ; cin >> q ;
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	build(1, 0, n - 1);
+	while (q--) {
+		int ch ; cin >> ch ;
+		if (ch == 1) {
+			int pos , val ; cin >> pos >> val;
+			update(1, 0, n - 1, pos , val );
+		} else if (ch == 2) {
+			int l, r; cin >> l >> r;
+			node ans = query(1, 0, n - 1, l, r - 1) ;
+			cout << ans.mini < nline;
+		}
 	}
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
-		}
-		cout << cnt << " ";
-	}
 }
 
 
@@ -147,7 +184,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

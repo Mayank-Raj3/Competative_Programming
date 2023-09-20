@@ -4,11 +4,11 @@
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
 using namespace __gnu_pbds;
-#define int 						  long long
-#define ll 							  long long
-#define ld 							  long double
-#define nline						  "\n"
-#define ff 							  first
+#define int                           long long
+#define ll                               long long
+#define ld                               long double
+#define nline                          "\n"
+#define ff                               first
 #define ss                            second
 #define pb                            push_back
 #define int                           long long
@@ -16,7 +16,7 @@ using namespace __gnu_pbds;
 #define rfl(i,n, k)                   for (int i = n; i >= k; i--)
 #define fel(a,x)                      for (auto& a : x)
 #define mp                            make_pair
-#define ppb 						  pop_back
+#define ppb                           pop_back
 #define ps(x, y)                      fixed << setprecision(y) << x
 #define setbit(x)                     __builtin_popcount(x);
 #define all(var)                      var.begin(), var.end()
@@ -29,20 +29,20 @@ using namespace __gnu_pbds;
 #define minus1                        cout << "-1\n";
 #define one                           cout << "1\n";
 #define PI                            3.141592653589793238462
-#define sz(x) (                       (int)(x).size())
+#define sz(x) 						((int)(x).size())
 #define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define rall(x)                       (x).rbegin(), (x).rend()
 
-typedef pair<int, int> 	              pii     ;
+typedef pair<int, int>                   pii     ;
 typedef vector<int>                   vi      ;
 typedef vector<string>                vs      ;
-typedef vector<pii> 				  vpi     ;
+typedef vector<pii>                   vpi     ;
 typedef vector <pair<int , int> >     vpi     ;
 typedef vector<bool>                  vb      ;
 typedef vector<vector<int>>           vvi     ;
-typedef map<int, int> 				  mpii    ;
-typedef set<int>   					  seti    ;
-typedef multiset<int> 				  mseti	  ;
+typedef map<int, int>                   mpii    ;
+typedef set<int>                         seti    ;
+typedef multiset<int>                   mseti      ;
 typedef unordered_set<int>            useti   ;
 typedef unordered_map<int, int>       umapii  ;
 typedef unsigned long long            ull     ;
@@ -104,41 +104,52 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
+
+void solve() {
+	int n;
+	cin >> n;
+	vector<int> arr(n);
+	// string s; cin >> s ;
+
+	for (int i = 0 ; i < n ; i ++)
 		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+	// arr[i] = s[i] - 'a';
+	map<int, vi> mpp;
+
+	for (int i = 0 ; i < n ; i ++) {
+		if (mpp[arr[i]].empty())
+			mpp[arr[i]].push_back(-1);
+
+		mpp[arr[i]].push_back(i);
 	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
+	db(mpp);
 
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
+// pb - push_back()
+// it {1,{1,2,3,4}}
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+//  it.first = : 1
+// it.second =  {1,2,3,4}
+	//  it.second.size()
+// ss second
+// ss second
+
+
+	int ans = 0;
+
+	for (auto &it : mpp) {
+		it.ss.pb(n);
+
+		for (int i = 1 ; i < (sz(it.ss) - 1); i++) {
+			int left  = it.ss[i] - it.ss[i - 1];
+			int right  = n - it.ss[i];
+			cout << i << " " << left << " " << right << nline ;
+			ans += left  * right ;
+			cout << ans << nline;
 		}
-		cout << cnt << " ";
+		break ;
 	}
+	cout << ans << nline;
 }
 
 
@@ -147,7 +158,41 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int t ; cin >> t ; while (t--)
+		solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+
+/*
+| 1 | 2  | 3 | 1  | 2 | 4 | 1 |
+ab dekho hame ye count karna ha ki 4 kitne me uniquely prenset ha
+
+
+1 2 3 1 2 4
+2 3 1 2 4
+3 1 2 4
+1 2 4
+2 4
+4
+
+
+1 2 3 1 2 4 1
+2 3 1 2 4 1
+3 1 2 4 1
+1 2 4 1
+2 4 1
+4 1
+
+
+tho ye ham effiently find karenge
+[ | 1 | 2  | 3 | 1  | 2 | ]   4  [ | 1 | ]
+ idr agr ham 4 k left me ik line choose kare tho 6c1 and 4 k right me ik choose kare tho 2c1
+
+iska multiplication no of subarray having 4 uniquely dedega
+which is 12
+
+ham aeesa isliye choose kar rhe kyuki 4 chiye subarray se tho
+jha tak dusra 4 nhi aata wha tak consider karenge
+
+aur ans me add karte chalenge har element k liye
+*/

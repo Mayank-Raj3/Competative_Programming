@@ -103,42 +103,37 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
   if (found != string::npos)
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+int subarraysWithKDistinct(vector<int>& arr, int m) {
+	auto subarrays = [&](int k ) {
+		long long  left = 0 , sum  = 0, n = arr.size() ;
+		unordered_map<int, int> mpp;
+		for (int i = 0 ; i < n ; i++) {
+			mpp[arr[i]]++;
+			while ( mpp.size() > k) {
+				mpp[arr[left]]--;
+				if (mpp[arr[left]] == 0) {
+					mpp.erase(arr[left]);
+				}
+				left++;
+			}
+			sum += (i - left + 1);
 		}
-		cout << cnt << " ";
+		return sum ;
+	};
+
+	int atmostKminus = subarrays(m - 1);
+	int atmostK = subarrays(m);
+	return atmostK - atmostKminus;
+}
+void solve() {
+	int n ; cin >> n ;
+	int k ; cin >> k ;
+	vi arr(n);
+	for (int i = 0 ; i < n ; i++) {
+		cin >> arr[i] ;
 	}
+	cout << subarraysWithKDistinct(arr, k) << nline;
+
 }
 
 
@@ -147,7 +142,7 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int t ; cin >> t ; while (t--)
+		solve();
 }
 /*----------------------------------endsHere----------------------------------*/

@@ -104,41 +104,47 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
+void solve() {
+	int n , m; cin >> n >> m;
+	vector<int>	adj[n + 1];
+	vector<int> col(n + 1, 1);
 	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
+		int a , b ; cin >> a >> b ;
+		adj[a].pb(b);
 	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+	vector<int> parent(n + 1, 0);
+	vector<int> cntCycle(n + 1, 0);
+	vi prefOrder;
+	function < void(int, int)> dfs = [&](int node, int par) {
+		col[node] = 2;
+		parent[node] = par;
+		for (auto it : adj[node]) {
+			if (col[it] == 1) {
+				dfs(it, node);
+			} else if (col[it] == 2) {
+				//cycle found
+				cout << node << " " << it << nline ;
+				cntCycle[node]++;
+				cntCycle[parent[it]]--;
+			}
 		}
-		cout << cnt << " ";
+		prefOrder.pb(node);
+		col[node] = 3;
+	};
+
+
+	for (int i = 1 ; i <= n ; i++) {
+		if (col[i] == 1)
+			dfs(i, 0);
 	}
+	db(parent)
+	cout << nline ;
+	for (auto it : prefOrder) {
+		cout << parent[it] << " " << it << nline ;
+		cntCycle[parent[it]] += cntCycle[it];
+	}
+	db(cntCycle)
 }
 
 
@@ -147,7 +153,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

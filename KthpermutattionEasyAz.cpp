@@ -103,42 +103,55 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
   if (found != string::npos)
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+int n;
+vi arr;
+map<int, int> mpp;
+vector<vector<int>> ans;
+vector<int> curr_perm ;
+void rec(int lev ) {
+	db(lev)
+	db(mpp)
+	db(curr_perm)
+	db(nline)
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+	if (lev == n) {
+		//base case
+
+		/*
+		for (auto it : curr_perm) {
+			cout << it << " ";
+		}*/
+
+		ans.pb(curr_perm);
+		// cout << nline ;
+		return ;
 	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
+	for (auto it : mpp) {
+		if (it.ss > 0) {
+			curr_perm.pb(it.ff);
+			mpp[it.ff]--;
+			rec(lev + 1);
+			curr_perm.pop_back();
+			mpp[it.ff]++;
+		}
 	}
 
 }
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+void solve() {
+	int k ;
+	cin >> n >> k ;
+	arr.resize(n);
+	for (int i = 0 ; i < n ; i++)  mpp[i + 1]++;
+	rec(0);
+	for (int i = 0 ; i < ans.size() ; i ++) {
+		for (auto it : ans[i]) {
+			cout << it << " ";
+		}
+		cout << nline ;
 	}
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
-		}
-		cout << cnt << " ";
-	}
+
 }
 
 
@@ -147,7 +160,266 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+/*
+arr [ 1 2 3 ]
+lev 0
+mpp [ {1,1} {2,1} {3,1} ]
+curr_perm [ ]
+nline
+
+lev 1
+mpp [ {1,0} {2,1} {3,1} ]
+curr_perm [ 1 ]
+nline
+
+lev 2
+mpp [ {1,0} {2,0} {3,1} ]
+curr_perm [ 1 2 ]
+nline
+
+lev 3
+mpp [ {1,0} {2,0} {3,0} ]
+curr_perm [ 1 2 3 ]
+nline
+
+lev 2
+mpp [ {1,0} {2,1} {3,0} ]
+curr_perm [ 1 3 ]
+nline
+
+lev 3
+mpp [ {1,0} {2,0} {3,0} ]
+curr_perm [ 1 3 2 ]
+nline
+
+lev 1
+mpp [ {1,1} {2,0} {3,1} ]
+curr_perm [ 2 ]
+nline
+
+lev 2
+mpp [ {1,0} {2,0} {3,1} ]
+curr_perm [ 2 1 ]
+nline
+
+lev 3
+mpp [ {1,0} {2,0} {3,0} ]
+curr_perm [ 2 1 3 ]
+nline
+
+lev 2
+mpp [ {1,1} {2,0} {3,0} ]
+curr_perm [ 2 3 ]
+nline
+
+lev 3
+mpp [ {1,0} {2,0} {3,0} ]
+curr_perm [ 2 3 1 ]
+nline
+
+lev 1
+mpp [ {1,1} {2,1} {3,0} ]
+curr_perm [ 3 ]
+nline
+
+lev 2
+mpp [ {1,0} {2,1} {3,0} ]
+curr_perm [ 3 1 ]
+nline
+
+lev 3
+mpp [ {1,0} {2,0} {3,0} ]
+curr_perm [ 3 1 2 ]
+nline
+
+lev 2
+mpp [ {1,1} {2,0} {3,0} ]
+curr_perm [ 3 2 ]
+nline
+
+lev 3
+mpp [ {1,0} {2,0} {3,0} ]
+curr_perm [ 3 2 1 ]
+nline
+
+/*
+1 2
+2 1
+
+*/
+
+
+/*
+1 2 3
+1 3 2
+2 1 3
+2 3 1
+3 1 2
+3 2 1
+*/
+
+
+/*
+n= 4
+
+
+1 2 3 4
+1 2 4 3
+1 3 2 4
+1 3 4 2
+1 4 2 3
+1 4 3 2
+
+2 1 3 4
+2 1 4 3
+2 3 1 4
+2 3 4 1
+2 4 1 3
+2 4 3 1
+
+3 1 2 4
+3 1 4 2
+3 2 1 4
+3 2 4 1
+3 4 1 2
+3 4 2 1
+
+4 1 2 3
+4 1 3 2
+4 2 1 3
+4 2 3 1
+4 3 1 2
+4 3 2 1
+
+*/
+
+/*
+1 2 3 4 5
+1 2 3 5 4
+1 2 4 3 5
+1 2 4 5 3
+1 2 5 3 4
+1 2 5 4 3
+1 3 2 4 5
+1 3 2 5 4
+1 3 4 2 5
+1 3 4 5 2
+1 3 5 2 4
+1 3 5 4 2
+1 4 2 3 5
+1 4 2 5 3
+1 4 3 2 5
+1 4 3 5 2
+1 4 5 2 3
+1 4 5 3 2
+1 5 2 3 4
+1 5 2 4 3
+1 5 3 2 4
+1 5 3 4 2
+1 5 4 2 3
+1 5 4 3 2
+
+2 1 3 4 5
+2 1 3 5 4
+2 1 4 3 5
+2 1 4 5 3
+2 1 5 3 4
+2 1 5 4 3
+2 3 1 4 5
+2 3 1 5 4
+2 3 4 1 5
+2 3 4 5 1
+2 3 5 1 4
+2 3 5 4 1
+2 4 1 3 5
+2 4 1 5 3
+2 4 3 1 5
+2 4 3 5 1
+2 4 5 1 3
+2 4 5 3 1
+2 5 1 3 4
+2 5 1 4 3
+2 5 3 1 4
+2 5 3 4 1
+2 5 4 1 3
+2 5 4 3 1
+
+3 1 2 4 5
+3 1 2 5 4
+3 1 4 2 5
+3 1 4 5 2
+3 1 5 2 4
+3 1 5 4 2
+3 2 1 4 5
+3 2 1 5 4
+3 2 4 1 5
+3 2 4 5 1
+3 2 5 1 4
+3 2 5 4 1
+3 4 1 2 5
+3 4 1 5 2
+3 4 2 1 5
+3 4 2 5 1
+3 4 5 1 2
+3 4 5 2 1
+3 5 1 2 4
+3 5 1 4 2
+3 5 2 1 4
+3 5 2 4 1
+3 5 4 1 2
+3 5 4 2 1
+
+4 1 2 3 5
+4 1 2 5 3
+4 1 3 2 5
+4 1 3 5 2
+4 1 5 2 3
+4 1 5 3 2
+4 2 1 3 5
+4 2 1 5 3
+4 2 3 1 5
+4 2 3 5 1
+4 2 5 1 3
+4 2 5 3 1
+4 3 1 2 5
+4 3 1 5 2
+4 3 2 1 5
+4 3 2 5 1
+4 3 5 1 2
+4 3 5 2 1
+4 5 1 2 3
+4 5 1 3 2
+4 5 2 1 3
+4 5 2 3 1
+4 5 3 1 2
+4 5 3 2 1
+
+5 1 2 3 4
+5 1 2 4 3
+5 1 3 2 4
+5 1 3 4 2
+5 1 4 2 3
+5 1 4 3 2
+5 2 1 3 4
+5 2 1 4 3
+5 2 3 1 4
+5 2 3 4 1
+5 2 4 1 3
+5 2 4 3 1
+5 3 1 2 4
+5 3 1 4 2
+5 3 2 1 4
+5 3 2 4 1
+5 3 4 1 2
+5 3 4 2 1
+5 4 1 2 3
+5 4 1 3 2
+5 4 2 1 3
+5 4 2 3 1
+5 4 3 1 2
+5 4 3 2 1
+
+*/

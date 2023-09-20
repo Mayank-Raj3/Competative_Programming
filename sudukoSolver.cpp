@@ -104,41 +104,95 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
 
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
+vector<string> arr(9);
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+int board[9][9];
+//  LCCM - level choise check move
+
+bool check(int row, int col, int x) {
+	// CHECK
+	/*
+	1. same row me ch nhi hona chiye
+	1. same col me ch nhi hona chiye
+	1. same submatrix me ch nhi hona chiye
+	*/
+	for (int i = 0; i < 9; i++) {
+		if (board[row][i] == x) {
+			return false;
 		}
-		cout << cnt << " ";
+		if (board[i][col] == x) {
+			return false;
+		}
 	}
+	//br = row /3 to get the starting index of that matrix
+	// | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+	// 0           3               6
+	/*
+	.2. 871 ..5
+	012 345 678
+			 ^
+	7/3 = 2 * 3 = 6 start
+	*/
+
+	int br = (row / 3) * 3;
+	int bc = (col / 3) * 3;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (board[br + i][bc + j] == x)return false;
+		}
+	}
+	return true;
+}
+
+void rec(int i, int j) {
+	// base case
+	if (i == 9) {
+		// print
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				cout << board[i][j] << " ";
+			}
+			cout << endl;
+		}
+		return;
+	}
+	// recursive case
+	// choice
+	if (arr[i][j] == '.') {
+		// choises is from 1 to 9 then we have to check wheather its possible or not
+		for (int ch = 1; ch <= 9; ch++) {
+			// check
+			if (check(i, j, ch)) {
+				// move
+				board[i][j] = ch;
+				if (j <= 8) rec(i, j + 1);
+				else rec(i + 1, 0);
+				board[i][j] = 0;
+			}
+		}
+	} else {
+		int ch = (arr[i][j] - '0');
+		// check
+		if (check(i, j, ch)) {
+			// move
+			board[i][j] = ch;
+			if (j <= 8)rec(i, j + 1);
+			else rec(i + 1, 0);
+			board[i][j] = 0;
+		}
+	}
+}
+
+void solve() {
+	for (int i = 0 ; i <  9  ; i ++) {
+		cin >> arr[i];
+		cout << arr[i] << nline;
+	}
+	cout << nline << nline;
+	// level
+	rec(0, 0);
 }
 
 
@@ -147,7 +201,20 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/
+
+/*
+
+9 2 6 8 7 1 3 4 5
+8 5 1 3 4 9 7 2 6
+4 7 3 2 5 6 8 9 1
+6 8 5 1 3 2 4 7 9
+7 3 4 5 9 8 1 6 2
+2 1 9 7 6 4 5 3 8
+3 4 2 9 1 5 6 8 7
+5 6 8 4 2 7 9 1 3
+1 9 7 6 8 3 2 5 4
+
+*/

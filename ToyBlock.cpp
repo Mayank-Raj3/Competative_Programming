@@ -103,42 +103,34 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
   if (found != string::npos)
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
+int dp[1001000];
+int rec (vi &arr,  int sum ) {
+	if (sum < 0) {
+		return INF ;
 	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
+	if (sum == 0) {
+		return  0ll ;
 	}
-
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
+	if (dp[sum] != -1) {
+		return dp[sum];
 	}
 
+	int mini = INF ;
+	for (auto it : arr) {
+		mini = min(rec(arr, (sum - it) ) + 1 , mini) ;
+	}
+	dp[sum] = mini ;
+	return dp[sum]  ;
 }
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
-		}
-		cout << cnt << " ";
-	}
+void solve() {
+	int n , sum ; cin >> n >> sum  ;
+	vi arr(n);
+	for ( int i = 0 ; i < n ; i++) cin >> arr[i];
+	memset(dp, -1, sizeof(dp));
+	int ans = rec(arr, sum) ;
+	ans == INF ? cout << -1 << nline : cout << ans << nline;
+
 }
 
 
@@ -147,7 +139,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

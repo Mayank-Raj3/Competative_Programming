@@ -104,50 +104,52 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
+void solve() {
+	string s ; cin >> s ;
+	int b = 0, su = 0, c = 0;
+	for (auto it : s ) {
+		if (it == 'B') b++;
+		else if (it == 'S') su++;
+		else c++;
 	}
+	int bb , ss, cc; cin >> bb >> ss >> cc;
+	int nb , ns , nc ; cin >> nb >> ns >> nc;
+	int  r ; cin >> r ;
+	auto check = [&](int items ) {
+		int reqb = items * b , reqs = items * su , reqc = items * c;
+		reqb -= bb;
+		reqs -= ss;
+		reqc -= cc;
 
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
+		reqb = max(0ll, reqb);
+		reqs = max(0ll, reqs);
+		reqc = max(0ll, reqc);
+		int paisa = 0 ;
+		reqb *= nb;
+		reqs *= ns;
+		reqc *= nc;
+		paisa = reqb + reqc + reqs;
+		return paisa <= r;
+	};
 
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+	int lo = 0 , hi = 1e13 , ans = 0;
+	while (lo <= hi) {
+		int mid = (lo + hi) /  2 ;
+		if (check(mid)) {
+			ans = mid ;
+			lo = mid + 1 ;
+		} else {
+			hi = mid - 1 ;
 		}
-		cout << cnt << " ";
 	}
+	cout << ans << nline;
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

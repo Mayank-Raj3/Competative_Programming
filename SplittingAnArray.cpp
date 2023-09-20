@@ -104,41 +104,38 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+void solve() {
+	int n ,  k ; cin >> n >> k ;
+	vi arr(n);
+	for (int i = 0  ; i  < n ; i ++) cin >> arr[i];
+	auto check = [&](int mid ) {
+		int cnt = 1 ;
+		int sum = 0 ;
+		for (int i = 0 ; i <  n ; i++) {
+			if (arr[i] > mid) return false ;
+			if (sum + arr[i] <= mid)
+				sum += arr[i];
+			else {
+				cnt += 1;
+				sum = arr[i];
+			}
 		}
-		cout << cnt << " ";
+		return cnt <= k;
+	};
+	int lo = *max_element(all(arr)), hi  = accumulate(all(arr), 0LL);
+	int ans = 0 ;
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2 ;
+		if (check(mid)) {
+			ans = mid ;
+			hi = mid - 1 ;
+		} else {
+			lo = mid + 1 ;
+		}
 	}
+	cout << ans << nline;
+
 }
 
 
@@ -147,7 +144,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

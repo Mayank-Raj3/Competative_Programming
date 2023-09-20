@@ -103,41 +103,44 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
   if (found != string::npos)
 */
 /*::::::::::::::::::::::::::StartHere:::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+vector<int> queen;
+vector<vector<string>> ans;
+int cnt = 0 ;
+vector<string> board;
 
-void bsm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
 
-	for (int i = 0 ; i < m ; i++) {
-		auto it  = lower_bound(all(arr), brr[i]) - arr.begin();
-		cout << it << " ";
-	}
-
-}
-void tpm() {
-	int n , m ; cin >> n >> m ;
-	vi arr(n), brr(m);
-	for (int i = 0 ; i < n ; i++) {
-		cin >> arr[i];
-	}
-	for (int i = 0 ; i < m ; i++) {
-		cin >> brr[i];
-	}
-
-	int cnt = 0 ;
-	int j = 0 ;
-	for (int i = 0 ; i < m  ; i++) {
-		while ( j < n and arr[j] < brr[i]) {
-			cnt++;
-			j++;
+bool check(int row , int col) {
+	if (board[row][col] == '*')
+		return false ;
+	for (int prow = 0 ; prow < row ; prow++) {
+		int pcol = queen[prow];
+		if ( (pcol == col) or  (abs(prow - row) == abs(pcol - col)) ) {
+			return false ;
 		}
-		cout << cnt << " ";
+	}
+	return true ;
+}
+
+void Nqueen(int i, int n  ) {
+	if (i == n) {
+		// placed queen
+		// vector<string> temp(n, string(n, '.'));
+		// for (int r = 0  ; r < queen.size() ; r++) {
+		// 	temp[r][queen[r]] = 'Q';
+		// }
+		// ans.push_back(temp);
+		//    for(auto it : queen) cout<<it<<" ";
+		//    cout<<endl;
+		cnt++;
+		return ;
+	}
+
+	for (int col = 0 ; col < n ; col++) {
+		if (check(i, col)) {
+			queen.push_back(col);
+			Nqueen(i + 1, n);
+			queen.pop_back();
+		}
 	}
 }
 
@@ -147,7 +150,13 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	// int t ; cin >> t ; while (t--)
-	bsm();
+	int n = 8 ;
+	board.resize(8);
+	for (int i = 0 ; i < 8 ; i ++) {
+		cin >> board[i];
+	}
+	Nqueen(0, n);
+	cout << cnt << nline ;
+
 }
 /*----------------------------------endsHere----------------------------------*/
