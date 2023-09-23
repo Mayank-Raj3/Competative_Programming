@@ -140,9 +140,9 @@ void solve() {
 	}
 
 	cout << temp.size() << nline;
-	for (auto it : temp) {
-		cout << it.ff << " " << it.ss << nline;
-	}
+	// for (auto it : temp) {
+	// 	cout << it.ff << " " << it.ss << nline;
+	// }
 
 }
 int32_t main() {

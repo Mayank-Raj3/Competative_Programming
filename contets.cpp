@@ -106,15 +106,38 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
-	set<int> st;
-	st.insert(1);
-	st.insert(2);
-	st.insert(3);
-	st.insert(4);
-	st.insert(5);
-	st.insert(6);
-	cout << st.lower_bound(1) - st.begin() << nline;
+	int n , m , k ; cin >> n >> m >> k ;
+	vi arr(n ), brr(m);
 
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	for (int i = 0 ; i < m ; i++) cin >> brr[i];
+	sort(all(arr));
+	sort(all(brr));
+
+
+	vi temp(n + 1);
+
+	for (int i = 1 ; i <= n ; i++) {
+		if (i) {
+			temp[i] += (temp[i - 1] + arr[i - 1]);
+		}
+	}
+
+	db(arr)
+	db(brr)
+	db(temp)
+
+	int sum = 0 ;
+
+	for (int i = 0 ; i < m ; i ++) {
+		auto it =  upper_bound(all(arr), (k - brr[i])) - arr.begin();
+		// cout << it - 1 << nline;
+		// cout << temp[it - 1] << nline;
+		sum += (temp[it ] + ( brr[i] * (it)));
+		sum += ((n - it ) * k)  ;
+	}
+
+	cout << sum << nline ;
 }
 
 
@@ -123,7 +146,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

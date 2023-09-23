@@ -106,39 +106,39 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
+	int n , m  ; cin >> n >> m ;
+	vector<int> adj[n + 1];
+	for (int i = 0 ; i < m ; i++) {
+		int a , b ; cin >> a >> b ;
+		adj[a].pb(b);
+		adj[b].pb(a);
+	}
 
-	vector<string> p1 = {
-		"1111111111",
-		"1222222221",
-		"1233333321",
-		"1234444321",
-		"1234554321",
-		"1234554321",
-		"1234444321",
-		"1233333321",
-		"1222222221",
-		"1111111111"
-	};
-	vector<string> arr(10);
-	for (int i = 0 ; i < 10 ; i ++) cin >> arr[i];
-	int a = 0;
-	for (int i = 0 ; i < 10 ; i++) {
-		for (int j = 0 ; j < 10 ; j++) {
-			if (p1[i][j] == '1' and arr[i][j] == 'X') {
-				a += (1);
-			} else if (p1[i][j] == '2' and arr[i][j] == 'X') {
-				a += (2);
-			} else if (p1[i][j] == '3' and arr[i][j] == 'X') {
-				a += (3);
-			} else if (p1[i][j] == '4' and arr[i][j] == 'X') {
-				a += (4);
-			} else if (p1[i][j] == '5' and arr[i][j] == 'X') {
-				a += (5);
+	bool ispossible = true ;
+	vi vis(n + 1, 0);
+	function<void(int, int)> dfs = [&](int node, int color) {
+		vis[node] = color;
+		for (auto it : adj[node]) {
+			if (!vis[it]) {
+				dfs(it, ( 3 - color));
+			} else  {
+				if (vis[it] == vis[node] ) {
+					ispossible = false;
+				}
 			}
 		}
-	}
-	cout << a << nline ;
+	};
 
+	for (int i = 0 ; i < n ; i ++ ) {
+		if (!vis[i]) {
+			dfs(i, 1);
+		}
+	}
+	if (ispossible) {
+		YES
+	} else {
+		NO
+	}
 }
 
 
@@ -147,7 +147,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

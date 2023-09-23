@@ -1,14 +1,13 @@
-
 #include<bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
 using namespace __gnu_pbds;
-#define int 						  long long
-#define ll 							  long long
-#define ld 							  long double
-#define nline						  "\n"
-#define ff 							  first
+#define int                           long long
+#define ll                               long long
+#define ld                               long double
+#define nline                          "\n"
+#define ff                               first
 #define ss                            second
 #define pb                            push_back
 #define int                           long long
@@ -16,7 +15,7 @@ using namespace __gnu_pbds;
 #define rfl(i,n, k)                   for (int i = n; i >= k; i--)
 #define fel(a,x)                      for (auto& a : x)
 #define mp                            make_pair
-#define ppb 						  pop_back
+#define ppb                           pop_back
 #define ps(x, y)                      fixed << setprecision(y) << x
 #define setbit(x)                     __builtin_popcount(x);
 #define all(var)                      var.begin(), var.end()
@@ -33,16 +32,16 @@ using namespace __gnu_pbds;
 #define jay_shri_ram                  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define rall(x)                       (x).rbegin(), (x).rend()
 
-typedef pair<int, int> 	              pii     ;
+typedef pair<int, int>                   pii     ;
 typedef vector<int>                   vi      ;
 typedef vector<string>                vs      ;
-typedef vector<pii> 				  vpi     ;
+typedef vector<pii>                   vpi     ;
 typedef vector <pair<int , int> >     vpi     ;
 typedef vector<bool>                  vb      ;
 typedef vector<vector<int>>           vvi     ;
-typedef map<int, int> 				  mpii    ;
-typedef set<int>   					  seti    ;
-typedef multiset<int> 				  mseti	  ;
+typedef map<int, int>                   mpii    ;
+typedef set<int>                         seti    ;
+typedef multiset<int>                   mseti      ;
 typedef unordered_set<int>            useti   ;
 typedef unordered_map<int, int>       umapii  ;
 typedef unsigned long long            ull     ;
@@ -106,48 +105,138 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
+    int n , m ; cin >> n >> m ;
+    vector<string> arr(n);
+    for (int i = 0 ; i < n ; i++) cin >> arr[i];
+    vector<vector<int>> vis(n, vector<int>(m, 0));
+    vector<vector<int>> dismons(n, vector<int>(m, 1e9));
+    vector<vector<int>> disadmi(n, vector<int>(m, 1e9));
+    vector<vector<pii>> parent(n, vector<pii>(m, pii(-2, -2)));
+    queue<pii> mons , admi ;
 
-	vector<string> p1 = {
-		"1111111111",
-		"1222222221",
-		"1233333321",
-		"1234444321",
-		"1234554321",
-		"1234554321",
-		"1234444321",
-		"1233333321",
-		"1222222221",
-		"1111111111"
-	};
-	vector<string> arr(10);
-	for (int i = 0 ; i < 10 ; i ++) cin >> arr[i];
-	int a = 0;
-	for (int i = 0 ; i < 10 ; i++) {
-		for (int j = 0 ; j < 10 ; j++) {
-			if (p1[i][j] == '1' and arr[i][j] == 'X') {
-				a += (1);
-			} else if (p1[i][j] == '2' and arr[i][j] == 'X') {
-				a += (2);
-			} else if (p1[i][j] == '3' and arr[i][j] == 'X') {
-				a += (3);
-			} else if (p1[i][j] == '4' and arr[i][j] == 'X') {
-				a += (4);
-			} else if (p1[i][j] == '5' and arr[i][j] == 'X') {
-				a += (5);
-			}
-		}
-	}
-	cout << a << nline ;
+    for (int i = 0 ; i < n ; i++) {
+        for (int j = 0 ; j < m ; j++) {
+            if (arr[i][j] == 'M') {
+                mons.push({i, j});
+                dismons[i][j] = 0;
+            } else if (arr[i][j] == 'A') {
+                admi.push({i, j});
+                disadmi[i][j] = 0;
+                parent[i][j] = { -1, -1};
+            }
+        }
+    }
+    auto isValid = [&](int row , int col  ) {
+        if (row >= n or col >= m or row < 0 or col < 0 or  vis[row][col] or arr[row][col] == '#' ) return false ;
+        return true ;
+    };
+    while (mons.size()) {
+        pii curr = mons.front();
+        mons.pop();
+        int curDis = dismons[curr.ff][curr.ss];
+        for (int k = 0 ; k < 4 ; k++) {
+            int x = dx[k] + curr.ff , y = dy[k] + curr.ss;
+            if (isValid(x, y) and   dismons[x][y] > curDis + 1 ) {
+                dismons[x][y] = curDis + 1;
+                mons.push({x, y});
+            }
 
+        }
+    }
+
+    vis.clear();
+    vis.assign(n, vector<int> (m));
+
+    while (admi.size()) {
+        pii curr = admi.front();
+        admi.pop();
+        int curDis = disadmi[curr.ff][curr.ss];
+        for (int k = 0 ; k < 4 ; k++) {
+            int x = dx[k] + curr.ff , y = dy[k] + curr.ss;
+            if (isValid(x, y) and   disadmi[x][y] > curDis + 1 ) {
+                disadmi[x][y] = curDis + 1;
+                admi.push({x, y});
+                parent[x][y] = { curr.ff, curr.ss};
+            }
+
+        }
+    }
+
+    int mini = 1e9 + 10 , t = 0 , chox = -1 , choy = -1 ;
+    for (int i = 0 ; i < m ; i++) {
+        if (disadmi[0][i] != 1e9 and disadmi[0][i] < dismons[0][i]) {
+            t = 1 ;
+            if (mini >  disadmi[0][i]) {
+                mini = disadmi[0][i];
+                chox = 0 , choy = i;
+            }
+        }
+
+        if (disadmi[n - 1][i] != 1e9 and disadmi[n - 1][i] < dismons[n - 1][i]) {
+            t = 1 ;
+            if (mini >  disadmi[n - 1][i]) {
+                mini = disadmi[n - 1][i];
+                chox = n - 1 , choy = i;
+
+            }
+        }
+    }
+    for (int i = 0 ; i < n ; i++) {
+        if (disadmi[i][0] != 1e9 and disadmi[i][0] < dismons[i][0]) {
+            t = 1 ;
+            if (mini >  disadmi[i][0]) {
+                mini = disadmi[i][0];
+                chox = i , choy = 0;
+
+            }
+        }
+
+        if (disadmi[i][m - 1] != 1e9 and disadmi[i][m - 1] < dismons[i][m - 1]) {
+            t = 1 ;
+            if (mini >  disadmi[i][m - 1]) {
+                mini = disadmi[i][m - 1];
+                chox = i , choy = m - 1;
+            }
+        }
+
+    }
+    db(parent)
+
+    if (t) {
+        YES
+        cout << mini << nline ;
+    } else {
+        NO
+        return ;
+    }
+
+    map<pii, char> mpp;
+    mpp[ {0, 1}] = 'R';
+    mpp[ { -1, 0}] = 'U';
+    mpp[ { 1, 0}] = 'D';
+    mpp[ {0, -1}] = 'L';
+    string ans = "";
+    while (chox != -1 and choy != -1) {
+        // cout << chox << " " << choy << nline ;
+        int parx = parent[chox][choy].ff;
+        int pary = parent[chox][choy].ss;
+        int xx  = chox - parx;
+        int yy  = choy - pary;
+        if (xx <= 1 and xx >= -1 and yy >= -1 and yy <= 1)
+            ans += (mpp[ {xx, yy}]);
+        chox = parx;
+        choy = pary;
+
+    }
+    reverse(all(ans));
+    if (mini != 0)
+        cout << ans << nline ;
 }
-
-
 int32_t main() {
 #ifndef ONLINE_JUDGE
-	freopen("Error.txt", "w", stderr);
+    freopen("Error.txt", "w", stderr);
 #endif
-	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+    jay_shri_ram;
+    solve();
 }
 /*----------------------------------endsHere----------------------------------*/

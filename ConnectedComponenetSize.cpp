@@ -106,38 +106,51 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
+	int n , m ; cin >> n >> m ;
+	vector<vector<int>> arr(n, vector<int>(m, 0));
+	vector<vector<int>> vis(n, vector<int>(m, 0));
+	for (int i = 0 ; i < n  ; i++) {
+		for (int j = 0 ; j < m ; j ++)
+			cin >> arr[i][j];
+	}
 
-	vector<string> p1 = {
-		"1111111111",
-		"1222222221",
-		"1233333321",
-		"1234444321",
-		"1234554321",
-		"1234554321",
-		"1234444321",
-		"1233333321",
-		"1222222221",
-		"1111111111"
+	vector<vector<pair<int, int>>> ans ;
+	vector < pair<int, int>> temp ;
+	auto isValid = [&](int x, int y ) {
+		if (x >= n or y >= m or  x < 0 or y < 0 or vis[x][y] or  arr[x][y] ) return false ;
+		return true ;
 	};
-	vector<string> arr(10);
-	for (int i = 0 ; i < 10 ; i ++) cin >> arr[i];
-	int a = 0;
-	for (int i = 0 ; i < 10 ; i++) {
-		for (int j = 0 ; j < 10 ; j++) {
-			if (p1[i][j] == '1' and arr[i][j] == 'X') {
-				a += (1);
-			} else if (p1[i][j] == '2' and arr[i][j] == 'X') {
-				a += (2);
-			} else if (p1[i][j] == '3' and arr[i][j] == 'X') {
-				a += (3);
-			} else if (p1[i][j] == '4' and arr[i][j] == 'X') {
-				a += (4);
-			} else if (p1[i][j] == '5' and arr[i][j] == 'X') {
-				a += (5);
+
+	function<void(int, int)> dfs = [&](int row , int col ) {
+		vis[row][col] = 1;
+		temp.pb({row, col});
+		for (int k = 0; k < 4; k++) {
+			int x = row + dx[k];
+			int y = col + dy[k];
+			if (isValid(x, y)) {
+				dfs(x, y);
 			}
 		}
+	};
+
+	for (int i = 0 ; i < n  ; i++) {
+		for (int j = 0 ; j < m ; j ++) {
+			if (!vis[i][j]  and !arr[i][j]  ) {
+				dfs(i, j);
+				ans.pb(temp);
+				db(temp)
+				temp.clear();
+			}
+		}
+
 	}
-	cout << a << nline ;
+	for (auto it : ans) {
+		for (auto i  : it) {
+			if (sz(it) != 1)
+				arr[i.ff][i.ss] = sz(it);
+		}
+	}
+
 
 }
 

@@ -106,39 +106,37 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
+	int n , m , k ; cin >> n >> m >> k ;
+	vi arr(n ), brr(m);
 
-	vector<string> p1 = {
-		"1111111111",
-		"1222222221",
-		"1233333321",
-		"1234444321",
-		"1234554321",
-		"1234554321",
-		"1234444321",
-		"1233333321",
-		"1222222221",
-		"1111111111"
-	};
-	vector<string> arr(10);
-	for (int i = 0 ; i < 10 ; i ++) cin >> arr[i];
-	int a = 0;
-	for (int i = 0 ; i < 10 ; i++) {
-		for (int j = 0 ; j < 10 ; j++) {
-			if (p1[i][j] == '1' and arr[i][j] == 'X') {
-				a += (1);
-			} else if (p1[i][j] == '2' and arr[i][j] == 'X') {
-				a += (2);
-			} else if (p1[i][j] == '3' and arr[i][j] == 'X') {
-				a += (3);
-			} else if (p1[i][j] == '4' and arr[i][j] == 'X') {
-				a += (4);
-			} else if (p1[i][j] == '5' and arr[i][j] == 'X') {
-				a += (5);
-			}
+	for (int i = 0 ; i < n ; i++) cin >> arr[i];
+	for (int i = 0 ; i < m ; i++) cin >> brr[i];
+	sort(all(arr));
+	sort(all(brr));
+
+
+	vi temp(n + 1);
+
+	for (int i = 1 ; i <= n ; i++) {
+		if (i) {
+			temp[i] += (temp[i - 1] + arr[i - 1]);
 		}
 	}
-	cout << a << nline ;
 
+	db(arr)
+	db(brr)
+	db(temp)
+
+	int sum = 0 ;
+
+	for (int i = 0 ; i < m ; i ++) {
+		auto it =  upper_bound(all(arr), (k - brr[i])) - arr.begin();
+		cout << it << nline ;
+		sum += (temp[it] + ( brr[i] * (it)));
+		sum += ((n - it ) * k)  ;
+	}
+
+	cout << sum << nline ;
 }
 
 
@@ -147,7 +145,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

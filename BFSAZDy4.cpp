@@ -106,39 +106,62 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 
 void solve() {
+	int n ; cin >> n ;
+	int m ; cin >> m ;
+	vector<string> arr(n);
+	for (int i = 0 ; i < n ; i ++) {
+		cin >> arr[i];
+	}
 
-	vector<string> p1 = {
-		"1111111111",
-		"1222222221",
-		"1233333321",
-		"1234444321",
-		"1234554321",
-		"1234554321",
-		"1234444321",
-		"1233333321",
-		"1222222221",
-		"1111111111"
-	};
-	vector<string> arr(10);
-	for (int i = 0 ; i < 10 ; i ++) cin >> arr[i];
-	int a = 0;
-	for (int i = 0 ; i < 10 ; i++) {
-		for (int j = 0 ; j < 10 ; j++) {
-			if (p1[i][j] == '1' and arr[i][j] == 'X') {
-				a += (1);
-			} else if (p1[i][j] == '2' and arr[i][j] == 'X') {
-				a += (2);
-			} else if (p1[i][j] == '3' and arr[i][j] == 'X') {
-				a += (3);
-			} else if (p1[i][j] == '4' and arr[i][j] == 'X') {
-				a += (4);
-			} else if (p1[i][j] == '5' and arr[i][j] == 'X') {
-				a += (5);
+	pair<int , int> start, end;
+	vector<vector<int>> dist(n , vector<int>(m ));
+	for (int i = 0 ; i < n; i++) {
+		for (int j = 0 ; j < m; j++) {
+			if (arr[i][j] == 'S') {
+				start.ff = i ;
+				start.ss = j ;
+			} else if (arr[i][j] == 'E') {
+				end.ff = i ;
+				end.ss = j ;
 			}
+			dist[i][j] = 100;
 		}
 	}
-	cout << a << nline ;
 
+
+	dist[start.ff][start.ss] = 0;
+	queue<pair<int, int>> q ;
+	q.push(start);
+
+	auto isValid = [&](int x, int y ) {
+		if (x >= n or y >= m or  x < 0 or y < 0 or arr[x][y] == '#') return false ;
+		return true ;
+	};
+	// cout << q.size();
+	while (q.size()) {
+		pair<int, int> curr = q.front();
+		q.pop();
+		int currd = dist[curr.ff][curr.ss];
+
+		for (int i = 0 ; i < 4 ; i++) {
+			int x = dx[i] + curr.ff;
+			int y = dy[i] + curr.ss;
+			if (isValid(x, y) and  currd + 1 < dist[x][y]) {
+				//relaxation
+				dist[x][y] = currd + 1;
+				q.push({x, y});
+			}
+		}
+
+	}
+	for (auto it : dist) {
+		for (auto i : it) {
+			cout << i << " ";
+		}
+		cout << nline ;
+	}
+
+	cout << dist[end.ff][end.ss] << nline ;
 }
 
 
@@ -147,7 +170,6 @@ int32_t main() {
 	freopen("Error.txt", "w", stderr);
 #endif
 	jay_shri_ram;
-	int t ; cin >> t ; while (t--)
-		solve();
+	solve();
 }
 /*----------------------------------endsHere----------------------------------*/

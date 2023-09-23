@@ -107,38 +107,33 @@ using ordered_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_st
 
 void solve() {
 
-	vector<string> p1 = {
-		"1111111111",
-		"1222222221",
-		"1233333321",
-		"1234444321",
-		"1234554321",
-		"1234554321",
-		"1234444321",
-		"1233333321",
-		"1222222221",
-		"1111111111"
-	};
-	vector<string> arr(10);
-	for (int i = 0 ; i < 10 ; i ++) cin >> arr[i];
-	int a = 0;
-	for (int i = 0 ; i < 10 ; i++) {
-		for (int j = 0 ; j < 10 ; j++) {
-			if (p1[i][j] == '1' and arr[i][j] == 'X') {
-				a += (1);
-			} else if (p1[i][j] == '2' and arr[i][j] == 'X') {
-				a += (2);
-			} else if (p1[i][j] == '3' and arr[i][j] == 'X') {
-				a += (3);
-			} else if (p1[i][j] == '4' and arr[i][j] == 'X') {
-				a += (4);
-			} else if (p1[i][j] == '5' and arr[i][j] == 'X') {
-				a += (5);
-			}
+
+	int a , b; cin >> a >> b ;
+	int ans = 0 ;
+	if (a < b) swap(a, b);
+	int i = log2(a);
+	for (  ; i >= 0 ; i--) {
+		if ((a & (1 << i)) == (b & (1 << i))) {
+			continue;
+		} else {
+			break;
 		}
 	}
-	cout << a << nline ;
+	i--;
+	for (  ; i >= 0 ; i--) {
+		if ((a & (1 << i)) and !(b & (1 << i))) {
+			ans = (ans | (1 << i));
+		}
+	}
 
+	cout << ans << nline;
+
+	// bitset<5>  b1 = a ^ ans;
+	// bitset<5> b2 = b ^ ans;
+	// bitset<5> a1 = a , a2 = b , aa = ans ;
+	// cout << a1 << " " << a2 << nline ;
+	// cout << b1 << " " << b2 << nline ;
+	// cout << aa << nline ;
 }
 
 
